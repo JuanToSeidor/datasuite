@@ -1,8 +1,60 @@
 @import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: var(--color-neutral-full);
+  --foreground: var(--color-neutral-900);
+
+  /* --- Caral Figma Colors --- */
+
+  /* Neutrals */
+  --color-neutral-100: #fafafa;
+  --color-neutral-400: #F1F5F9;
+  --color-neutral-500: #e2e8f0;
+  --color-neutral-800: #94a3b8;
+  --color-neutral-900: #242528;
+
+  /* Layout / Body */
+  --color-neutral-full: var(--color-neutral-500);
+  --color-container: var(--color-neutral-400);
+  --color-container-50: color-mix(in srgb, var(--color-neutral-400) 50%, transparent);
+  --color-seidor-main-text: var(--color-seidor-main);
+
+
+  /* Seidor (Primary) */
+  --color-seidor-light: #66b6ff;
+  --color-seidor-main: #07153a;
+  --color-seidor-hard: #263c7a;
+
+  /* Success */
+  --color-success-light: #daf4ec;
+  --color-success-main: #44ca9f;
+  --color-success-hard: #13644a;
+
+  /* Info */
+  --color-info-light: #99d3ff;
+  --color-info-main: #0191ff;
+  --color-info-hard: #006abb;
+
+  /* Warning */
+  --color-warning-light: #fff3e5;
+  --color-warning-main: #f88a00;
+  --color-warning-hard: #b46400;
+
+  /* Danger */
+  --color-danger-light: #ffeded;
+  --color-danger-main: #ef4444;
+  --color-danger-hard: #560505;
+
+  /* Indigo */
+  --color-indigo-light: #f2dcff;
+  --color-indigo-main: #3c096c;
+  --color-indigo-hard: #240046;
+
+  /* Sakura */
+  --color-sakura-light: #ffd0e5;
+  --color-sakura-main: #ff2e8c;
+  --color-sakura-hard: #b1004f;
 }
 
 @theme inline {
@@ -10,17 +62,87 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* --- Caral Tailwind Colors --- */
+
+  --color-neutral-100: var(--color-neutral-100);
+  --color-neutral-400: var(--color-neutral-400);
+  --color-neutral-500: var(--color-neutral-500);
+  --color-neutral-800: var(--color-neutral-800);
+  --color-neutral-900: var(--color-neutral-900);
+
+  --color-neutral-full: var(--color-neutral-full);
+  --color-container: var(--color-container);
+  --color-container-50: var(--color-container-50);
+
+  --color-seidor-light: var(--color-seidor-light);
+  --color-seidor-main: var(--color-seidor-main);
+  --color-seidor-hard: var(--color-seidor-hard);
+  --color-seidor-main-text: var(--color-seidor-main-text);
+
+  --color-success-light: var(--color-success-light);
+  --color-success-main: var(--color-success-main);
+  --color-success-hard: var(--color-success-hard);
+
+  --color-info-light: var(--color-info-light);
+  --color-info-main: var(--color-info-main);
+  --color-info-hard: var(--color-info-hard);
+
+  --color-warning-light: var(--color-warning-light);
+  --color-warning-main: var(--color-warning-main);
+  --color-warning-hard: var(--color-warning-hard);
+
+  --color-danger-light: var(--color-danger-light);
+  --color-danger-main: var(--color-danger-main);
+  --color-danger-hard: var(--color-danger-hard);
+
+  --color-indigo-light: var(--color-indigo-light);
+  --color-indigo-main: var(--color-indigo-main);
+  --color-indigo-hard: var(--color-indigo-hard);
+
+  --color-sakura-light: var(--color-sakura-light);
+  --color-sakura-main: var(--color-sakura-main);
+  --color-sakura-hard: var(--color-sakura-hard);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root.dark {
+  --background: var(--color-neutral-full);
+  --foreground: var(--color-neutral-400);
+
+  /* --- Caral Figma Colors (Dark Mode Overrides) --- */
+
+  /* Neutrals */
+  --color-neutral-400: #21252b;
+  --color-neutral-500: #555c67;
+  --color-neutral-900: #f1f5f9;
+
+  /* Layout / Body */
+  --color-neutral-full: #0f172b;
+  --color-container: #202938;
+  --color-container-50: color-mix(in srgb, #202938 50%, transparent);
+
+  /* Seidor (Primary) */
+  --color-seidor-main: #263c7a;
+  --color-seidor-main-text: #fafafa;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes rowExpand {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.995);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-row-expand {
+  animation: rowExpand 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

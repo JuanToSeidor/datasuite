@@ -1,65 +1,71 @@
-import Image from "next/image";
+"use client";
+
+import React, { useState } from 'react';
+import { NewsBanner } from '@/components/home/NewsBanner';
+import { BranchCard } from '@/components/home/BranchCard';
+import { suiteConfig } from '@/config/suite';
+import { Tabs } from 'caralstable';
 
 export default function Home() {
+  const [activeTab, setActiveTab] = useState(0);
+
+  const TABS = [
+    { label: 'Todos' },
+    { label: 'Destacados' },
+    { label: 'AI generativa' },
+    { label: 'Propios' },
+    { label: 'Nuevas tendencias' },
+    { label: 'Tecnología emergente' },
+    { label: 'Colaboraciones' },
+    { label: 'Proyectos futuros' }
+  ];
+
+  const filteredBranches = (!suiteConfig.enableTagDiscrimination || TABS[activeTab].label === 'Todos')
+    ? suiteConfig.branches
+    : suiteConfig.branches.filter(branch =>
+      branch.tags?.includes(TABS[activeTab].label)
+    );
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <>
+
+      <NewsBanner />
+
+      <div className="content-stretch flex flex-col gap-[20px] items-start relative w-full  rounded-lg">
+
+
+        {suiteConfig.enableTagDiscrimination ? (
+          <div className="bg-[var(--color-neutral-500)] content-stretch flex gap-[10px] items-start overflow-clip p-[10px] relative rounded-[10px] shrink-0 overflow-x-auto">
+            <Tabs
+              activeIndex={activeTab}
+              onChange={(index) => setActiveTab(index)}
+              tabs={TABS}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
+        ) : (
+          <div className="w-full">
+            <h2 className="text-[var(--color-neutral-900)] text-xl font-semibold">
+              All apps in {suiteConfig.name}
+            </h2>
+            <p className="text-[var(--color-neutral-800)]">
+              Browse all the apps available in {suiteConfig.name}, each designed to help you
+            </p>
+
+          </div>
+        )}
+
+        <div className="gap-[10px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full">
+          {filteredBranches.map((branch) => (
+            <BranchCard key={branch.id} branch={branch} />
+          ))}
+
+          {filteredBranches.length === 0 && (
+            <div className="col-span-full py-10 text-center text-[var(--color-neutral-800)]">
+              No hay productos disponibles en esta categoría.
+            </div>
+          )}
         </div>
-      </main>
-    </div>
+      </div>
+    </>
   );
 }

@@ -1,0 +1,227 @@
+[
+  {
+    "id": "drv-01",
+    "code": "DRV-01",
+    "name": "Centro de Costos Corporativo",
+    "description": "Distribución de consumo core de producción entre regiones de negocio",
+    "accounts": [
+      {
+        "id": "acc-aws-01",
+        "name": "AWS - Cloud Operations Production",
+        "brand": "AWS",
+        "provider": "AWS",
+        "color": "#FF9900"
+      },
+      {
+        "id": "acc-azure-01",
+        "name": "Azure - EA Production Sub",
+        "brand": "Azure",
+        "provider": "Azure",
+        "color": "#0089D6"
+      },
+      {
+        "id": "acc-snow-01",
+        "name": "Snowflake - Corporate Analytics DWH",
+        "brand": "Snowflake",
+        "provider": "Snowflake",
+        "color": "#29B5E8"
+      }
+    ],
+    "entities": [
+      {
+        "id": "ent-01-1",
+        "name": "Región Norte",
+        "percentage": 40,
+        "color": "#EF4444"
+      },
+      {
+        "id": "ent-01-2",
+        "name": "Región Sur",
+        "percentage": 35,
+        "color": "#3B82F6"
+      },
+      {
+        "id": "ent-01-3",
+        "name": "Región Este",
+        "percentage": 25,
+        "color": "#10B981"
+      }
+    ]
+  },
+  {
+    "id": "drv-02",
+    "code": "DRV-02",
+    "name": "Operaciones Core Cloud & Cómputo",
+    "description": "Cómputo e infraestructura compartida distribuida por áreas organizacionales",
+    "accounts": [
+      {
+        "id": "acc-aws-02",
+        "name": "AWS - Kubernetes Core Cluster (EKS)",
+        "brand": "AWS",
+        "provider": "AWS",
+        "color": "#FF9900"
+      },
+      {
+        "id": "acc-gcp-04",
+        "name": "GCP - Cloud Spanner Core Banking",
+        "brand": "GoogleStorage",
+        "provider": "GCP",
+        "color": "#4285F4"
+      }
+    ],
+    "entities": [
+      {
+        "id": "ent-02-1",
+        "name": "Products",
+        "percentage": 50,
+        "color": "#8B5CF6"
+      },
+      {
+        "id": "ent-02-2",
+        "name": "IT & DevOps",
+        "percentage": 30,
+        "color": "#F59E0B"
+      },
+      {
+        "id": "ent-02-3",
+        "name": "Preventas",
+        "percentage": 20,
+        "color": "#06B6D4"
+      }
+    ]
+  },
+  {
+    "id": "drv-03",
+    "code": "DRV-03",
+    "name": "Data Engineering & Analytics",
+    "description": "Pipelines de ingesta analítica y bodegas de datos compartidas",
+    "accounts": [
+      {
+        "id": "acc-snow-01",
+        "name": "Snowflake - Corporate Analytics DWH",
+        "brand": "Snowflake",
+        "provider": "Snowflake",
+        "color": "#29B5E8"
+      },
+      {
+        "id": "acc-azure-02",
+        "name": "Azure - Enterprise Data Warehouse",
+        "brand": "Azure",
+        "provider": "Azure",
+        "color": "#0089D6"
+      },
+      {
+        "id": "acc-gcp-01",
+        "name": "GCP - BigQuery Analytics Platform",
+        "brand": "GoogleStorage",
+        "provider": "GCP",
+        "color": "#4285F4"
+      }
+    ],
+    "entities": [
+      {
+        "id": "ent-03-1",
+        "name": "Business Intelligence",
+        "percentage": 45,
+        "color": "#EC4899"
+      },
+      {
+        "id": "ent-03-2",
+        "name": "Finanzas & Reporting",
+        "percentage": 30,
+        "color": "#3B82F6"
+      },
+      {
+        "id": "ent-03-3",
+        "name": "Auditoría & Compliance",
+        "percentage": 25,
+        "color": "#10B981"
+      }
+    ]
+  },
+  {
+    "id": "drv-04",
+    "code": "DRV-04",
+    "name": "Marketing & Growth Experiments",
+    "description": "Servicios de experimentación, marketing digital y analítica de usuarios",
+    "accounts": [
+      {
+        "id": "acc-gcp-02",
+        "name": "GCP - Marketing & Growth Experiments",
+        "brand": "GoogleStorage",
+        "provider": "GCP",
+        "color": "#4285F4"
+      },
+      {
+        "id": "acc-aws-06",
+        "name": "AWS - E-Commerce & Checkout Portal",
+        "brand": "AWS",
+        "provider": "AWS",
+        "color": "#FF9900"
+      },
+      {
+        "id": "acc-snow-03",
+        "name": "Snowflake - Customer 360 Insights",
+        "brand": "Snowflake",
+        "provider": "Snowflake",
+        "color": "#29B5E8"
+      }
+    ],
+    "entities": [
+      {
+        "id": "ent-04-1",
+        "name": "Growth Hacking",
+        "percentage": 40,
+        "color": "#F97316"
+      },
+      {
+        "id": "ent-04-2",
+        "name": "Performance Marketing",
+        "percentage": 35,
+        "color": "#EF4444"
+      },
+      {
+        "id": "ent-04-3",
+        "name": "CRM & Retention",
+        "percentage": 25,
+        "color": "#8B5CF6"
+      }
+    ]
+  },
+  {
+    "id": "drv-05",
+    "code": "DRV-05",
+    "name": "Seguridad y Redes Corporativas",
+    "description": "Gateways, VPNs, Active Directory e inspección de tráfico cloud",
+    "accounts": [
+      {
+        "id": "acc-azure-04",
+        "name": "Azure - Active Directory & Security",
+        "brand": "Azure",
+        "provider": "Azure",
+        "color": "#0089D6"
+      },
+      {
+        "id": "acc-aws-09",
+        "name": "AWS - Corporate IT & Backup",
+        "brand": "AWS",
+        "provider": "AWS",
+        "color": "#FF9900"
+      }
+    ],
+    "entities": [
+      {
+        "id": "ent-05-1",
+        "name": "Ciberseguridad",
+        "percentage": 50,
+        "color": "#DC2626"
+      },
+      {
+        "id": "ent-05-2",
+        "name": "Soporte Infraestructura",
+        "percentage": 50,
+        "color": "#2563EB"
+      }
+    ]
+  }
+]
