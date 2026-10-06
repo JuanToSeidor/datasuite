@@ -1,11 +1,16 @@
-"use client";
-
-import React, { use } from "react";
+import React from "react";
 import Link from "next/link";
 import { Button } from "caralstable";
+import { suiteConfig } from "@/config/suite";
 
-export default function BranchPage({ params }: { params: Promise<{ branch: string }> }) {
-  const { branch } = use(params);
+export function generateStaticParams() {
+  return suiteConfig.branches.map((branch) => ({
+    branch: branch.id,
+  }));
+}
+
+export default async function BranchPage({ params }: { params: Promise<{ branch: string }> }) {
+  const { branch } = await params;
 
   return (
     <div className="flex-1 p-8 flex flex-col items-center justify-center bg-container border border-neutral-300 rounded-[20px] shadow-sm m-4">
@@ -27,3 +32,4 @@ export default function BranchPage({ params }: { params: Promise<{ branch: strin
     </div>
   );
 }
+
