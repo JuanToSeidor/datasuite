@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "audit:caral": "node scripts/audit-caral-adoption.mjs"
+    "audit:caral": "node scripts/audit-caral-adoption.mjs",
+    "check:i18n": "node scripts/check-i18n.mjs"
   },
   "dependencies": {
     "caralstable": "^1.4.0",

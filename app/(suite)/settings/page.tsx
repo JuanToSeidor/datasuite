@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense } from "react";
+import React, { Suspense, useMemo } from "react";
 import { Button, Tabs } from "caralstable";
 import { GeneralTab } from "./tabs/general";
 import { UsersTab } from "./tabs/users";
@@ -9,25 +9,29 @@ import { WorkspacesTab } from "./tabs/workspaces";
 import { PlatformSecurityTab } from "./tabs/security";
 import { LicenseTab } from "./tabs/license";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-export const SETTINGS_TABS = [
-  { id: "general", label: "General", description: "Parallel extraction engine, SMTP delivery, and regional preferences" },
-  { id: "users", label: "Users", description: "Manage organization users, invitations, and permissions" },
-  { id: "roles", label: "Roles", description: "Configure access control policies and role assignments" },
-  { id: "workspaces", label: "Workspaces", description: "Configure global workspaces, environments, and quotas" },
-  { id: "security", label: "Security", description: "Configure enterprise Single Sign-On (SSO) and identity providers" },
-  { id: "license", label: "License", description: "View license details, seats, and enterprise plan status" },
-];
+export const SETTINGS_TAB_IDS = ["general", "users", "roles", "workspaces", "security", "license"];
 
 function SettingsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { dict } = useLanguage();
   const currentTabId = searchParams.get("tab") || "general";
+
+  const tabs = useMemo(() => [
+    { id: "general", label: dict.settings.tabGeneral, description: "Parallel extraction engine, SMTP delivery, and regional preferences" },
+    { id: "users", label: dict.settings.tabUsers, description: "Manage organization users, invitations, and permissions" },
+    { id: "roles", label: dict.settings.tabRoles, description: "Configure access control policies and role assignments" },
+    { id: "workspaces", label: dict.settings.tabWorkspaces, description: "Configure global workspaces, environments, and quotas" },
+    { id: "security", label: dict.settings.tabSecurity, description: "Configure enterprise Single Sign-On (SSO) and identity providers" },
+    { id: "license", label: dict.settings.tabLicense, description: "View license details, seats, and enterprise plan status" },
+  ], [dict]);
 
   // Encontrar el índice de la pestaña activa a partir de la URL (soporta compatibilidad previa)
   const activeTabIndex = Math.max(
     0,
-    SETTINGS_TABS.findIndex((tab) =>
+    tabs.findIndex((tab) =>
       tab.id === currentTabId ||
       (currentTabId === "settings" && tab.id === "general") ||
       (currentTabId === "sso" && tab.id === "security")
@@ -35,7 +39,7 @@ function SettingsContent() {
   );
 
   const handleTabChange = (index: number) => {
-    const selectedTab = SETTINGS_TABS[index];
+    const selectedTab = tabs[index];
     if (selectedTab) {
       router.push(`/settings?tab=${selectedTab.id}`, { scroll: false });
     }
@@ -56,7 +60,7 @@ function SettingsContent() {
           <Tabs
             activeIndex={activeTabIndex}
             onChange={handleTabChange}
-            tabs={SETTINGS_TABS}
+            tabs={tabs}
           />
 
           {/* Right side actions */}
@@ -67,7 +71,7 @@ function SettingsContent() {
               variant="ghost"
               hasBorder
               className="border-neutral-400 text-neutral-800 hover:text-neutral-900"
-              title="Search settings"
+              title={dict.settings.searchSettings}
             />
           </div>
         </div>
@@ -107,8 +111,9 @@ function SettingsContent() {
 }
 
 export default function SettingsPage() {
+  const { dict } = useLanguage();
   return (
-    <Suspense fallback={<div className="p-8 text-neutral-800 font-poppins">Loading platform settings...</div>}>
+    <Suspense fallback={<div className="p-8 text-neutral-800 font-poppins">{dict.settings.loadingSettings}</div>}>
       <SettingsContent />
     </Suspense>
   );

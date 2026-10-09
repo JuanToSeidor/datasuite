@@ -5,6 +5,7 @@ import { Button, Chip } from "caralstable";
 import { CaralIcon } from "@/components/icons";
 import { useTheme } from "@/contexts/ThemeContext";
 import { Select, SelectOption } from "@/components/ui";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const INDEX_PAGE_OPTIONS: SelectOption[] = [
   { value: "/", label: "Suite Overview (Home)" },
@@ -15,6 +16,7 @@ const INDEX_PAGE_OPTIONS: SelectOption[] = [
 ];
 
 export function PreferencesTab() {
+  const { dict } = useLanguage();
   const { isDark, toggleDark, theme, setTheme } = useTheme();
   const [indexPage, setIndexPage] = useState("/");
   const [savedSuccess, setSavedSuccess] = useState(false);

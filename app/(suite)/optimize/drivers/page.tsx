@@ -9,10 +9,12 @@ import { DriversTable } from '@/components/optimize/drivers/DriversTable';
 import { NewDriverDrawer } from '@/components/optimize/drivers/NewDriverDrawer';
 
 import driversRawData from '@/data/drivers.json';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const INITIAL_DRIVERS: DriverItem[] = driversRawData as DriverItem[];
 
 export default function OptimizeDriversPage() {
+  const { dict } = useLanguage();
   const [drivers, setDrivers] = useState<DriverItem[]>(INITIAL_DRIVERS);
   const [searchQuery, setSearchQuery] = useState("");
   const [isNewDrawerOpen, setIsNewDrawerOpen] = useState(false);

@@ -5,6 +5,7 @@ import { Button, Drawer, Tabs } from 'caralstable';
 import { Brand, CaralBrandName, CaralIcon } from '@/components/icons';
 import { AllocationMultiSlider } from './AllocationMultiSlider';
 import accountsRawData from '@/data/accounts.json';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export interface DriverAccount {
   id: string;
@@ -67,6 +68,7 @@ export function DriverAllocationRow({
   onClose,
   onSave,
 }: DriverAllocationRowProps) {
+  const { dict } = useLanguage();
   // Normalize initial accounts and entities (handling legacy data if any)
   const initialAccounts: DriverAccount[] = useMemo(() => {
     if (driver.accounts && driver.accounts.length > 0) return driver.accounts;

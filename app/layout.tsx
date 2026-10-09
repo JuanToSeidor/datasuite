@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "caralstable/style.css";
 import "./globals.css";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +33,9 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-[var(--color-neutral-full)] text-neutral-900 font-poppins">
         <ThemeProvider>
-          {children}
+          <LanguageProvider>
+            {children}
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

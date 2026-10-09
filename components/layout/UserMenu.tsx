@@ -3,6 +3,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { CaralIcon } from '@/components/icons';
 import { useTheme, ThemeMode } from '@/contexts/ThemeContext';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { Language } from '@/locales';
 import Link from 'next/link';
 import { Button, Tabs, Chip } from 'caralstable';
 
@@ -24,8 +26,10 @@ export function UserMenu({
   initials = "JD"
 }: UserMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const { theme, setTheme } = useTheme();
+  const { language, setLanguage, dict, languages, currentLanguageOption } = useLanguage();
 
   const activeThemeTab = theme === 'light' ? 0 : theme === 'dark' ? 1 : 2;
 
@@ -41,6 +45,7 @@ export function UserMenu({
     function handleClickOutside(event: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsOpen(false);
+        setIsLangMenuOpen(false);
       }
     }
     if (isOpen) {
@@ -56,6 +61,7 @@ export function UserMenu({
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape') {
         setIsOpen(false);
+        setIsLangMenuOpen(false);
       }
     }
     if (isOpen) {
@@ -127,7 +133,7 @@ export function UserMenu({
                 iconName="user"
                 className="w-full !justify-start gap-3 px-2 text-neutral-900 font-medium text-sm"
               >
-                Perfil
+                {dict.userMenu.profile}
               </Button>
             </Link>
 
@@ -142,7 +148,7 @@ export function UserMenu({
                 iconName="building"
                 className="w-full !justify-start gap-3 px-2 text-neutral-900 font-medium text-sm"
               >
-                Dashboard
+                {dict.userMenu.dashboard}
               </Button>
             </Link>
 
@@ -157,27 +163,65 @@ export function UserMenu({
                 iconName="gear"
                 className="w-full !justify-start gap-3 px-2 text-neutral-900 font-medium text-sm"
               >
-                Configuración
+                {dict.userMenu.settings}
               </Button>
             </Link>
 
-            {/* Español */}
-            <Button
-              variant="ghost"
-              iconName="globe"
-              className="w-full px-2 text-neutral-900 font-medium text-sm"
-            >
-              <span className='w-full text-start'>Español</span>
-              <CaralIcon name="chevronRigth" size={16} />
-            </Button>
+            {/* Language item with toggleable submenu */}
+            <div className="relative">
+              <Button
+                variant="ghost"
+                iconName="globe"
+                onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
+                className="w-full px-2 text-neutral-900 font-medium text-sm"
+              >
+                <span className='w-full text-start flex items-center gap-1.5'>
+                  <span>{currentLanguageOption.flag}</span>
+                  <span>{currentLanguageOption.label}</span>
+                </span>
+                <span className={`inline-flex transition-transform duration-150 ${isLangMenuOpen ? "rotate-90" : ""}`}>
+                  <CaralIcon name="chevronRigth" size={16} />
+                </span>
+              </Button>
+
+              {isLangMenuOpen && (
+                <div className="mt-1 mb-1 ml-4 pl-2 border-l border-neutral-300 dark:border-neutral-700 flex flex-col gap-1">
+                  {languages.map((item) => (
+                    <button
+                      key={item.code}
+                      type="button"
+                      onClick={() => {
+                        setLanguage(item.code);
+                        setIsLangMenuOpen(false);
+                      }}
+                      className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-md text-xs transition-colors cursor-pointer text-left ${
+                        item.code === language
+                          ? "bg-info-light/20 text-info-main font-semibold"
+                          : "text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 font-medium"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <span>{item.flag}</span>
+                        <span>{item.label}</span>
+                      </div>
+                      {item.code === language && (
+                        <span className="text-info-main">
+                          <CaralIcon name="check" size={14} />
+                        </span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
 
             {/* Versión 2.0.0 */}
             <div className="flex items-center justify-between px-2 py-1.5 w-full text-neutral-900 text-sm font-medium">
               <div className="flex items-center gap-3">
                 <CaralIcon name="command" size={20} />
-                <span>Versión 2.0.0</span>
+                <span>{dict.userMenu.version} 2.0.0</span>
               </div>
-              <Chip label="Novedades" variant="info" />
+              <Chip label={dict.userMenu.news} variant="info" />
             </div>
           </div>
 
@@ -194,7 +238,7 @@ export function UserMenu({
               iconName="arrowLeft"
               className="w-full !justify-start gap-3 px-2 text-neutral-900 font-medium text-sm"
             >
-              Cerrar Sesión
+              {dict.userMenu.logout}
             </Button>
           </Link>
         </div>

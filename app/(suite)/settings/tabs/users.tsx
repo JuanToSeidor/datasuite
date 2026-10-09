@@ -4,6 +4,7 @@ import React, { useState, useMemo } from "react";
 import { Button, Drawer } from "caralstable";
 import { CaralIcon, Brand } from "@/components/icons";
 import { Input, Select, SelectOption, DataTable, DataTableColumn } from "@/components/ui";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export type LoginMethod = "microsoft" | "email";
 
@@ -66,145 +67,12 @@ const AVATAR_COLORS = [
   "#6366f1", // Indigo
 ];
 
-const INITIAL_USERS: UserItem[] = [
-  {
-    id: "1",
-    name: "Juan David Torres",
-    email: "jdtorres@seidoranalytics.com",
-    department: "Cloud FinOps",
-    loginMethod: "microsoft",
-    role: "SuperAdmin",
-    avatarColor: "#3b82f6",
-  },
-  {
-    id: "2",
-    name: "Ana Martínez",
-    email: "amartinez@seidoranalytics.com",
-    department: "Cloud FinOps",
-    loginMethod: "microsoft",
-    role: "Admin",
-    avatarColor: "#10b981",
-  },
-  {
-    id: "3",
-    name: "Carlos Gómez",
-    email: "cgomez@seidoranalytics.com",
-    department: "Data & AI",
-    loginMethod: "email",
-    role: "Data Engineer",
-    avatarColor: "#f59e0b",
-  },
-  {
-    id: "4",
-    name: "Lucía Fernández",
-    email: "lfernandez@seidoranalytics.com",
-    department: "Finance",
-    loginMethod: "microsoft",
-    role: "Billing Manager",
-    avatarColor: "#8b5cf6",
-  },
-  {
-    id: "5",
-    name: "Martín Silva",
-    email: "msilva@seidoranalytics.com",
-    department: "Infrastructure",
-    loginMethod: "microsoft",
-    role: "DevOps Lead",
-    avatarColor: "#ec4899",
-  },
-  {
-    id: "6",
-    name: "Valentina Rojas",
-    email: "vrojas@seidoranalytics.com",
-    department: "Analytics",
-    loginMethod: "email",
-    role: "Senior Analyst",
-    avatarColor: "#06b6d4",
-  },
-  {
-    id: "7",
-    name: "Diego Álvarez",
-    email: "dalvarez@seidoranalytics.com",
-    department: "Data Engineering",
-    loginMethod: "microsoft",
-    role: "Data Architect",
-    avatarColor: "#f97316",
-  },
-  {
-    id: "8",
-    name: "Sofía Benítez",
-    email: "sbenitez@seidoranalytics.com",
-    department: "Operations",
-    loginMethod: "email",
-    role: "Editor",
-    avatarColor: "#6366f1",
-  },
-  {
-    id: "9",
-    name: "Javier Castro",
-    email: "jcastro@seidoranalytics.com",
-    department: "Security & Compliance",
-    loginMethod: "microsoft",
-    role: "Security Auditor",
-    avatarColor: "#3b82f6",
-  },
-  {
-    id: "10",
-    name: "Camila Herrera",
-    email: "cherrera@seidoranalytics.com",
-    department: "Management",
-    loginMethod: "email",
-    role: "Viewer",
-    avatarColor: "#10b981",
-  },
-  {
-    id: "11",
-    name: "Mateo López",
-    email: "mlopez@seidoranalytics.com",
-    department: "Cloud FinOps",
-    loginMethod: "microsoft",
-    role: "Data Architect",
-    avatarColor: "#f59e0b",
-  },
-  {
-    id: "12",
-    name: "Elena Navarro",
-    email: "enavarro@seidoranalytics.com",
-    department: "Cloud FinOps",
-    loginMethod: "microsoft",
-    role: "Cost Optimizer",
-    avatarColor: "#8b5cf6",
-  },
-  {
-    id: "13",
-    name: "Pablo Domínguez",
-    email: "pdominguez@seidoranalytics.com",
-    department: "BI Solutions",
-    loginMethod: "email",
-    role: "BI Consultant",
-    avatarColor: "#ec4899",
-  },
-  {
-    id: "14",
-    name: "Agustina Morales",
-    email: "amorales@seidoranalytics.com",
-    department: "Platform Ops",
-    loginMethod: "microsoft",
-    role: "Site Reliability Engineer",
-    avatarColor: "#06b6d4",
-  },
-  {
-    id: "15",
-    name: "Federico Vargas",
-    email: "fvargas@seidoranalytics.com",
-    department: "Enterprise Sales",
-    loginMethod: "email",
-    role: "Account Executive",
-    avatarColor: "#f97316",
-  },
-];
+import usersData from "@/data/users.json";
+
+const INITIAL_USERS: UserItem[] = usersData as UserItem[];
 
 export function UsersTab() {
+  const { dict } = useLanguage();
   const [users, setUsers] = useState<UserItem[]>(INITIAL_USERS);
 
   // Invite User Drawer state
@@ -300,8 +168,8 @@ export function UsersTab() {
       {
         id: "name",
         accessorKey: "name",
-        header: "Usuario",
-        filterLabel: "Usuario",
+        header: dict.users.colUser,
+        filterLabel: dict.users.colUser,
         filterType: "text",
         width: 250,
         minWidth: 180,
@@ -329,7 +197,7 @@ export function UsersTab() {
         },
         footer: ({ filteredData }) => (
           <span className="font-bold text-neutral-900">
-            Total: {filteredData.length} usuarios
+            {dict.common.total}: {filteredData.length} {dict.common.records}
           </span>
         ),
       },
@@ -338,8 +206,8 @@ export function UsersTab() {
       {
         id: "email",
         accessorKey: "email",
-        header: "Mail",
-        filterLabel: "Mail",
+        header: dict.users.colEmail,
+        filterLabel: dict.users.colEmail,
         filterType: "text",
         width: 280,
         minWidth: 200,
@@ -359,8 +227,8 @@ export function UsersTab() {
       {
         id: "department",
         accessorKey: "department",
-        header: "Departamento",
-        filterLabel: "Departamento",
+        header: dict.users.colDepartment,
+        filterLabel: dict.users.colDepartment,
         filterType: "select",
         filterSelectOptions: departmentOptions,
         width: 190,
@@ -376,8 +244,8 @@ export function UsersTab() {
       {
         id: "loginMethod",
         accessorKey: "loginMethod",
-        header: "Método de Login",
-        filterLabel: "Método de Login",
+        header: dict.users.colLoginMethod,
+        filterLabel: dict.users.colLoginMethod,
         filterType: "select",
         filterSelectOptions: [
           { label: "Microsoft", value: "microsoft" },
@@ -417,8 +285,8 @@ export function UsersTab() {
       {
         id: "role",
         accessorKey: "role",
-        header: "Rol",
-        filterLabel: "Rol",
+        header: dict.users.colRole,
+        filterLabel: dict.users.colRole,
         filterType: "select",
         filterSelectOptions: roleOptions,
         width: 170,
@@ -456,7 +324,7 @@ export function UsersTab() {
       // 6. Acciones Column (Solo Editar)
       {
         id: "actions",
-        header: "Acciones",
+        header: dict.users.colActions,
         filterType: "none",
         align: "center",
         width: 80,
@@ -471,20 +339,20 @@ export function UsersTab() {
               iconName="edit"
               onClick={() => openEditDrawer(row)}
               className="text-neutral-800 hover:text-info-main cursor-pointer"
-              title="Editar usuario"
+              title={dict.users.editUser}
             />
           </div>
         ),
       },
     ];
-  }, [departmentOptions, roleOptions]);
+  }, [departmentOptions, roleOptions, dict]);
 
   return (
     <div className="w-full flex flex-col gap-4 text-left font-poppins">
       {/* Agnostic DataTable with custom user columns configuration */}
       <DataTable<UserItem>
-        title="Gestión de Usuarios"
-        description="Administra los usuarios de la plataforma, sus correos, departamentos, métodos de autenticación y roles de acceso."
+        title={dict.users.title}
+        description={dict.users.description}
 
         toolbarRight={
           <Button
@@ -492,26 +360,20 @@ export function UsersTab() {
             iconName="plus"
             onClick={() => setIsInviteDrawerOpen(true)}
           >
-            Invite user
+            {dict.users.addUser}
           </Button>
         }
         data={users}
         columns={userColumns}
         keyExtractor={(row) => row.id}
         canSearch={true}
-        searchPlaceholder="Buscar por usuario, email, departamento o rol..."
+        searchPlaceholder={dict.users.searchPlaceholder}
         canFilterColumns={true}
         canFilterErrors={false}
         canExport={true}
         exportFileName="usuarios_plataforma"
         canExpand={true}
         canReadjust={true}
-        labels={{
-          itemPlural: "usuarios",
-          emptyMessage: "No se encontraron usuarios para los filtros seleccionados.",
-          filterDrawerTitle: "Filtros de Usuarios",
-          filterDrawerDescription: "Selecciona una columna y una condición para filtrar la lista de usuarios.",
-        }}
       />
 
       {/* ========================================================= */}

@@ -7,25 +7,27 @@ import { PreferencesTab } from "./tabs/preferences";
 import { ProfileSecurityTab } from "./tabs/security";
 import { IntegrationsTab } from "./tabs/integrations";
 import { useRouter, useSearchParams } from "next/navigation";
-
-export const PROFILE_TABS = [
-  { id: "preferences", label: "Preferences", description: "Appearance, display theme, and default index landing route" },
-  { id: "security", label: "Security", description: "Password, credentials, and active browser sessions" },
-  { id: "integrations", label: "Integrations", description: "Two-step verification (TOTP) and Personal Access Tokens (PAT)" },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 function ProfileContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { dict } = useLanguage();
   const currentTabId = searchParams.get("tab") || "preferences";
+
+  const profileTabs = [
+    { id: "preferences", label: dict.profile.tabPreferences, description: "Appearance, display theme, and default index landing route" },
+    { id: "security", label: dict.profile.tabSecurity, description: "Password, credentials, and active browser sessions" },
+    { id: "integrations", label: dict.profile.tabIntegrations, description: "Two-step verification (TOTP) and Personal Access Tokens (PAT)" },
+  ];
 
   const activeTabIndex = Math.max(
     0,
-    PROFILE_TABS.findIndex((tab) => tab.id === currentTabId)
+    profileTabs.findIndex((tab) => tab.id === currentTabId)
   );
 
   const handleTabChange = (index: number) => {
-    const selectedTab = PROFILE_TABS[index];
+    const selectedTab = profileTabs[index];
     if (selectedTab) {
       router.push(`/profile?tab=${selectedTab.id}`, { scroll: false });
     }
@@ -46,8 +48,8 @@ function ProfileContent() {
               <h1 className="text-xl font-bold text-neutral-900 tracking-tight">
                 Juan David Torres
               </h1>
-              <Chip variant="info" label="Platform Admin" hasBorder />
-              <Chip variant="success" label="Active" hasBorder status="success" />
+              <Chip variant="info" label={dict.profile.platformAdmin} hasBorder />
+              <Chip variant="success" label={dict.profile.activeStatus} hasBorder status="success" />
             </div>
             <p className="text-xs text-neutral-800">
               jdtorres@seidoranalytics.com • Organization: <span className="font-semibold text-neutral-900">Seidor Analytics</span>
@@ -64,7 +66,7 @@ function ProfileContent() {
             className="border-neutral-400 text-neutral-800 hover:text-neutral-900"
             onClick={() => router.push("/settings")}
           >
-            Platform Settings
+            {dict.settings.title}
           </Button>
         </div>
       </div>
@@ -78,7 +80,7 @@ function ProfileContent() {
           <Tabs
             activeIndex={activeTabIndex}
             onChange={handleTabChange}
-            tabs={PROFILE_TABS}
+            tabs={profileTabs}
           />
 
           {/* Right side search action */}

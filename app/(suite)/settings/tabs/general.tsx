@@ -6,6 +6,8 @@ import { CaralIcon } from "@/components/icons";
 import { Input, Select, SelectOption } from "@/components/ui";
 import { useRouter } from "next/navigation";
 
+import { useLanguage } from "@/contexts/LanguageContext";
+
 interface GeneralTabProps {
   onNavigateTab?: (tabId: string) => void;
 }
@@ -33,6 +35,7 @@ const DATE_FORMAT_OPTIONS: SelectOption[] = [
 
 export function GeneralTab({ onNavigateTab }: GeneralTabProps = {}) {
   const router = useRouter();
+  const { dict } = useLanguage();
 
   // Parallel Extraction States
   const [isFallbackActive, setIsFallbackActive] = useState(true);

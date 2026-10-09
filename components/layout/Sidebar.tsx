@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { suiteConfig, SidebarSection } from '@/config/suite';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export function Sidebar({
   className,
@@ -21,6 +22,7 @@ export function Sidebar({
   setIsWorkspacesView?: (val: boolean) => void;
 }) {
   const { isDark: isDarkMode, toggleDark: toggleTheme } = useTheme();
+  const { dict, t } = useLanguage();
   const [isGearMenuOpen, setIsGearMenuOpen] = useState(false);
   const pathname = usePathname();
 
@@ -31,6 +33,33 @@ export function Sidebar({
       pathname === `/${b.id}` ||
       pathname.startsWith(`/${b.id}/`)
   );
+
+  // Helper to translate default sidebar labels dynamically
+  const getSectionTitle = (title?: string) => {
+    if (!title) return "";
+    if (title.toLowerCase() === "explore") return dict.sidebar.explore;
+    if (title.toLowerCase() === "manage") return dict.sidebar.manage;
+    return title;
+  };
+
+  const getItemLabel = (label: string) => {
+    switch (label.toLowerCase()) {
+      case "home":
+        return dict.sidebar.home;
+      case "connections":
+        return dict.sidebar.connections;
+      case "monitor":
+        return dict.sidebar.monitor;
+      case "dashboard":
+        return dict.sidebar.dashboard;
+      case "docs":
+        return dict.sidebar.docs;
+      case "settings":
+        return dict.sidebar.settings;
+      default:
+        return label;
+    }
+  };
 
   // Seleccionar las secciones correspondientes: las del hijo activo o las globales por defecto
   const sectionsToRender: SidebarSection[] =
@@ -56,13 +85,13 @@ export function Sidebar({
                 variant="ghost"
                 className="pointer-events-none text-neutral-800!"
               />
-              {isExpanded && <span className="text-neutral-800 text-sm font-medium">Volver</span>}
+              {isExpanded && <span className="text-neutral-800 text-sm font-medium">{dict.common.back}</span>}
             </div>
 
             <div className="flex flex-col w-full mb-6">
               {isExpanded && (
                 <p className="text-xs font-semibold text-neutral-800 mb-3 px-1">
-                  Default Workspace
+                  {dict.sidebar.defaultWorkspace}
                 </p>
               )}
               <WorkspaceCard
@@ -76,7 +105,7 @@ export function Sidebar({
             <div className="flex flex-col w-full">
               {isExpanded && (
                 <p className="text-xs font-semibold text-neutral-800 mb-3 px-1">
-                  All workspaces
+                  {dict.sidebar.workspaces}
                 </p>
               )}
 
@@ -113,7 +142,7 @@ export function Sidebar({
             >
               <div className="flex items-center justify-center text-neutral-800">
                 <span className="text-xl leading-none mr-2">+</span>
-                {isExpanded && <span className="font-semibold text-sm">Add workspaces</span>}
+                {isExpanded && <span className="font-semibold text-sm">{dict.common.add} {dict.sidebar.workspaces.toLowerCase()}</span>}
               </div>
             </div>
           </div>
@@ -155,7 +184,7 @@ export function Sidebar({
                     className={`text-xs font-semibold text-neutral-800 px-2 transition-all ${!isExpanded ? 'opacity-0 h-0 overflow-hidden m-0' : 'opacity-100 mb-1'
                       }`}
                   >
-                    {section.sectionTitle}
+                    {getSectionTitle(section.sectionTitle)}
                   </p>
                 )}
 
@@ -172,6 +201,7 @@ export function Sidebar({
                       )
                     );
                   const isActive = isExact || (isSubRoute && !hasMoreSpecificMatch);
+                  const label = getItemLabel(item.label);
 
                   if (item.external) {
                     return (
@@ -188,7 +218,7 @@ export function Sidebar({
                           variant="ghost"
                           className={isExpanded ? "w-full !justify-start gap-3 px-4" : "w-full"}
                         >
-                          {isExpanded && item.label}
+                          {isExpanded && label}
                         </Button>
                       </a>
                     );
@@ -216,7 +246,7 @@ export function Sidebar({
                               : ''
                         }
                       >
-                        {isExpanded && item.label}
+                        {isExpanded && label}
                       </Button>
                     </Link>
                   );

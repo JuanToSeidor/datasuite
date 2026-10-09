@@ -1,0 +1,312 @@
+[
+  {
+    "id": "sap-hana",
+    "name": "SAP HANA",
+    "category": "SQL",
+    "type": "In-Memory DB",
+    "description": "SAP's implementation of in-memory database technology.",
+    "brandName": "SAP",
+    "defaultPort": 30015,
+    "pillColor": "info"
+  },
+  {
+    "id": "oracle",
+    "name": "Oracle Database",
+    "category": "SQL",
+    "type": "SQL Database",
+    "description": "A multi-model database management system produced by Oracle Corporation.",
+    "brandName": "Oracle",
+    "defaultPort": 1521,
+    "pillColor": "warning"
+  },
+  {
+    "id": "mssql",
+    "name": "Microsoft SQL Server",
+    "category": "SQL",
+    "type": "SQL Database",
+    "description": "A relational database management system developed by Microsoft.",
+    "brandName": "MSSQL",
+    "defaultPort": 1433,
+    "pillColor": "warning"
+  },
+  {
+    "id": "postgresql",
+    "name": "PostgreSQL",
+    "category": "SQL",
+    "type": "SQL Database",
+    "description": "An open-source relational database known for its robustness and features.",
+    "brandName": "PostgreSQL",
+    "defaultPort": 5432,
+    "pillColor": "warning"
+  },
+  {
+    "id": "redshift",
+    "name": "AMAZON redshift",
+    "category": "Data Warehouse",
+    "type": "Data Warehouse",
+    "description": "A document-oriented NoSQL database that leverages flexible JSON-like structures, allowing for dynamic schemas.",
+    "brandName": "AmazonRedshift",
+    "defaultPort": 5439,
+    "pillColor": "success"
+  },
+  {
+    "id": "ibm-db2",
+    "name": "IBM Db2",
+    "category": "SQL",
+    "type": "SQL Database",
+    "description": "A family of data management products, including database servers, developed by IBM.",
+    "brandName": "IBMDb2",
+    "defaultPort": 50000,
+    "pillColor": "light"
+  },
+  {
+    "id": "cloudera",
+    "name": "Cloudera",
+    "category": "Big Data",
+    "type": "Data Platform",
+    "description": "An elastic NoSQL database engineered to efficiently manage vast datasets distributed across multiple nodes.",
+    "brandName": "Cloudera",
+    "defaultPort": 2181,
+    "pillColor": "danger"
+  },
+  {
+    "id": "fabric",
+    "name": "Fabric",
+    "category": "Big Data",
+    "type": "Data Platform",
+    "description": "An open-source relational database that is a fork of MySQL, developed for high performance.",
+    "brandName": "Fabric",
+    "defaultPort": 443,
+    "pillColor": "sakura"
+  },
+  {
+    "id": "onelake",
+    "name": "One Lake",
+    "category": "Cloud Storage",
+    "type": "Data Lake",
+    "description": "A high-performance open-source relational database derived from MySQL, optimized for speed and scalability.",
+    "brandName": "OneLake",
+    "defaultPort": 443,
+    "pillColor": "indido"
+  },
+  {
+    "id": "aws",
+    "name": "AWS Platform",
+    "category": "Cloud Storage",
+    "type": "Cloud Infrastructure",
+    "description": "Amazon Web Services global cloud infrastructure and resource management.",
+    "brandName": "AWS",
+    "defaultPort": 443,
+    "pillColor": "info"
+  },
+  {
+    "id": "azure-sql",
+    "name": "Azure SQL",
+    "category": "SQL",
+    "type": "SQL Database",
+    "description": "Microsoft Azure SQL Database cloud-based relational database service.",
+    "brandName": "AzureSql",
+    "defaultPort": 1433,
+    "pillColor": "warning"
+  },
+  {
+    "id": "google-storage",
+    "name": "Google Storage",
+    "category": "Cloud Storage",
+    "type": "Object Storage",
+    "description": "Google Cloud Storage unified object storage for developers and enterprises.",
+    "brandName": "GoogleStorage",
+    "defaultPort": 443,
+    "pillColor": "info"
+  },
+  {
+    "id": "sap",
+    "name": "SAP ERP",
+    "category": "SQL",
+    "type": "Enterprise ERP",
+    "description": "SAP application systems data connection server.",
+    "brandName": "SAP",
+    "defaultPort": 30015,
+    "pillColor": "info"
+  },
+  {
+    "id": "salesforce",
+    "name": "Salesforce CRM",
+    "category": "Cloud Storage",
+    "type": "CRM Data",
+    "description": "Salesforce cloud business CRM data service integration.",
+    "brandName": "Saleforce",
+    "defaultPort": 443,
+    "pillColor": "success"
+  },
+  {
+    "id": "snowflake",
+    "name": "Snowflake DW",
+    "category": "Data Warehouse",
+    "type": "SaaS Warehouse",
+    "description": "Cloud-based data warehousing platform for analytics and big data.",
+    "brandName": "Snowflake",
+    "defaultPort": 443,
+    "pillColor": "success"
+  },
+  {
+    "id": "teradata",
+    "name": "Teradata",
+    "category": "Data Warehouse",
+    "type": "Relational DB",
+    "description": "Teradata enterprise analytics and data warehousing platform.",
+    "brandName": "Teradata",
+    "defaultPort": 1025,
+    "pillColor": "success"
+  },
+  {
+    "id": "databricks",
+    "name": "Databricks Workspace",
+    "category": "Big Data",
+    "type": "Unified Analytics",
+    "description": "Databricks unified data analytics platform based on Apache Spark.",
+    "brandName": "Databricks",
+    "defaultPort": 443,
+    "pillColor": "danger"
+  },
+  {
+    "id": "odata",
+    "name": "OData Feed",
+    "category": "Files",
+    "type": "Web Protocol",
+    "description": "Open Data Protocol standard for building and consuming RESTful APIs.",
+    "brandName": "OData",
+    "defaultPort": 443,
+    "pillColor": "light"
+  },
+  {
+    "id": "sap-odata",
+    "name": "SAP OData Service",
+    "category": "Files",
+    "type": "ERP API",
+    "description": "SAP Gateway OData services for web applications integration.",
+    "brandName": "SapOdata",
+    "defaultPort": 443,
+    "pillColor": "light"
+  },
+  {
+    "id": "google-bigquery",
+    "name": "Google BigQuery",
+    "category": "Data Warehouse",
+    "type": "Serverless DW",
+    "description": "Google Cloud serverless, highly-scalable cloud data warehouse.",
+    "brandName": "GoogleBigquery",
+    "defaultPort": 443,
+    "pillColor": "success"
+  },
+  {
+    "id": "sap-hanac",
+    "name": "SAP HANA Cloud",
+    "category": "SQL",
+    "type": "Cloud In-Memory",
+    "description": "SAP HANA Cloud multi-model database service in the cloud.",
+    "brandName": "SAPHanaC",
+    "defaultPort": 443,
+    "pillColor": "info"
+  },
+  {
+    "id": "s3",
+    "name": "Amazon S3 Bucket",
+    "category": "Cloud Storage",
+    "type": "Object Storage",
+    "description": "Amazon Simple Storage Service object storage through web service interface.",
+    "brandName": "S3",
+    "defaultPort": 443,
+    "pillColor": "info"
+  },
+  {
+    "id": "mysql",
+    "name": "MySQL Database",
+    "category": "SQL",
+    "type": "SQL Database",
+    "description": "MySQL open-source relational database management system.",
+    "brandName": "mySQL",
+    "defaultPort": 3306,
+    "pillColor": "warning"
+  },
+  {
+    "id": "sybase",
+    "name": "Sybase ASE",
+    "category": "SQL",
+    "type": "SQL Database",
+    "description": "SAP Sybase ASE enterprise relational database server.",
+    "brandName": "Sybase",
+    "defaultPort": 5000,
+    "pillColor": "warning"
+  },
+  {
+    "id": "data-engineering",
+    "name": "Data Pipelines",
+    "category": "Big Data",
+    "type": "Data Workflow",
+    "description": "Data Engineering pipelines and processing connection.",
+    "brandName": "DataEngineering",
+    "defaultPort": 443,
+    "pillColor": "danger"
+  },
+  {
+    "id": "data-activator",
+    "name": "Data Activator",
+    "category": "Big Data",
+    "type": "Automation Hub",
+    "description": "Microsoft Fabric Data Activator for real-time detection and actions.",
+    "brandName": "DataActivator",
+    "defaultPort": 443,
+    "pillColor": "danger"
+  },
+  {
+    "id": "data-factory",
+    "name": "Data Factory",
+    "category": "Big Data",
+    "type": "ETL Pipelines",
+    "description": "Microsoft Azure Data Factory cloud-based data integration service.",
+    "brandName": "DataFactory",
+    "defaultPort": 443,
+    "pillColor": "danger"
+  },
+  {
+    "id": "synapse",
+    "name": "Azure Synapse",
+    "category": "Data Warehouse",
+    "type": "Analytics Service",
+    "description": "Azure Synapse Analytics enterprise analytics service.",
+    "brandName": "Synapse",
+    "defaultPort": 1433,
+    "pillColor": "success"
+  },
+  {
+    "id": "powerbi",
+    "name": "PowerBI Dataset",
+    "category": "Files",
+    "type": "Visualization",
+    "description": "Microsoft Power BI business analytics service connections.",
+    "brandName": "PowerBI",
+    "defaultPort": 443,
+    "pillColor": "light"
+  },
+  {
+    "id": "database",
+    "name": "Generic Database",
+    "category": "SQL",
+    "type": "Relational DB",
+    "description": "Generic relational SQL database connection standard.",
+    "brandName": "Database",
+    "defaultPort": 3306,
+    "pillColor": "warning"
+  },
+  {
+    "id": "sap-iq",
+    "name": "SAP IQ Server",
+    "category": "SQL",
+    "type": "Columnar DB",
+    "description": "SAP IQ columnar-based relational database server for analytics.",
+    "brandName": "IQ",
+    "defaultPort": 2638,
+    "pillColor": "warning"
+  }
+]

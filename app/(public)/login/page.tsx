@@ -6,8 +6,10 @@ import Image from "next/image";
 import { Button } from "caralstable";
 import { CaralIcon, CrestoneLogo } from "@/components/icons";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function LoginPage() {
+  const { dict } = useLanguage();
   const { isDark, toggleDark } = useTheme();
   const [email, setEmail] = useState("jdtorres@seidoranalytics.com");
   const [password, setPassword] = useState("");

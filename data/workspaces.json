@@ -1,0 +1,74 @@
+{
+  "allAvailableUsers": [
+    { "id": "1", "name": "juan", "email": "jdtorres@seidoranalytics.com", "role": "SuperAdmin", "avatarBg": "#0191FF" },
+    { "id": "2", "name": "ana.martinez", "email": "amartinez@seidoranalytics.com", "role": "Admin", "avatarBg": "#8B5CF6" },
+    { "id": "3", "name": "carlos.gomez", "email": "cgomez@seidoranalytics.com", "role": "Data Engineer", "avatarBg": "#F88A00" },
+    { "id": "4", "name": "lucia.fernandez", "email": "lfernandez@seidoranalytics.com", "role": "Billing Manager", "avatarBg": "#10B981" },
+    { "id": "5", "name": "martin.silva", "email": "msilva@seidoranalytics.com", "role": "DevOps Lead", "avatarBg": "#3C096C" },
+    { "id": "6", "name": "valentina.rojas", "email": "vrojas@seidoranalytics.com", "role": "Senior Analyst", "avatarBg": "#FF2E8C" },
+    { "id": "7", "name": "diego.alvarez", "email": "dalvarez@seidoranalytics.com", "role": "Data Architect", "avatarBg": "#07153A" },
+    { "id": "8", "name": "sofia.benitez", "email": "sbenitez@seidoranalytics.com", "role": "Editor", "avatarBg": "#F59E0B" },
+    { "id": "9", "name": "javier.castro", "email": "jcastro@seidoranalytics.com", "role": "Security Auditor", "avatarBg": "#EF4444" }
+  ],
+  "workspaces": [
+    {
+      "id": "default",
+      "name": "Default Workspace",
+      "type": "system",
+      "typeLabel": "Predeterminado",
+      "description": "Espacio de trabajo principal y predeterminado para todos los módulos de la suite.",
+      "iconName": "grid",
+      "color": "#0191FF",
+      "members": [
+        { "id": "1", "name": "juan", "email": "jdtorres@seidoranalytics.com", "role": "SuperAdmin", "avatarBg": "#0191FF" },
+        { "id": "2", "name": "ana.martinez", "email": "amartinez@seidoranalytics.com", "role": "Admin", "avatarBg": "#8B5CF6" },
+        { "id": "3", "name": "carlos.gomez", "email": "cgomez@seidoranalytics.com", "role": "Data Engineer", "avatarBg": "#F88A00" },
+        { "id": "4", "name": "lucia.fernandez", "email": "lfernandez@seidoranalytics.com", "role": "Billing Manager", "avatarBg": "#10B981" },
+        { "id": "5", "name": "martin.silva", "email": "msilva@seidoranalytics.com", "role": "DevOps Lead", "avatarBg": "#3C096C" }
+      ]
+    },
+    {
+      "id": "analytics-ai",
+      "name": "Analytics & AI Core",
+      "type": "custom",
+      "typeLabel": "Personalizado",
+      "description": "Entorno dedicado para modelos predictivos, pipelines de datos y optimización cloud.",
+      "iconName": "robot",
+      "color": "#8B5CF6",
+      "members": [
+        { "id": "1", "name": "juan", "email": "jdtorres@seidoranalytics.com", "role": "SuperAdmin", "avatarBg": "#0191FF" },
+        { "id": "3", "name": "carlos.gomez", "email": "cgomez@seidoranalytics.com", "role": "Data Engineer", "avatarBg": "#F88A00" },
+        { "id": "6", "name": "valentina.rojas", "email": "vrojas@seidoranalytics.com", "role": "Senior Analyst", "avatarBg": "#FF2E8C" },
+        { "id": "7", "name": "diego.alvarez", "email": "dalvarez@seidoranalytics.com", "role": "Data Architect", "avatarBg": "#07153A" }
+      ]
+    },
+    {
+      "id": "finance-ops",
+      "name": "Finance & Operations",
+      "type": "custom",
+      "typeLabel": "Personalizado",
+      "description": "Espacio para reporting financiero, centros de costo y facturación SAP.",
+      "iconName": "chartSimple",
+      "color": "#F88A00",
+      "members": [
+        { "id": "2", "name": "ana.martinez", "email": "amartinez@seidoranalytics.com", "role": "Admin", "avatarBg": "#8B5CF6" },
+        { "id": "4", "name": "lucia.fernandez", "email": "lfernandez@seidoranalytics.com", "role": "Billing Manager", "avatarBg": "#10B981" },
+        { "id": "8", "name": "sofia.benitez", "email": "sbenitez@seidoranalytics.com", "role": "Editor", "avatarBg": "#F59E0B" }
+      ]
+    },
+    {
+      "id": "staging-env",
+      "name": "Staging Environment",
+      "type": "custom",
+      "typeLabel": "Personalizado",
+      "description": "Ambiente de pruebas y validación antes de despliegue a producción.",
+      "iconName": "cloud",
+      "color": "#10B981",
+      "members": [
+        { "id": "1", "name": "juan", "email": "jdtorres@seidoranalytics.com", "role": "SuperAdmin", "avatarBg": "#0191FF" },
+        { "id": "5", "name": "martin.silva", "email": "msilva@seidoranalytics.com", "role": "DevOps Lead", "avatarBg": "#3C096C" },
+        { "id": "9", "name": "javier.castro", "email": "jcastro@seidoranalytics.com", "role": "Security Auditor", "avatarBg": "#EF4444" }
+      ]
+    }
+  ]
+}

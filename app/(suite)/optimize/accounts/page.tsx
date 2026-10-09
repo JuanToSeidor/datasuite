@@ -55,88 +55,26 @@ const DRAWER_TABS = [
   { label: "Exclusivas" },
 ];
 
-const SUITE_CONNECTIONS = [
-  {
-    id: "suite-aws-prod",
-    name: "AWS Production Core",
-    provider: "AWS" as const,
-    brand: "AWS" as const,
-    accountNumber: "9482-1029-4481",
-    type: "AWS IAM Role ARN",
-    status: "Enabled",
-    createdDay: "Abril 2025",
-    color: "#FF9900",
-    baseAmount: 3200,
-    startYear: 2011,
-  },
-  {
-    id: "suite-az-ea",
-    name: "Azure EA Enterprise Main",
-    provider: "Azure" as const,
-    brand: "Azure" as const,
-    accountNumber: "sub-88210-ea-prod",
-    type: "Azure Service Principal",
-    status: "Enabled",
-    createdDay: "Febrero 2025",
-    color: "#0089D6",
-    baseAmount: 4100,
-    startYear: 2011,
-  },
-  {
-    id: "suite-gcp-bq",
-    name: "GCP BigQuery Analytics Export",
-    provider: "GCP" as const,
-    brand: "GoogleStorage" as const,
-    accountNumber: "crestone-gcp-prod-01",
-    type: "Google Service Account",
-    status: "Enabled",
-    createdDay: "Marzo 2025",
-    color: "#4285F4",
-    baseAmount: 2900,
-    startYear: 2014,
-  },
-  {
-    id: "suite-snow-corp",
-    name: "Snowflake DWH Corporate",
-    provider: "Snowflake" as const,
-    brand: "Snowflake" as const,
-    accountNumber: "xy82710.east-us-2",
-    type: "Snowflake Key-Pair Auth",
-    status: "Enabled",
-    createdDay: "Enero 2025",
-    color: "#29B5E8",
-    baseAmount: 3600,
-    startYear: 2015,
-  },
-  {
-    id: "suite-aws-dev",
-    name: "AWS Dev & Staging Cluster",
-    provider: "AWS" as const,
-    brand: "AWS" as const,
-    accountNumber: "3321-7788-0012",
-    type: "AWS Access Keys",
-    status: "Enabled",
-    createdDay: "Mayo 2025",
-    color: "#FF9900",
-    baseAmount: 1100,
-    startYear: 2016,
-  },
-  {
-    id: "suite-az-sql",
-    name: "Azure SQL Managed Warehouse",
-    provider: "Azure" as const,
-    brand: "Azure" as const,
-    accountNumber: "sub-33019-sql-managed",
-    type: "Azure Managed Identity",
-    status: "Enabled",
-    createdDay: "Junio 2025",
-    color: "#0089D6",
-    baseAmount: 2200,
-    startYear: 2014,
-  },
-];
+import suiteConnectionsData from '@/data/suiteConnections.json';
+
+const SUITE_CONNECTIONS = suiteConnectionsData as Array<{
+  id: string;
+  name: string;
+  provider: "AWS" | "Azure" | "GCP" | "Snowflake";
+  brand: "AWS" | "Azure" | "GoogleStorage" | "Snowflake";
+  accountNumber: string;
+  type: string;
+  status: string;
+  createdDay: string;
+  color: string;
+  baseAmount: number;
+  startYear: number;
+}>;
+
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function OptimizeAccountsPage() {
+  const { dict } = useLanguage();
   const [accounts, setAccounts] = useState<AccountWithHistory[]>(INITIAL_ACCOUNTS);
   const [activeTab, setActiveTab] = useState(0);
   const [drawerTab, setDrawerTab] = useState(0);

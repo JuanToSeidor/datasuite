@@ -8,6 +8,8 @@ import { useNewsData } from '@/hooks/useNewsData';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { UserMenu } from './UserMenu';
+import { LanguageSelector } from './LanguageSelector';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export function Navbar({
   className,
@@ -21,6 +23,7 @@ export function Navbar({
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [activeNotifTab, setActiveNotifTab] = useState(0);
   const { data: newsData, loading: newsLoading } = useNewsData();
+  const { t, dict } = useLanguage();
   const pathname = usePathname();
 
   // Detectar si estamos dentro de un producto/hijo específico
@@ -33,7 +36,7 @@ export function Navbar({
 
   const logoAccentColor = currentBranch?.color || "var(--color-info-main, #0191FF)";
 
-  const NOTIF_TABS = [{ label: 'Notifications' }, { label: 'Version' }];
+  const NOTIF_TABS = [{ label: dict.navbar.notifications }, { label: dict.navbar.version }];
 
   return (
     <div className={`bg-container shadow-md content-stretch flex items-center justify-between overflow-visible px-[10px] py-[20px] relative w-full h-[84px] shrink-0 z-50 ${className || ''}`}>
@@ -62,11 +65,11 @@ export function Navbar({
           </Link>
         </div>
       </div>
-      <div className="content-stretch flex gap-[20px] items-center relative shrink-0">
+      <div className="content-stretch flex gap-[14px] sm:gap-[20px] items-center relative shrink-0">
         <div className="relative">
           <Button isIconButton iconName="bell" variant="light" className='bg-transparent hover:text-seidor-main' hasBorder onClick={() => setIsNotificationsOpen(true)} />
 
-          <Drawer isOpen={isNotificationsOpen} onClose={() => setIsNotificationsOpen(false)} title='Updates'>
+          <Drawer isOpen={isNotificationsOpen} onClose={() => setIsNotificationsOpen(false)} title={dict.navbar.updates}>
 
             <div className="p-4 border-b border-[var(--color-neutral-300)] dark:border-[var(--color-neutral-800)]">
               <Tabs activeIndex={activeNotifTab} onChange={(index) => setActiveNotifTab(index)} tabs={NOTIF_TABS} />
@@ -76,14 +79,14 @@ export function Navbar({
               {activeNotifTab === 0 && (
                 <div className="flex flex-col items-center justify-center h-full text-center text-[var(--color-neutral-700)]">
                   <CaralIcon name="bell" size={48} />
-                  <p>You don't have any new notifications.</p>
+                  <p>{dict.navbar.noNotifications}</p>
                 </div>
               )}
 
               {activeNotifTab === 1 && (
                 <div className="flex flex-col gap-6">
                   {newsLoading ? (
-                    <p className="text-center text-[var(--color-neutral-500)] mt-10">Cargando novedades...</p>
+                    <p className="text-center text-[var(--color-neutral-500)] mt-10">{dict.common.loading}</p>
                   ) : (
                     Object.values(newsData).sort((a: any, b: any) => b.version.localeCompare(a.version)).map((release: any) => (
                       <div key={release.version} className="flex flex-col gap-2 pb-6 border-b border-[var(--color-neutral-300)] dark:border-[var(--color-neutral-800)] last:border-0">
@@ -91,7 +94,7 @@ export function Navbar({
                           <span className="bg-info-light text-info-main text-xs font-bold px-2 py-1 rounded">v{release.version}</span>
                           <span className="text-xs text-[var(--color-neutral-700)]">{release.date}</span>
                         </div>
-                        <p className="text-sm text-[var(--color-neutral-900)]  mb-2">{release.description}</p>
+                        <p className="text-sm text-[var(--color-neutral-900)] mb-2">{release.description}</p>
                         <div className="mt-4">
                           <a
                             href={`https://crestone-help.seidoranalytics.com/docs/releasenotes/${release.link}`}
@@ -100,7 +103,7 @@ export function Navbar({
                             className="w-full block"
                           >
                             <Button variant="light" className="w-full text-[var(--color-info-main)]! border border-[var(--color-info-main)] hover:bg-info-main! hover:text-white!">
-                              See more
+                              {dict.navbar.seeMore}
                             </Button>
                           </a>
                         </div>
@@ -141,11 +144,11 @@ export function Navbar({
             <Brand name='Daiana' size={24} />
           </Button>
 
-          <Drawer isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} title='Hola, ¿en qué puedo ayudarle?'>
+          <Drawer isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} title={dict.navbar.chatWithDaiana}>
 
-            <div className="flex flex-col h-full justify-center  gap-4">
+            <div className="flex flex-col h-full justify-center gap-4">
               <div className="bg-[var(--color-neutral-full)] rounded-[16px] border border-white/10 p-4 flex flex-col gap-8 w-full">
-                <span className="text-[var(--color-neutral-800)] text-sm">Enviar un mensaje a Daiana</span>
+                <span className="text-[var(--color-neutral-800)] text-sm">{dict.navbar.chatPlaceholder}</span>
                 <div className="flex justify-between items-center text-[var(--color-neutral-200)]! ">
                   <Button isIconButton iconName="plus" variant="ghost" />
                   <Button isIconButton iconName="plane" isPill variant="info" />
@@ -153,23 +156,26 @@ export function Navbar({
               </div>
 
               <Button variant='light' className='w-full border border-neutral-500!'>
-                Resumir los puntos principales de esta página.
+                {dict.navbar.promptSummarize}
               </Button>
 
               <Button variant='light' className='w-full border border-neutral-500!'>
-                Crear un nuevo flujo de SAP a AWS.
+                {dict.navbar.promptSapToAws}
               </Button>
 
               <Button variant='light' className='w-full border border-neutral-500!'>
-                Crear un nuevo flujo de AWS a SAP.
+                {dict.navbar.promptAwsToSap}
               </Button>
-
-
 
             </div>
 
           </Drawer>
         </div>
+        
+        {/* Language Selector */}
+        <LanguageSelector />
+
+        {/* User Menu */}
         <UserMenu />
       </div>
     </div>

@@ -9,8 +9,10 @@ import { TopServicesCard } from '@/components/optimize/TopServicesCard';
 import driversRawData from '@/data/drivers.json';
 import accountsRawData from '@/data/accounts.json';
 import { DriverItem } from '@/components/optimize/drivers/DriverAllocationRow';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function OptimizeDashboardPage() {
+  const { dict } = useLanguage();
   const [selectedDriverId, setSelectedDriverId] = useState<string | null>(null);
   const [isDriverDropdownOpen, setIsDriverDropdownOpen] = useState(false);
   const [driverSearch, setDriverSearch] = useState("");

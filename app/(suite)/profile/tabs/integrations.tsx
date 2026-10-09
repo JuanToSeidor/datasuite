@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Button, Chip, Toggle, Drawer } from "caralstable";
 import { CaralIcon } from "@/components/icons";
 import { Input, Select, SelectOption } from "@/components/ui";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export interface CapabilityItem {
   id: string;
@@ -204,59 +205,9 @@ export interface PersonalAccessToken {
   workspaces: string[];
 }
 
-const INITIAL_TOKENS: PersonalAccessToken[] = [
-  {
-    id: "pat-1",
-    name: "VS Code Suite Extension",
-    tokenPrefix: "cst_pat_live_7a82...e491",
-    createdAt: "15 Jan 2024",
-    lastUsedAt: "2 hours ago",
-    expiresAt: "Never",
-    expiresInDays: null,
-    capabilities: [
-      "workspaces:read",
-      "connections:read",
-      "connections:probe",
-      "nodes:read",
-      "jobs:read",
-      "jobs:run",
-      "executions:read",
-      "logs:read",
-    ],
-    workspaces: ["EX Default", "Workspace Dev"],
-  },
-  {
-    id: "pat-2",
-    name: "CI/CD Ingestion Pipeline",
-    tokenPrefix: "cst_pat_live_1b93...6f82",
-    createdAt: "02 Feb 2024",
-    lastUsedAt: "1 day ago",
-    expiresAt: "In 28 days",
-    expiresInDays: 28,
-    capabilities: ALL_CAPABILITY_IDS,
-    workspaces: ["EX Default", "MCP", "Workspace Dev"],
-  },
-  {
-    id: "pat-3",
-    name: "MCP Local Server Sidecar",
-    tokenPrefix: "cst_pat_live_4d02...11ac",
-    createdAt: "20 Mar 2024",
-    lastUsedAt: "Just now",
-    expiresAt: "In 84 days",
-    expiresInDays: 84,
-    capabilities: [
-      "workspaces:read",
-      "connections:read",
-      "connections:probe",
-      "metadata:postgres",
-      "metadata:sap_hana",
-      "metadata:snowflake",
-      "jobs:read",
-      "logs:read",
-    ],
-    workspaces: ["MCP"],
-  },
-];
+import tokensData from "@/data/tokens.json";
+
+const INITIAL_TOKENS: PersonalAccessToken[] = tokensData as PersonalAccessToken[];
 
 const EXPIRATION_OPTIONS: SelectOption[] = [
   { value: "30", label: "30 days" },
@@ -268,6 +219,7 @@ const EXPIRATION_OPTIONS: SelectOption[] = [
 ];
 
 export function IntegrationsTab() {
+  const { dict } = useLanguage();
   // TOTP States
   const [isTotpActive, setIsTotpActive] = useState(false);
   const [isTotpDrawerOpen, setIsTotpDrawerOpen] = useState(false);

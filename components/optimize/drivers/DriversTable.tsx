@@ -7,6 +7,7 @@ import {
   DriverItem,
   DriverAllocationRow,
 } from './DriverAllocationRow';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface DriversTableProps {
   drivers: DriverItem[];
@@ -14,6 +15,7 @@ interface DriversTableProps {
 }
 
 export function DriversTable({ drivers, onUpdateDriver }: DriversTableProps) {
+  const { dict } = useLanguage();
   const [expandedDriverId, setExpandedDriverId] = useState<string | null>(null);
 
   const handleToggleExpand = (driverId: string) => {

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Brand, CaralIcon } from '@/components/icons';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ConsolidatedHeroProps {
   mainTitle?: string;
@@ -22,6 +23,7 @@ export function ConsolidatedHeroCard({
   activeServicesCount = 5,
   consolidatedForecast = 150,
 }: ConsolidatedHeroProps) {
+  const { dict } = useLanguage();
   const radius = 46;
   const circumference = 2 * Math.PI * radius;
   // 75% arc for hero visual

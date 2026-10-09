@@ -6,6 +6,7 @@ import { Brand, CaralBrandName, CaralIcon } from '@/components/icons';
 import { DriverItem, DriverAccount, DriverEntity } from './DriverAllocationRow';
 import { AllocationMultiSlider } from './AllocationMultiSlider';
 import accountsRawData from '@/data/accounts.json';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface NewDriverDrawerProps {
   isOpen: boolean;
@@ -43,6 +44,7 @@ const ENTITY_PALETTE = [
 const STEP_OPTIONS = [1, 5, 10, 20];
 
 export function NewDriverDrawer({ isOpen, onClose, onCreate }: NewDriverDrawerProps) {
+  const { dict } = useLanguage();
   // Nivel 1: Información General
   const [name, setName] = useState("");
   const [code, setCode] = useState(`DRV-0${Math.floor(Math.random() * 90 + 10)}`);

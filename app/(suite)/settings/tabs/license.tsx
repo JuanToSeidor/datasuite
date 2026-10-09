@@ -3,8 +3,10 @@
 import React, { useState } from "react";
 import { Button, Chip } from "caralstable";
 import { CaralIcon } from "@/components/icons";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function LicenseTab() {
+  const { dict } = useLanguage();
   const [isKeyCopied, setIsKeyCopied] = useState(false);
   const licenseKey = "CST-ENT-2026-9482-A74B-EE19-SEIDOR";
 

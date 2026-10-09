@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { CaralIcon, Icons } from "@/components/icons";
 import { Button } from "caralstable";
 import { Input } from "./Input";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export interface IconCategoryDef {
   name: string;
@@ -136,6 +137,8 @@ export function IconSelector({
     };
   }, [isOpen, value]);
 
+  const { dict } = useLanguage();
+
   const currentCategoryDef = useMemo(() => {
     return PORTAL_ICON_CATEGORIES.find((c) => c.name === selectedCategory) || PORTAL_ICON_CATEGORIES[0];
   }, [selectedCategory]);
@@ -177,13 +180,13 @@ export function IconSelector({
         {/* Modal Top Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-400">
           <h3 className="text-base font-bold text-neutral-900 tracking-tight">
-            Seleccionar Ícono
+            {dict.table.searchIconPlaceholder ? "Seleccionar Ícono" : "Select Icon"}
           </h3>
           <button
             type="button"
             onClick={() => setIsOpen(false)}
             className="text-neutral-800 hover:text-neutral-900 cursor-pointer p-1 rounded-md hover:bg-neutral-500/10 transition-colors"
-            title="Cerrar"
+            title={dict.common.close}
           >
             <CaralIcon name="x" size={16} />
           </button>
@@ -218,7 +221,7 @@ export function IconSelector({
           {/* Search Input */}
           <div className="w-full">
             <Input
-              placeholder="Buscar ícono..."
+              placeholder={dict.table.searchIconPlaceholder}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               iconName="search"

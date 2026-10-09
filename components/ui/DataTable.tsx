@@ -4,6 +4,7 @@ import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Button, Chip, Drawer } from 'caralstable';
 import { CaralIcon, Icons } from '@/components/icons';
 import { Input, Select } from '@/components/ui';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export type TextFilterOperator =
   | 'contains'
@@ -279,28 +280,30 @@ export function DataTable<T = any>({
   toolbarLeft,
   toolbarRight,
 }: DataTableProps<T>) {
+  const { dict } = useLanguage();
+
   // 1. Resolved Labels
   const resolvedLabels = useMemo(() => {
-    const itemPlural = labels?.itemPlural ?? 'registros';
+    const itemPlural = labels?.itemPlural ?? dict.common.records;
     return {
-      searchPlaceholder: labels?.searchPlaceholder ?? searchPlaceholder ?? `Buscar ${itemPlural}...`,
-      emptyMessage: labels?.emptyMessage ?? `No se encontraron ${itemPlural} para los filtros aplicados.`,
+      searchPlaceholder: labels?.searchPlaceholder ?? searchPlaceholder ?? `${dict.common.search} ${itemPlural}...`,
+      emptyMessage: labels?.emptyMessage ?? `${dict.common.noResults}`,
       exportFileName: labels?.exportFileName ?? exportFileName ?? 'export_datos',
-      filterDrawerTitle: labels?.filterDrawerTitle ?? 'Filtros de Tabla',
+      filterDrawerTitle: labels?.filterDrawerTitle ?? dict.common.filters,
       filterDrawerDescription:
         labels?.filterDrawerDescription ??
         `Selecciona una columna, el operador de coincidencia y el valor para filtrar los ${itemPlural}.`,
       filterDrawerConditionLabel: labels?.filterDrawerConditionLabel ?? 'Condición de coincidencia',
       filterDrawerActiveBadgeLabel: labels?.filterDrawerActiveBadgeLabel ?? 'Filtro Activo',
-      filterDrawerApplyLabel: labels?.filterDrawerApplyLabel ?? 'Aplicar Filtro',
-      filterDrawerClearLabel: labels?.filterDrawerClearLabel ?? 'Limpiar',
-      filterDrawerClearAllLabel: labels?.filterDrawerClearAllLabel ?? 'Limpiar todos',
-      filterDrawerCloseLabel: labels?.filterDrawerCloseLabel ?? 'Cerrar',
+      filterDrawerApplyLabel: labels?.filterDrawerApplyLabel ?? dict.common.apply,
+      filterDrawerClearLabel: labels?.filterDrawerClearLabel ?? dict.common.clearFilters,
+      filterDrawerClearAllLabel: labels?.filterDrawerClearAllLabel ?? dict.common.clearAll,
+      filterDrawerCloseLabel: labels?.filterDrawerCloseLabel ?? dict.common.close,
       filterDrawerAvailableLabel: labels?.filterDrawerAvailableLabel ?? 'Disponibles:',
-      activeFiltersLabel: labels?.activeFiltersLabel ?? 'Filtros activos:',
+      activeFiltersLabel: labels?.activeFiltersLabel ?? dict.common.activeFilters,
       itemPlural,
     };
-  }, [labels, searchPlaceholder, exportFileName]);
+  }, [labels, searchPlaceholder, exportFileName, dict]);
 
   // 2. Filterable Columns
   const filterableColumns = useMemo(() => {
@@ -745,7 +748,7 @@ export function DataTable<T = any>({
                 onClick={() => setDrawerOpen(true)}
                 title={
                   activeFiltersList.length > 0
-                    ? `Filtros activos (${activeFiltersList.length})`
+                    ? `${dict.common.activeFilters} (${activeFiltersList.length})`
                     : resolvedLabels.filterDrawerTitle
                 }
               />
@@ -758,7 +761,7 @@ export function DataTable<T = any>({
                 iconName="fileDown"
                 isIconButton
                 onClick={handleExportClick}
-                title="Exportar a CSV"
+                title={dict.common.exportCsv}
               />
             )}
 
@@ -769,7 +772,7 @@ export function DataTable<T = any>({
                 iconName={isMaximized ? 'arrowsMinimize' : 'arrowsMaximize'}
                 isIconButton
                 onClick={() => setIsMaximized(!isMaximized)}
-                title={isMaximized ? 'Restaurar tamaño (Esc)' : 'Expandir a pantalla completa'}
+                title={isMaximized ? `${dict.common.restoreSize} (Esc)` : dict.common.fullscreen}
               />
             )}
 
@@ -1032,7 +1035,7 @@ export function DataTable<T = any>({
 
               {/* Column to filter Selector */}
               <Select
-                label="Columna a filtrar"
+                label={dict.table.columnToFilter}
                 iconName="circleBars"
                 value={activeFilterCol?.id || filterableColumns[0]?.id}
                 onValueChange={(val) => {
@@ -1045,12 +1048,12 @@ export function DataTable<T = any>({
                   const isFiltered = activeFilters[col.id]?.active;
                   return {
                     value: col.id,
-                    label: isFiltered ? `${label} (Filtro Activo)` : label,
+                    label: isFiltered ? `${label} (${dict.table.filterActive})` : label,
                     iconName: isFiltered ? 'check' : undefined,
                   };
                 })}
-                placeholder="Selecciona una columna..."
-                detail="Elige la columna sobre la cual deseas aplicar la condición de filtro."
+                placeholder={dict.table.selectColumn}
+                detail={dict.table.selectColumnDetail}
               />
 
               {/* Active column filter form */}
@@ -1077,10 +1080,10 @@ export function DataTable<T = any>({
                     <div className="flex flex-col gap-3">
                       <div className="flex items-center justify-between">
                         <label className="text-xs font-bold text-neutral-800">
-                          Filtrar por una o varias opciones:
+                          {dict.table.filterByOptions}
                         </label>
                         <span className="text-[11px] font-mono text-neutral-800 font-semibold">
-                          {draftSelectedValues.length} de {availableSelectOptions.length} seleccionadas
+                          {draftSelectedValues.length} {dict.table.of} {availableSelectOptions.length} {dict.table.selectedCount}
                         </span>
                       </div>
 
@@ -1118,7 +1121,7 @@ export function DataTable<T = any>({
                           }
                           className="text-xs text-info-main hover:underline font-semibold cursor-pointer"
                         >
-                          Seleccionar todas
+                          {dict.table.selectAll}
                         </button>
                         <span className="text-neutral-500 text-xs">|</span>
                         <button
@@ -1126,7 +1129,7 @@ export function DataTable<T = any>({
                           onClick={() => setDraftSelectedValues([])}
                           className="text-xs text-neutral-800 hover:text-danger-main hover:underline font-medium cursor-pointer"
                         >
-                          Limpiar selección
+                          {dict.table.clearSelection}
                         </button>
                       </div>
                     </div>
@@ -1142,13 +1145,32 @@ export function DataTable<T = any>({
                         options={(
                           activeFilterCol.filterOptions ||
                           (activeFilterCol.filterType === 'number' || activeFilterCol.filterType === 'currency'
-                            ? DEFAULT_NUMBER_FILTER_OPTIONS
-                            : DEFAULT_TEXT_FILTER_OPTIONS)
+                            ? [
+                                { id: 'equals', label: dict.table.equals },
+                                { id: 'doesNotEqual', label: dict.table.doesNotEqual },
+                                { id: 'greaterThan', label: dict.table.greaterThan },
+                                { id: 'greaterThanOrEqual', label: dict.table.greaterThanOrEqual },
+                                { id: 'lessThan', label: dict.table.lessThan },
+                                { id: 'lessThanOrEqual', label: dict.table.lessThanOrEqual },
+                                { id: 'between', label: dict.table.between },
+                                { id: 'empty', label: dict.table.empty },
+                                { id: 'notEmpty', label: dict.table.notEmpty },
+                              ]
+                            : [
+                                { id: 'contains', label: dict.table.contains },
+                                { id: 'doesNotContain', label: dict.table.doesNotContain },
+                                { id: 'equals', label: dict.table.equals },
+                                { id: 'doesNotEqual', label: dict.table.doesNotEqual },
+                                { id: 'startsWith', label: dict.table.startsWith },
+                                { id: 'endsWith', label: dict.table.endsWith },
+                                { id: 'empty', label: dict.table.empty },
+                                { id: 'notEmpty', label: dict.table.notEmpty },
+                              ])
                         ).map((op) => ({
                           value: op.id,
                           label: op.label,
                         }))}
-                        placeholder="Selecciona una condición..."
+                        placeholder={dict.table.selectColumn}
                       />
 
                       {/* Value Input */}
@@ -1156,7 +1178,7 @@ export function DataTable<T = any>({
                         <div className="flex flex-col gap-3">
                           <div className="flex flex-col gap-1.5">
                             <label className="text-xs font-bold text-neutral-800">
-                              {draftOp === 'between' ? 'Valor Mínimo' : 'Valor a buscar'}
+                              {draftOp === 'between' ? dict.table.minValue : dict.table.searchValue}
                             </label>
                             <Input
                               type={
@@ -1166,19 +1188,19 @@ export function DataTable<T = any>({
                               }
                               value={draftVal}
                               onChange={(e) => setDraftVal(e.target.value)}
-                              placeholder="Escribe el valor..."
+                              placeholder={dict.common.searchPlaceholder}
                               className="w-full"
                             />
                           </div>
 
                           {draftOp === 'between' && (
                             <div className="flex flex-col gap-1.5">
-                              <label className="text-xs font-bold text-neutral-800">Valor Máximo</label>
+                              <label className="text-xs font-bold text-neutral-800">{dict.table.maxValue}</label>
                               <Input
                                 type="number"
                                 value={draftValTo}
                                 onChange={(e) => setDraftValTo(e.target.value)}
-                                placeholder="Valor máximo..."
+                                placeholder={dict.table.maxValue}
                                 className="w-full"
                               />
                             </div>

@@ -4,6 +4,7 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { DriverEntity } from './DriverAllocationRow';
 import { CaralIcon } from '@/components/icons';
 import { Button } from 'caralstable';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface AllocationMultiSliderProps {
   entities: DriverEntity[];
@@ -37,6 +38,7 @@ export function AllocationMultiSlider({
   onEditEntityName,
   onRemoveEntity,
 }: AllocationMultiSliderProps) {
+  const { dict } = useLanguage();
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeHandleIdx, setActiveHandleIdx] = useState<number | null>(null);
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);

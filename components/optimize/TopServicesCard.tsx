@@ -5,6 +5,7 @@ import { Button } from 'caralstable';
 import { Brand, CaralIcon } from '@/components/icons';
 import { DriverItem } from '@/components/optimize/drivers/DriverAllocationRow';
 import accountsRawData from '@/data/accounts.json';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ConsumedService {
   rank: string;
@@ -22,6 +23,7 @@ export interface TopServicesCardProps {
 }
 
 export function TopServicesCard({ driver = null }: TopServicesCardProps) {
+  const { dict } = useLanguage();
   const [selectedPeriod, setSelectedPeriod] = useState("Mes actual");
 
   const services: ConsumedService[] = useMemo(() => {

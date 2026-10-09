@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Button, Drawer } from "caralstable";
 import { CaralIcon } from "@/components/icons";
 import { Input } from "@/components/ui";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface SessionItem {
   id: string;
@@ -13,38 +14,12 @@ interface SessionItem {
   isCurrent: boolean;
 }
 
-const INITIAL_SESSIONS: SessionItem[] = [
-  {
-    id: "1",
-    device: "Edge, Windows 10",
-    date: "22 ago 2024",
-    location: "Buenos Aires, Argentina",
-    isCurrent: true,
-  },
-  {
-    id: "2",
-    device: "Chrome, macOS Sequoia",
-    date: "21 ago 2024",
-    location: "Buenos Aires, Argentina",
-    isCurrent: false,
-  },
-  {
-    id: "3",
-    device: "Firefox, Ubuntu Linux",
-    date: "10 ago 2024",
-    location: "Buenos Aires, Argentina",
-    isCurrent: false,
-  },
-  {
-    id: "4",
-    device: "Safari, iPhone 15 Pro",
-    date: "2 ago 2024",
-    location: "Buenos Aires, Argentina",
-    isCurrent: false,
-  },
-];
+import sessionsData from "@/data/sessions.json";
+
+const INITIAL_SESSIONS: SessionItem[] = sessionsData as SessionItem[];
 
 export function ProfileSecurityTab() {
+  const { dict } = useLanguage();
   // Password Drawer States
   const [isPasswordDrawerOpen, setIsPasswordDrawerOpen] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");

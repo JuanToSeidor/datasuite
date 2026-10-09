@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export function evaluateFormula(rawInput: string, currentAmount: number, baseTotalAmount: number = 0): number {
   if (!rawInput || !rawInput.trim()) return 0;
@@ -80,8 +81,10 @@ export function FormulaCell({
   disabled = false,
   className = '',
   placeholder = '0.00',
-  title = 'Ingresa valor o fórmula: 35%, +0.4, -2, *1.5, /2, 50+20',
+  title,
 }: FormulaCellProps) {
+  const { dict } = useLanguage();
+  const cellTitle = title || dict.table.formulaPlaceholder;
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>(Number(value || 0).toFixed(2));
 
@@ -143,7 +146,7 @@ export function FormulaCell({
             (e.target as HTMLInputElement).blur();
           }
         }}
-        title={title}
+        title={cellTitle}
         placeholder={placeholder}
         className="w-24 px-2 py-1 text-right text-xs font-mono font-bold rounded-lg border border-neutral-500 bg-container text-neutral-900 focus:outline-none focus:ring-2 focus:ring-info-main/40 focus:border-info-main hover:border-neutral-800 transition-all shadow-2xs"
       />

@@ -4,6 +4,7 @@ import React, { useMemo, useState } from 'react';
 import { Chip, Button, Drawer } from 'caralstable';
 import { CaralIcon } from '@/components/icons';
 import { DataTable, DataTableColumn, FormulaCell } from '@/components/ui';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export interface DistributionsTableEntity {
   id: string;
@@ -110,6 +111,7 @@ export function DistributionsTable({
 
   className = '',
 }: DistributionsTableProps) {
+  const { dict } = useLanguage();
   // 1. Manual allocations state
   const [internalManualAllocations, setInternalManualAllocations] = useState<
     Record<string, Record<string, number>>

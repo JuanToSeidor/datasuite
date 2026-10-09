@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { CaralIcon, Brand, CaralBrandName, Icons } from '@/components/icons';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export interface SelectOption {
   value: string | number;
@@ -47,7 +48,7 @@ export const Select: React.FC<SelectProps> = ({
   onChange,
   onValueChange,
   name,
-  placeholder = 'Seleccionar...',
+  placeholder,
   containerClassName = '',
   className = '',
   dropdownClassName = '',
@@ -55,6 +56,8 @@ export const Select: React.FC<SelectProps> = ({
   disabled = false,
   children,
 }) => {
+  const { dict } = useLanguage();
+  const selectPlaceholder = placeholder || dict.common.select;
   const [isOpen, setIsOpen] = useState(false);
   const [internalValue, setInternalValue] = useState<string | number | undefined>(
     defaultValue !== undefined ? defaultValue : undefined
@@ -105,7 +108,7 @@ export const Select: React.FC<SelectProps> = ({
     ? selectedOption.label
     : currentValue !== undefined
       ? String(currentValue)
-      : placeholder;
+      : selectPlaceholder;
 
   const activeIcon = selectedOption?.icon || (
     selectedOption?.brand ? (
@@ -195,7 +198,7 @@ export const Select: React.FC<SelectProps> = ({
             className={`absolute top-[calc(100%+6px)] left-0 min-w-full z-[100] bg-container border border-neutral-400 rounded-xl shadow-xl py-1.5 max-h-64 overflow-y-auto custom-scrollbar animate-in fade-in zoom-in-95 duration-150 ${dropdownClassName}`}
           >
             {parsedOptions.length === 0 ? (
-              <div className="px-3 py-2 text-xs text-neutral-800">No options available</div>
+              <div className="px-3 py-2 text-xs text-neutral-800">{dict.common.noOptions}</div>
             ) : (
               parsedOptions.map((opt) => {
                 const isSelected = String(opt.value) === String(currentValue);

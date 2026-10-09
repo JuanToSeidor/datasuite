@@ -3,6 +3,7 @@
 import React from 'react';
 import { Button } from 'caralstable';
 import { CaralIcon } from '@/components/icons';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface BudgetGaugeCardProps {
   currentSpend?: number;
@@ -13,6 +14,7 @@ export function BudgetGaugeCard({
   currentSpend = 2700,
   budgetLimit = 3000,
 }: BudgetGaugeCardProps) {
+  const { dict } = useLanguage();
   const percentage = Math.min(100, Math.round((currentSpend / budgetLimit) * 100));
 
   // SVG Gauge calculations

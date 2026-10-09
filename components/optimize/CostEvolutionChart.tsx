@@ -5,6 +5,7 @@ import { Button } from 'caralstable';
 import { CaralIcon, Brand } from '@/components/icons';
 import accountsRawData from '@/data/accounts.json';
 import { DriverItem } from '@/components/optimize/drivers/DriverAllocationRow';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export interface MonthlyCostData {
   id: string;
@@ -63,6 +64,7 @@ export interface CostEvolutionChartProps {
 }
 
 export function CostEvolutionChart({ driver = null }: CostEvolutionChartProps) {
+  const { dict } = useLanguage();
   // Construir mapa de cuentas para acceso indexado rápido O(1)
   const accountsMap = useMemo(() => {
     const map = new Map<string, {

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button, Chip, Tabs, Drawer, Toggle, Alert } from "caralstable";
 import { CaralIcon, Brand, CaralBrandName, Icons } from "@/components/icons";
 import { Input, DataTable, DataTableColumn } from "@/components/ui";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const VALID_BRANDS = new Set([
   "AWS", "AzureSql", "GoogleStorage", "SAP", "Saleforce", "Snowflake", "Redshift", "Cloudera", "Teradata", "Google", "Databricks", "AmazonRedshift", "GoogleBigquery", "Teams", "Deepseek", "Gemini", "OpenAI", "SAPHanaC", "S3", "Harbinger", "Doxa", "Daiana", "Crestone", "CloudCosting", "Feelings", "IBMDb2", "MSSQL", "mySQL", "PostgreSQL", "OneDrive", "Sharepoint", "PDF", "DOC", "DOCX", "CSV", "XLSX", "Json", "HTML", "Fabric", "Sybase", "Ollama", "Windows", "DataEngineering", "OneLake", "DataActivator", "DataFactory", "Synapse", "PowerBI", "Database", "IQ", "Dynamics", "Oracle", "Azure", "CloudStorage"
@@ -48,202 +49,12 @@ export interface ConnectionItem {
   sslMode?: boolean;
 }
 
-const mockConnections: ConnectionItem[] = [
-  {
-    id: "ezequielsap5",
-    name: "EZequielSap5",
-    status: "Enabled",
-    locationType: "Destination",
-    type: "IBM Cloud",
-    brandName: "CloudStorage",
-    createdDay: "2026-01-12",
-    createdBy: "Chris Lee",
-    avatarText: "CL",
-    isProduction: true
-  },
-  {
-    id: "ezequielsap6",
-    name: "EZequielSap6",
-    status: "Enabled",
-    locationType: "Destination",
-    type: "Azure",
-    brandName: "Azure",
-    createdDay: "2026-02-14",
-    createdBy: "Anna Wu",
-    avatarText: "AW"
-  },
-  {
-    id: "ezequielsap7",
-    name: "EZequielSap7",
-    status: "Disabled",
-    locationType: "Destination",
-    type: "Google Cloud",
-    brandName: "Google",
-    createdDay: "2026-03-12",
-    createdBy: "Mark Taylor",
-    avatarText: "MT"
-  },
-  {
-    id: "ezequielsap8",
-    name: "EZequielSap8",
-    status: "Enabled",
-    locationType: "Destination",
-    type: "AWS",
-    brandName: "AWS",
-    createdDay: "2026-04-01",
-    createdBy: "Sarah Johnson",
-    avatarText: "SJ",
-    isProduction: true
-  },
-  {
-    id: "ezequielsap9",
-    name: "EZequielSap9",
-    status: "Enabled",
-    locationType: "Destination",
-    type: "Oracle Cloud",
-    brandName: "Oracle",
-    createdDay: "2026-05-15",
-    createdBy: "David Brown",
-    avatarText: "DB"
-  },
-  {
-    id: "ezequielsap10",
-    name: "EZequielSap10",
-    status: "Disabled",
-    locationType: "Destination",
-    type: "DigitalOcean",
-    brandName: "Database",
-    createdDay: "2026-06-22",
-    createdBy: "Laura Smith",
-    avatarText: "LS"
-  },
-  {
-    id: "ezequielsap11",
-    name: "EZequielSap11",
-    status: "Enabled",
-    locationType: "Destination",
-    type: "Heroku",
-    brandName: "Database",
-    createdDay: "2026-07-30",
-    createdBy: "Kevin White",
-    avatarText: "KW"
-  },
-  {
-    id: "ezequielsap12",
-    name: "EZequielSap12",
-    status: "Enabled",
-    locationType: "Destination",
-    type: "Alibaba Cloud",
-    brandName: "CloudStorage",
-    createdDay: "2026-08-18",
-    createdBy: "Mia Chen",
-    avatarText: "MC"
-  },
-  {
-    id: "ezequielsap13",
-    name: "EZequielSap13",
-    status: "Disabled",
-    locationType: "Destination",
-    type: "Linode",
-    brandName: "Database",
-    createdDay: "2026-09-25",
-    createdBy: "Tom Harris",
-    avatarText: "TH"
-  },
-  {
-    id: "ezequielsap14",
-    name: "EZequielSap14",
-    status: "Enabled",
-    locationType: "Destination",
-    type: "Vultr",
-    brandName: "AWS",
-    createdDay: "2026-10-30",
-    createdBy: "Emma Wilson",
-    avatarText: "EW"
-  },
-  {
-    id: "ezequielsap2",
-    name: "EZequielSAP2",
-    status: "Enabled",
-    locationType: "Source",
-    type: "SAP",
-    brandName: "SAP",
-    createdDay: "2024-08-15",
-    createdBy: "System Admin",
-    avatarText: "SA",
-    isProduction: true
-  },
-  {
-    id: "conexionestrella",
-    name: "ConexiónEstrella",
-    status: "Enabled",
-    locationType: "Destination",
-    type: "AWS",
-    brandName: "AWS",
-    createdDay: "2024-09-01",
-    createdBy: "System Admin",
-    avatarText: "SA",
-    isProduction: true
-  },
-  {
-    id: "redrapida",
-    name: "RedRápida",
-    status: "Enabled",
-    locationType: "Destination",
-    type: "Snowflake",
-    brandName: "Snowflake",
-    createdDay: "2024-10-10",
-    createdBy: "System Admin",
-    avatarText: "SA"
-  },
-  {
-    id: "alianzadigital",
-    name: "AlianzaDigital",
-    status: "Enabled",
-    locationType: "Source",
-    type: "SAP",
-    brandName: "SAP",
-    createdDay: "2024-11-22",
-    createdBy: "System Admin",
-    avatarText: "SA"
-  },
-  {
-    id: "vinculoglobal",
-    name: "VinculoGlobal",
-    status: "Disabled",
-    locationType: "Destination",
-    type: "AWS",
-    brandName: "AWS",
-    createdDay: "2024-12-25",
-    createdBy: "System Admin",
-    avatarText: "SA"
-  },
-  {
-    id: "puenteinnovador",
-    name: "PuenteInnovador",
-    status: "Enabled",
-    locationType: "Source",
-    type: "SAP",
-    brandName: "SAP",
-    createdDay: "2025-01-01",
-    createdBy: "System Admin",
-    avatarText: "SA",
-    isProduction: true
-  },
-  {
-    id: "nexoeficaz",
-    name: "NexoEficaz",
-    status: "Enabled",
-    locationType: "Destination",
-    type: "Fabric",
-    brandName: "Fabric",
-    createdDay: "2025-02-14",
-    createdBy: "System Admin",
-    avatarText: "SA"
-  }
-];
+import connectionsData from "@/data/connections.json";
+
+const mockConnections: ConnectionItem[] = connectionsData as ConnectionItem[];
 
 export default function ManageConnectionsPage() {
+  const { dict } = useLanguage();
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
@@ -396,9 +207,9 @@ export default function ManageConnectionsPage() {
   };
 
   const locationTypeOptions = useMemo(() => [
-    { label: "Source", value: "Source" },
-    { label: "Destination", value: "Destination" },
-  ], []);
+    { label: dict.common.source, value: "Source" },
+    { label: dict.common.destination, value: "Destination" },
+  ], [dict]);
 
   const typeOptions = useMemo(() => {
     const list = Array.from(new Set(connections.map((c) => c.type).filter(Boolean)));
@@ -417,8 +228,8 @@ export default function ManageConnectionsPage() {
       {
         id: "name",
         accessorKey: "name",
-        header: "Name",
-        filterLabel: "Name",
+        header: dict.connections.colName,
+        filterLabel: dict.connections.colName,
         filterType: "text",
         width: 280,
         minWidth: 200,
@@ -443,10 +254,10 @@ export default function ManageConnectionsPage() {
                     <div className="relative z-10 space-y-1.5 font-normal text-left">
                       <div className="flex items-center gap-2 text-info-hard">
                         <CaralIcon name="badgeSync" size={14} />
-                        <span className="text-xs font-bold font-poppins">Productive environment</span>
+                        <span className="text-xs font-bold font-poppins">{dict.connections.productionEnv}</span>
                       </div>
                       <p className="text-[11px] leading-relaxed text-neutral-800">
-                        Only origins marked with this flag can be used in automated jobs. Connections without this flag are intended for testing, validation, or QA environments.
+                        {dict.connections.productionEnvDesc}
                       </p>
                     </div>
                   </div>
@@ -457,7 +268,7 @@ export default function ManageConnectionsPage() {
         ),
         footer: ({ filteredData }) => (
           <span className="font-bold text-neutral-900">
-            Total: {filteredData.length} connections
+            {dict.common.total}: {filteredData.length} {dict.connections.totalConnections}
           </span>
         ),
       },
@@ -466,15 +277,15 @@ export default function ManageConnectionsPage() {
       {
         id: "locationType",
         accessorKey: "locationType",
-        header: "Tipo",
-        filterLabel: "Tipo",
+        header: dict.connections.colTipo,
+        filterLabel: dict.connections.colTipo,
         filterType: "select",
         filterSelectOptions: locationTypeOptions,
         width: 170,
         minWidth: 130,
         cell: ({ value }) => (
           <Chip
-            label={String(value)}
+            label={value === "Source" ? dict.common.source : dict.common.destination}
             variant={value === "Source" ? "info" : "indido"}
             hasBorder
           />
@@ -485,8 +296,8 @@ export default function ManageConnectionsPage() {
       {
         id: "type",
         accessorKey: "type",
-        header: "Connector",
-        filterLabel: "Connector",
+        header: dict.connections.colConnector,
+        filterLabel: dict.connections.colConnector,
         filterType: "select",
         filterSelectOptions: typeOptions,
         width: 190,
@@ -505,8 +316,8 @@ export default function ManageConnectionsPage() {
       {
         id: "createdDay",
         accessorKey: "createdDay",
-        header: "Created Day",
-        filterLabel: "Created Day",
+        header: dict.connections.colCreatedDay,
+        filterLabel: dict.connections.colCreatedDay,
         filterType: "text",
         width: 160,
         minWidth: 120,
@@ -521,8 +332,8 @@ export default function ManageConnectionsPage() {
       {
         id: "createdBy",
         accessorKey: "createdBy",
-        header: "Created By",
-        filterLabel: "Created By",
+        header: dict.connections.colCreatedBy,
+        filterLabel: dict.connections.colCreatedBy,
         filterType: "select",
         filterSelectOptions: creatorOptions,
         width: 180,
@@ -542,7 +353,7 @@ export default function ManageConnectionsPage() {
       // 6. Actions (Edit icon button)
       {
         id: "actions",
-        header: "ACCIONES",
+        header: dict.connections.colActions,
         align: "center",
         width: 100,
         minWidth: 80,
@@ -555,7 +366,7 @@ export default function ManageConnectionsPage() {
               isIconButton
               iconName="edit"
               className="text-neutral-800 hover:text-neutral-900 hover:bg-neutral-500/30 cursor-pointer p-1.5 rounded-lg transition-colors"
-              title="Edit Connection"
+              title={dict.connections.editConnection}
               onClick={() => {
                 setSelectedConnection(row);
                 setIsEditDrawerOpen(true);
@@ -565,7 +376,7 @@ export default function ManageConnectionsPage() {
         ),
       },
     ];
-  }, [locationTypeOptions, typeOptions, creatorOptions]);
+  }, [locationTypeOptions, typeOptions, creatorOptions, dict]);
 
   if (!mounted) {
     return null;
@@ -588,14 +399,14 @@ export default function ManageConnectionsPage() {
       {/* View Switcher: Table View (Agnostic DataTable) or Cards / Grid View */}
       {isListView ? (
         <DataTable<ConnectionItem>
-          title="Manage Connections"
-          description="View and manage your sources and destinations across all cloud and on-premise environments."
+          title={dict.connections.title}
+          description={dict.connections.description}
           iconName="link"
           data={connections}
           columns={connectionColumns}
           keyExtractor={(row) => row.id}
           canSearch={true}
-          searchPlaceholder="Search by name, type, host, or creator..."
+          searchPlaceholder={dict.connections.searchPlaceholder}
           canFilterColumns={true}
           canFilterErrors={false}
           canExport={false}
@@ -608,7 +419,7 @@ export default function ManageConnectionsPage() {
                   isIconButton
                   variant="ghost"
                   onClick={() => setIsListView(false)}
-                  title="Switch to Grid View"
+                  title={dict.connections.switchToCards}
                   className="cursor-pointer"
                 />
               )}
@@ -616,10 +427,10 @@ export default function ManageConnectionsPage() {
                 <Button
                   variant="info"
                   iconName="plus"
-                  title="Add Connection"
+                  title={dict.connections.addConnection}
                   className="cursor-pointer"
                 >
-                  Add Connection
+                  {dict.connections.addConnection}
                 </Button>
               </Link>
             </div>
@@ -632,7 +443,7 @@ export default function ManageConnectionsPage() {
             <div className="flex items-center gap-2">
               <CaralIcon name="link" size={18} />
               <h3 className="text-sm sm:text-base font-extrabold text-neutral-900 tracking-tight">
-                Manage Connections (Cards)
+                {dict.connections.titleCards}
               </h3>
             </div>
             <div className="flex items-center gap-2">
@@ -641,17 +452,17 @@ export default function ManageConnectionsPage() {
                 isIconButton
                 variant="info"
                 onClick={() => setIsListView(true)}
-                title="Switch to Table View"
+                title={dict.connections.switchToTable}
                 className="cursor-pointer"
               />
               <Link href="/connections/new">
                 <Button
                   variant="info"
                   iconName="plus"
-                  title="Add Connection"
+                  title={dict.connections.addConnection}
                   className="cursor-pointer"
                 >
-                  Add Connection
+                  {dict.connections.addConnection}
                 </Button>
               </Link>
             </div>
@@ -718,7 +529,7 @@ export default function ManageConnectionsPage() {
                       setIsEditDrawerOpen(true);
                     }}
                   >
-                    Edit connection
+                    {dict.connections.editConnection}
                   </Button>
                 </div>
               </div>
@@ -732,7 +543,13 @@ export default function ManageConnectionsPage() {
         <Drawer
           isOpen={isEditDrawerOpen}
           onClose={() => setIsEditDrawerOpen(false)}
-          title={selectedConnection ? `Edit ${selectedConnection.locationType} Connection` : "Edit Connection"}
+          title={
+            selectedConnection
+              ? selectedConnection.locationType === "Source"
+                ? dict.connections.editSourceConnection
+                : dict.connections.editDestinationConnection
+              : dict.connections.editConnection
+          }
           size="md"
         >
           <div className="flex flex-col h-full justify-between pb-6 space-y-6 text-left">
@@ -748,7 +565,7 @@ export default function ManageConnectionsPage() {
                       {selectedConnection.type}
                     </h3>
                     <p className="text-xs text-neutral-800 font-sans">
-                      Created by {selectedConnection.createdBy} on {selectedConnection.createdDay}
+                      {selectedConnection.createdBy} • {selectedConnection.createdDay}
                     </p>
                   </div>
                 </div>
@@ -757,11 +574,11 @@ export default function ManageConnectionsPage() {
               {/* Section 1: General Settings */}
               <div className="space-y-4 pt-2">
                 <h4 className="text-xs font-semibold uppercase tracking-wider text-neutral-800 border-b border-neutral-500 pb-2">
-                  General Settings
+                  {dict.connections.generalSettings}
                 </h4>
                 <div className="grid grid-cols-1 gap-4">
                   <Input
-                    label="Connection Name"
+                    label={dict.connections.connectionName}
                     placeholder="e.g. Production Data Source"
                     value={formName}
                     onChange={(e) => setFormName(e.target.value)}
@@ -773,8 +590,8 @@ export default function ManageConnectionsPage() {
                   {/* Status toggle */}
                   <div className="flex items-center justify-between p-3.5 border border-neutral-500 rounded-xl bg-container">
                     <div className="flex flex-col">
-                      <span className="text-xs font-semibold text-neutral-900">Active Status</span>
-                      <span className="text-[10px] text-neutral-800">Toggle whether this connection is enabled</span>
+                      <span className="text-xs font-semibold text-neutral-900">{dict.connections.activeStatus}</span>
+                      <span className="text-[10px] text-neutral-800">{dict.connections.activeStatusDesc}</span>
                     </div>
                     <Toggle
                       checked={formStatus === "Enabled"}
@@ -787,14 +604,14 @@ export default function ManageConnectionsPage() {
                   <div className="flex items-center justify-between p-3.5 border border-neutral-500 rounded-xl bg-container">
                     <div className="flex flex-col">
                       <span className="text-xs font-semibold text-neutral-900 flex items-center gap-1.5">
-                        Production Environment
+                        {dict.connections.productionEnv}
                         {formIsProduction && (
                           <span className="text-info-main">
                             <CaralIcon name="badgeSync" size={12} />
                           </span>
                         )}
                       </span>
-                      <span className="text-[10px] text-neutral-800">Production sources can be used in jobs</span>
+                      <span className="text-[10px] text-neutral-800">{dict.connections.productionEnvDesc}</span>
                     </div>
                     <Toggle
                       checked={formIsProduction}
@@ -808,12 +625,12 @@ export default function ManageConnectionsPage() {
               {/* Section 2: Connection Parameters */}
               <div className="space-y-4 pt-4">
                 <h4 className="text-xs font-semibold uppercase tracking-wider text-neutral-800 border-b border-neutral-500 pb-2">
-                  Parameters &amp; Credentials
+                  {dict.connections.paramsCredentials}
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="sm:col-span-2">
                     <Input
-                      label="Host / Server"
+                      label={dict.connections.host}
                       placeholder="e.g. db.example.com"
                       value={formHost}
                       onChange={(e) => setFormHost(e.target.value)}
@@ -822,7 +639,7 @@ export default function ManageConnectionsPage() {
                   </div>
                   <div>
                     <Input
-                      label="Port"
+                      label={dict.connections.port}
                       placeholder="e.g. 5432"
                       value={formPort}
                       onChange={(e) => setFormPort(e.target.value)}
@@ -833,14 +650,14 @@ export default function ManageConnectionsPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Input
-                    label="Database / Schema Name"
+                    label={dict.connections.database}
                     placeholder="e.g. sales_db"
                     value={formDatabase}
                     onChange={(e) => setFormDatabase(e.target.value)}
                     disabled={isTesting}
                   />
                   <Input
-                    label="Username"
+                    label={dict.connections.username}
                     placeholder="e.g. db_user"
                     value={formUsername}
                     onChange={(e) => setFormUsername(e.target.value)}
@@ -851,7 +668,7 @@ export default function ManageConnectionsPage() {
                 {/* Password field with asterisks and eye show/hide toggle */}
                 <div className="w-full space-y-1.5">
                   <label className="text-xs font-semibold text-neutral-900">
-                    Password
+                    {dict.connections.password}
                   </label>
                   <div className="relative">
                     <input
@@ -888,28 +705,23 @@ export default function ManageConnectionsPage() {
                       {isTesting ? (
                         <>
                           <span className="w-3.5 h-3.5 border-2 border-neutral-800 border-t-transparent rounded-full animate-spin" />
-                          Testing Connection...
+                          {dict.connections.testingConnection}
                         </>
                       ) : (
                         <>
                           <CaralIcon name="sync" size={14} />
-                          Test Connection
+                          {dict.connections.testConnection}
                         </>
                       )}
                     </Button>
-                    {!isDirty && !isTesting && (
-                      <p className="text-[11px] text-neutral-800 mt-1 italic">
-                        Modify any field to enable connection testing.
-                      </p>
-                    )}
                   </div>
                 </div>
 
                 {/* SSL Mode toggle */}
                 <div className="flex items-center justify-between p-3.5 border border-neutral-500 rounded-xl bg-container">
                   <div className="flex flex-col">
-                    <span className="text-xs font-semibold text-neutral-900">Use SSL/TLS Connection</span>
-                    <span className="text-[10px] text-neutral-800">Encrypt traffic between Crestone and data source</span>
+                    <span className="text-xs font-semibold text-neutral-900">{dict.connections.sslConnection}</span>
+                    <span className="text-[10px] text-neutral-800">{dict.connections.sslDesc}</span>
                   </div>
                   <Toggle
                     checked={formSslMode}
@@ -923,20 +735,20 @@ export default function ManageConnectionsPage() {
               <div className="space-y-4 pt-4 border-t border-neutral-500">
                 <div className="space-y-1">
                   <h4 className="text-sm font-bold text-neutral-900">
-                    Danger Zone
+                    {dict.connections.dangerZone}
                   </h4>
                   <p className="text-xs text-neutral-800">
-                    Irreversible and destructive actions.
+                    {dict.connections.dangerZoneDesc}
                   </p>
                 </div>
 
                 <div className="flex items-center justify-between p-4 border border-danger-main/30 rounded-xl bg-danger-light/10">
                   <div className="flex flex-col text-left space-y-1">
                     <span className="text-xs font-semibold text-neutral-900">
-                      Delete {selectedConnection?.locationType || "Connection"}
+                      {dict.connections.deleteConnection}
                     </span>
                     <span className="text-[10px] text-neutral-800">
-                      Once you delete a connection, there is no going back.
+                      {dict.connections.deleteWarning}
                     </span>
                   </div>
                   <Button
@@ -946,7 +758,7 @@ export default function ManageConnectionsPage() {
                     className="text-xs font-semibold px-4 py-2 bg-danger-main hover:bg-danger-hard text-white rounded-lg h-auto flex items-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <CaralIcon name="trash" size={14} />
-                    Delete connection
+                    {dict.connections.deleteConnection}
                   </Button>
                 </div>
               </div>
@@ -960,7 +772,7 @@ export default function ManageConnectionsPage() {
                 disabled={isTesting}
                 className="flex-1 text-xs font-semibold h-[40px] justify-center cursor-pointer"
               >
-                Cancel
+                {dict.common.cancel}
               </Button>
               <Button
                 variant="info"
@@ -968,7 +780,7 @@ export default function ManageConnectionsPage() {
                 disabled={isTesting}
                 className="flex-1 text-xs font-semibold h-[40px] justify-center cursor-pointer"
               >
-                Save Changes
+                {dict.common.saveChanges}
               </Button>
             </div>
           </div>

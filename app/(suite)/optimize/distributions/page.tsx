@@ -9,6 +9,7 @@ import driversRawData from '@/data/drivers.json';
 import accountsRawData from '@/data/accounts.json';
 import { DriverItem } from '@/components/optimize/drivers/DriverAllocationRow';
 import { DistributionsTable } from '@/components/optimize/distributions';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ServiceItem {
   id: string;
@@ -50,6 +51,7 @@ const DISTRIBUTION_TABS = [
 ];
 
 export default function OptimizeDistributionsPage() {
+  const { dict } = useLanguage();
   const drivers: DriverItem[] = driversRawData as DriverItem[];
   const accounts: EnrichedAccount[] = accountsRawData as EnrichedAccount[];
 

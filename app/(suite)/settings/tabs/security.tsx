@@ -4,12 +4,14 @@ import React, { useState } from "react";
 import { Button, Chip, Toggle, Drawer } from "caralstable";
 import { CaralIcon } from "@/components/icons";
 import { Input } from "@/components/ui";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface PlatformSecurityTabProps {
   onNavigateTab?: (tabId: string) => void;
 }
 
 export function PlatformSecurityTab({ onNavigateTab }: PlatformSecurityTabProps = {}) {
+  const { dict } = useLanguage();
   // Microsoft SSO Drawer States
   const [isMicrosoftSsoActive, setIsMicrosoftSsoActive] = useState(true);
   const [isMicrosoftSsoDrawerOpen, setIsMicrosoftSsoDrawerOpen] = useState(false);
