@@ -7,7 +7,7 @@ import { WorkspaceCard } from './WorkspaceCard';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { suiteConfig, SidebarSection } from '@/config/suite';
-
+import { useTheme } from '@/contexts/ThemeContext';
 
 export function Sidebar({
   className,
@@ -20,23 +20,9 @@ export function Sidebar({
   isWorkspacesView?: boolean;
   setIsWorkspacesView?: (val: boolean) => void;
 }) {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { isDark: isDarkMode, toggleDark: toggleTheme } = useTheme();
   const [isGearMenuOpen, setIsGearMenuOpen] = useState(false);
   const pathname = usePathname();
-
-  useEffect(() => {
-    if (typeof document !== 'undefined') {
-      setIsDarkMode(document.documentElement.classList.contains('dark'));
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    if (typeof document !== 'undefined') {
-      const isDark = document.documentElement.classList.toggle('dark');
-      setIsDarkMode(isDark);
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    }
-  };
 
   // Encontrar si la ruta actual pertenece a uno de los hijos (branches)
   const currentBranch = suiteConfig.branches.find(

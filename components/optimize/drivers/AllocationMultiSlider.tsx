@@ -213,19 +213,19 @@ export function AllocationMultiSlider({
                 }}
                 onMouseEnter={() => setHoveredIdx(idx)}
                 onMouseLeave={() => setHoveredIdx(null)}
-                className={`relative px-3 py-1.5 rounded-xl border transition-all flex items-center gap-2 max-w-full shadow-2xs bg-neutral-100 dark:bg-neutral-800 ${
+                className={`relative px-3 py-1.5 rounded-xl border transition-all flex items-center gap-2 max-w-full shadow-2xs bg-container ${
                   isDragging
-                    ? 'opacity-40 border-dashed border-blue-500 scale-95'
+                    ? 'opacity-40 border-dashed border-seidor-main scale-95'
                     : isDragOver
-                    ? 'border-blue-500 ring-2 ring-blue-400 shadow-lg scale-105 z-30'
+                    ? 'border-seidor-main ring-2 ring-seidor-main/40 shadow-lg scale-105 z-30'
                     : hoveredIdx === idx || isPickerOpen
-                    ? 'border-neutral-400 dark:border-neutral-600 shadow-md scale-105 z-30'
-                    : 'border-neutral-300 dark:border-neutral-700 z-10'
+                    ? 'border-neutral-500 shadow-md scale-105 z-30'
+                    : 'border-neutral-500 z-10'
                 }`}
               >
                 {/* Horizontal Drag Handle */}
                 <div
-                  className="cursor-grab active:cursor-grabbing text-neutral-400 hover:text-neutral-800 dark:hover:text-white flex items-center shrink-0 transition-colors p-0.5"
+                  className="cursor-grab active:cursor-grabbing text-neutral-800 hover:text-neutral-900 flex items-center shrink-0 transition-colors p-0.5"
                   title="Arrastrar para reordenar horizontalmente"
                 >
                   <CaralIcon name="arrowsLeftRight" size={14} />
@@ -239,7 +239,7 @@ export function AllocationMultiSlider({
                     setOpenColorPickerId(isPickerOpen ? null : ent.id);
                   }}
                   style={{ backgroundColor: color }}
-                  className="size-3 rounded-full shrink-0 shadow-2xs hover:scale-130 transition-transform ring-2 ring-transparent hover:ring-blue-500/40 cursor-pointer"
+                  className="size-3 rounded-full shrink-0 shadow-2xs hover:scale-130 transition-transform ring-2 ring-transparent hover:ring-seidor-main/40 cursor-pointer"
                   title="Cambiar color de la entidad"
                 />
 
@@ -248,7 +248,7 @@ export function AllocationMultiSlider({
                   <div
                     ref={popoverRef}
                     onClick={(e) => e.stopPropagation()}
-                    className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 p-2 bg-white dark:bg-neutral-900 rounded-xl border border-neutral-300 dark:border-neutral-700 shadow-2xl z-50 flex items-center gap-1.5 animate-in fade-in zoom-in-95 duration-150"
+                    className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 p-2 bg-container rounded-xl border border-neutral-500 shadow-2xl z-50 flex items-center gap-1.5 animate-in fade-in zoom-in-95 duration-150"
                   >
                     {COLOR_PALETTE.map((c) => {
                       const isSelected = color === c;
@@ -258,7 +258,7 @@ export function AllocationMultiSlider({
                           type="button"
                           onClick={() => handleSelectColor(ent.id, c)}
                           style={{ backgroundColor: c }}
-                          className={`size-5 rounded-full transition-transform hover:scale-125 flex items-center justify-center ${isSelected ? 'ring-2 ring-neutral-900 dark:ring-white scale-110' : ''
+                          className={`size-5 rounded-full transition-transform hover:scale-125 flex items-center justify-center ${isSelected ? 'ring-2 ring-neutral-900 scale-110' : ''
                             }`}
                           title={`Color ${c}`}
                         >
@@ -275,11 +275,11 @@ export function AllocationMultiSlider({
                     type="text"
                     value={ent.name}
                     onChange={(e) => onEditEntityName(ent.id, e.target.value)}
-                    className="text-xs font-bold text-neutral-900 dark:text-white bg-transparent outline-none truncate max-w-[130px]"
+                    className="text-xs font-bold text-neutral-900 bg-transparent outline-none truncate max-w-[130px]"
                     placeholder="Entidad..."
                   />
                 ) : (
-                  <span className="text-xs font-bold text-neutral-900 dark:text-white truncate max-w-[130px]">
+                  <span className="text-xs font-bold text-neutral-900 truncate max-w-[130px]">
                     {ent.name}
                   </span>
                 )}
@@ -295,7 +295,7 @@ export function AllocationMultiSlider({
                     iconName='trash'
                     hasBorder
                     size='sm'
-                    className='text-neutral-400! hover:text-neutral-800! transition-colors'
+                    className='text-neutral-800! hover:text-neutral-900! transition-colors'
                     title='Elimiar entidad' />
                 )}
               </div>
@@ -307,7 +307,7 @@ export function AllocationMultiSlider({
       {/* Main Multi-Segment Slider Track */}
       <div
         ref={trackRef}
-        className="relative w-full h-7 rounded-full bg-neutral-200/80 dark:bg-neutral-800 flex items-center"
+        className="relative w-full h-7 rounded-full bg-neutral-500 flex items-center"
       >
         {/* Segments */}
         {entities.map((ent, idx) => {
@@ -324,10 +324,10 @@ export function AllocationMultiSlider({
               className="absolute top-0 h-full flex items-center justify-center transition-all duration-75 px-3 overflow-hidden"
             >
               {/* Segment background bar */}
-              <div className="absolute inset-0 bg-[#E8EFF7] dark:bg-[#1E293B] rounded-full border border-neutral-300/60 dark:border-neutral-700/60 shadow-inner" />
+              <div className="absolute inset-0 bg-neutral-500/80 rounded-full border border-neutral-500 shadow-inner" />
 
               {/* Percentage label inside segment */}
-              <span className="relative z-1 text-xs font-semibold text-neutral-800 dark:text-neutral-200 select-none font-mono">
+              <span className="relative z-1 text-xs font-semibold text-neutral-800 select-none font-mono">
                 {ent.percentage}%
               </span>
             </div>
@@ -337,7 +337,7 @@ export function AllocationMultiSlider({
         {/* Start boundary knob (0%) */}
         <div
           style={{ left: '0%' }}
-          className="absolute -translate-x-1/2 size-4.5 rounded-full bg-[#0070F3] ring-2 ring-white dark:ring-neutral-900 shadow-md z-10 pointer-events-none"
+          className="absolute -translate-x-1/2 size-4.5 rounded-full bg-seidor-main ring-2 ring-container shadow-md z-10 pointer-events-none"
         />
 
         {/* Draggable Internal Handles between segments */}
@@ -351,7 +351,7 @@ export function AllocationMultiSlider({
               key={`handle-${handleIdx}`}
               style={{ left: `${posPct}%` }}
               onPointerDown={(e) => handlePointerDown(handleIdx, e)}
-              className={`absolute -translate-x-1/2 size-5 rounded-full bg-[#0070F3] ring-2 ring-white dark:ring-neutral-900 shadow-md cursor-ew-resize z-30 transition-transform flex items-center justify-center hover:scale-125 active:scale-135 ${isDragging ? 'scale-130 ring-4 ring-blue-400 shadow-lg' : ''
+              className={`absolute -translate-x-1/2 size-5 rounded-full bg-seidor-main ring-2 ring-container shadow-md cursor-ew-resize z-30 transition-transform flex items-center justify-center hover:scale-125 active:scale-135 ${isDragging ? 'scale-130 ring-4 ring-seidor-main/40 shadow-lg' : ''
                 }`}
               title={`Arrastrar para ajustar (${entities[idx].name} / ${entities[idx + 1].name})`}
             >
@@ -363,7 +363,7 @@ export function AllocationMultiSlider({
         {/* End boundary knob (100%) */}
         <div
           style={{ left: '100%' }}
-          className="absolute -translate-x-1/2 size-4.5 rounded-full bg-[#0070F3] ring-2 ring-white dark:ring-neutral-900 shadow-md z-10 pointer-events-none"
+          className="absolute -translate-x-1/2 size-4.5 rounded-full bg-seidor-main ring-2 ring-container shadow-md z-10 pointer-events-none"
         />
       </div>
     </div>

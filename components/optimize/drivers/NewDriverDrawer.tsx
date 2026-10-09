@@ -264,12 +264,12 @@ export function NewDriverDrawer({ isOpen, onClose, onCreate }: NewDriverDrawerPr
       <form onSubmit={handleCreate} className="flex flex-col h-full justify-between gap-6 pb-4 pt-2">
         <div className="flex flex-col gap-6 overflow-y-auto pr-1">
           {/* Information Card */}
-          <div className="p-3.5 rounded-xl bg-neutral-500/10 dark:bg-neutral-800/40 border border-neutral-500/20 dark:border-neutral-700/50 flex items-start gap-3">
-            <div className="p-2 rounded-lg bg-red-500/10 text-red-500 shrink-0 mt-0.5">
+          <div className="p-3.5 rounded-xl bg-container border border-neutral-500 flex items-start gap-3">
+            <div className="p-2 rounded-lg bg-info-light text-info-main shrink-0 mt-0.5">
               <CaralIcon name="bolt" size={18} />
             </div>
-            <div className="text-xs text-neutral-700 dark:text-neutral-300">
-              <span className="font-semibold block text-neutral-900 dark:text-white mb-0.5">
+            <div className="text-xs text-neutral-800">
+              <span className="font-semibold block text-neutral-900 mb-0.5">
                 Configuración del Driver
               </span>
               Asocia las cuentas cloud fuente y define las entidades de destino con sus manejadores interactivos de porcentaje.
@@ -279,14 +279,14 @@ export function NewDriverDrawer({ isOpen, onClose, onCreate }: NewDriverDrawerPr
           {/* NIVEL 1: Información General */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-neutral-900 dark:text-white uppercase tracking-wider">
+              <span className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
                 1. Información General
               </span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="sm:col-span-1 flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-neutral-800 dark:text-neutral-200">
+                <label className="text-xs font-bold text-neutral-800">
                   Código *
                 </label>
                 <input
@@ -295,12 +295,12 @@ export function NewDriverDrawer({ isOpen, onClose, onCreate }: NewDriverDrawerPr
                   onChange={(e) => setCode(e.target.value)}
                   placeholder="DRV-01"
                   required
-                  className="w-full px-3 py-2 text-sm font-mono rounded-xl bg-container border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500/40"
+                  className="w-full px-3 py-2 text-sm font-mono rounded-xl bg-container border border-neutral-500 text-neutral-900 focus:outline-none focus:ring-2 focus:ring-info-main/40 focus:border-info-main"
                 />
               </div>
 
               <div className="sm:col-span-2 flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-neutral-800 dark:text-neutral-200">
+                <label className="text-xs font-bold text-neutral-800">
                   Nombre del Driver *
                 </label>
                 <input
@@ -309,13 +309,13 @@ export function NewDriverDrawer({ isOpen, onClose, onCreate }: NewDriverDrawerPr
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  className="w-full px-3 py-2 text-sm rounded-xl bg-container border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-white placeholder:text-neutral-800 focus:outline-none focus:ring-2 focus:ring-red-500/40"
+                  className="w-full px-3 py-2 text-sm rounded-xl bg-container border border-neutral-500 text-neutral-900 placeholder:text-neutral-800 focus:outline-none focus:ring-2 focus:ring-info-main/40 focus:border-info-main"
                 />
               </div>
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-bold text-neutral-800 dark:text-neutral-200">
+              <label className="text-xs font-bold text-neutral-800">
                 Descripción <span className="text-neutral-800 font-normal">(Opcional)</span>
               </label>
               <textarea
@@ -323,39 +323,39 @@ export function NewDriverDrawer({ isOpen, onClose, onCreate }: NewDriverDrawerPr
                 placeholder="Indica el propósito del driver o área responsable..."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full px-3 py-2 text-xs rounded-xl bg-container border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-white placeholder:text-neutral-800 focus:outline-none focus:ring-2 focus:ring-red-500/40 resize-none"
+                className="w-full px-3 py-2 text-xs rounded-xl bg-container border border-neutral-500 text-neutral-900 placeholder:text-neutral-800 focus:outline-none focus:ring-2 focus:ring-info-main/40 focus:border-info-main resize-none"
               />
             </div>
           </div>
 
           {/* NIVEL 2: Cuentas Asignadas */}
-          <div className="space-y-3 pt-3 border-t border-neutral-200 dark:border-neutral-800">
+          <div className="space-y-3 pt-3 border-t border-neutral-500">
             <div className="flex items-center justify-between">
               <div>
-                <span className="text-xs font-bold text-neutral-900 dark:text-white uppercase tracking-wider">
+                <span className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
                   2. Cuentas Asignadas ({selectedAccountIds.length})
                 </span>
-                <p className="text-[11px] text-neutral-500">
+                <p className="text-[11px] text-neutral-800">
                   Cuentas cloud cuyo costo total se agrupará en este driver.
                 </p>
               </div>
 
               <div className="flex items-center gap-2">
-                <button
-                  type="button"
+                <Button
+                  variant="ghost"
                   onClick={() => handleSelectAllFiltered(filteredAccounts.map((c) => c.id))}
-                  className="text-[11px] text-red-500 hover:text-red-600 font-semibold"
+                  className="text-[11px] text-info-main hover:text-info-hard font-semibold"
                 >
                   Seleccionar visibles
-                </button>
-                <span className="text-neutral-300 dark:text-neutral-700">|</span>
-                <button
-                  type="button"
+                </Button>
+                <span className="text-neutral-500">|</span>
+                <Button
+                  variant="ghost"
                   onClick={() => handleDeselectAllFiltered(filteredAccounts.map((c) => c.id))}
-                  className="text-[11px] text-neutral-800 dark:hover:text-neutral-300"
+                  className="text-[11px] text-neutral-800 hover:text-neutral-900"
                 >
                   Limpiar
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -370,7 +370,7 @@ export function NewDriverDrawer({ isOpen, onClose, onCreate }: NewDriverDrawerPr
                   placeholder="Buscar cuenta por nombre o proveedor..."
                   value={searchAccount}
                   onChange={(e) => setSearchAccount(e.target.value)}
-                  className="w-full pl-8! pr-3 py-2 text-xs rounded-lg bg-container border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-white placeholder:text-neutral-800 focus:outline-none focus:ring-1 focus:ring-red-500"
+                  className="w-full pl-8! pr-3 py-2 text-xs rounded-lg bg-container border border-neutral-500 text-neutral-900 placeholder:text-neutral-800 focus:outline-none focus:ring-1 focus:ring-info-main"
                 />
               </div>
 
@@ -399,24 +399,24 @@ export function NewDriverDrawer({ isOpen, onClose, onCreate }: NewDriverDrawerPr
                       onClick={() => toggleAccount(conn.id)}
                       className={`p-2.5 rounded-xl border cursor-pointer flex items-center justify-between transition-all select-none ${
                         isSelected
-                          ? "border-red-500/60 bg-red-50/60 dark:bg-red-950/20 text-neutral-900 dark:text-white"
-                          : "border-neutral-200 dark:border-neutral-800 bg-container text-neutral-700 dark:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-700"
+                          ? "border-info-main bg-info-light/20 text-neutral-900"
+                          : "border-neutral-500 bg-container text-neutral-800 hover:border-neutral-800"
                       }`}
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
-                        <div className="p-1 rounded-lg bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shrink-0">
+                        <div className="p-1 rounded-lg bg-container border border-neutral-500 shrink-0">
                           <Brand name={conn.brand} size={18} />
                         </div>
                         <div className="min-w-0">
                           <p className="text-xs font-medium truncate">{conn.name}</p>
-                          <p className="text-[10px] text-neutral-500">{conn.provider} &bull; {conn.id}</p>
+                          <p className="text-[10px] text-neutral-800">{conn.provider} &bull; {conn.id}</p>
                         </div>
                       </div>
 
                       <div className={`size-4.5 rounded-md border flex items-center justify-center transition-colors ${
                         isSelected
-                          ? "bg-red-500 border-red-500 text-white"
-                          : "border-neutral-300 dark:border-neutral-700 bg-transparent"
+                          ? "bg-info-main border-info-main text-white"
+                          : "border-neutral-500 bg-transparent"
                       }`}>
                         {isSelected && <CaralIcon name="check" size={12} />}
                       </div>
@@ -428,24 +428,24 @@ export function NewDriverDrawer({ isOpen, onClose, onCreate }: NewDriverDrawerPr
           </div>
 
           {/* NIVEL 3: Entidades y Repartición Porcentual con Manejadores */}
-          <div className="space-y-3 pt-3 border-t border-neutral-200 dark:border-neutral-800">
+          <div className="space-y-3 pt-3 border-t border-neutral-500">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-neutral-900 dark:text-white uppercase tracking-wider">
+                  <span className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
                     3. Entidades & Prorrateo Porcentual
                   </span>
                   <span
                     className={`text-xs font-mono font-bold px-2 py-0.5 rounded-full ${
                       totalPercentage === 100
-                        ? 'bg-emerald-100 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400'
-                        : 'bg-red-100 dark:bg-red-950/40 text-red-600 dark:text-red-400'
+                        ? 'bg-success-light text-success-hard border border-success-main/30'
+                        : 'bg-danger-light text-danger-hard border border-danger-main/30'
                     }`}
                   >
                     Total: {totalPercentage}% {totalPercentage !== 100 ? '(Debe ser 100%)' : '✓'}
                   </span>
                 </div>
-                <p className="text-[11px] text-neutral-500 mt-0.5">
+                <p className="text-[11px] text-neutral-800 mt-0.5">
                   Usa los manejadores (+/-) y el selector de paso para calibrar la partición del 100%.
                 </p>
               </div>
@@ -454,16 +454,17 @@ export function NewDriverDrawer({ isOpen, onClose, onCreate }: NewDriverDrawerPr
               <div className="flex items-center gap-1.5 flex-wrap">
                 {/* Step Dropdown */}
                 <div className="relative">
-                  <button
-                    type="button"
+                  <Button
+                    variant="ghost"
+                    hasBorder
                     onClick={() => setIsStepDropdownOpen((prev) => !prev)}
-                    className="px-2 py-1 text-[11px] rounded-lg border border-neutral-300 dark:border-neutral-700 bg-container font-mono font-semibold flex items-center gap-1 text-neutral-800 dark:text-neutral-200 hover:border-neutral-400"
+                    className="px-2 py-1 text-[11px] font-mono font-semibold flex items-center gap-1 text-neutral-800 border-neutral-500"
                   >
                     <span>Paso: &plusmn;{step}%</span>
                     <CaralIcon name="chevronDown" size={10} />
-                  </button>
+                  </Button>
                   {isStepDropdownOpen && (
-                    <div className="absolute right-0 mt-1 w-24 bg-container rounded-lg border border-neutral-300 dark:border-neutral-700 shadow-lg py-1 z-30">
+                    <div className="absolute right-0 mt-1 w-24 bg-container rounded-lg border border-neutral-500 shadow-lg py-1 z-30">
                       {STEP_OPTIONS.map((opt) => (
                         <button
                           key={opt}
@@ -474,8 +475,8 @@ export function NewDriverDrawer({ isOpen, onClose, onCreate }: NewDriverDrawerPr
                           }}
                           className={`w-full text-left px-2.5 py-1 text-xs font-mono transition-colors ${
                             step === opt
-                              ? 'bg-red-500 text-white font-bold'
-                              : 'hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-800 dark:text-neutral-200'
+                              ? 'bg-seidor-main text-white font-bold'
+                              : 'hover:bg-neutral-500/20 text-neutral-800'
                           }`}
                         >
                           &plusmn;{opt}%
@@ -485,29 +486,32 @@ export function NewDriverDrawer({ isOpen, onClose, onCreate }: NewDriverDrawerPr
                   )}
                 </div>
 
-                <button
-                  type="button"
+                <Button
+                  variant="ghost"
+                  hasBorder
                   onClick={() => handleApplyPreset('regions')}
-                  className="px-2 py-1 text-[11px] rounded-md bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-700"
+                  className="px-2 py-1 text-[11px] rounded-md text-neutral-800 border-neutral-500"
                   title="Ejemplo: Norte, Sur, Este"
                 >
                   Regiones
-                </button>
-                <button
-                  type="button"
+                </Button>
+                <Button
+                  variant="ghost"
+                  hasBorder
                   onClick={() => handleApplyPreset('departments')}
-                  className="px-2 py-1 text-[11px] rounded-md bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-700"
+                  className="px-2 py-1 text-[11px] rounded-md text-neutral-800 border-neutral-500"
                   title="Ejemplo: Products, IT, Preventas"
                 >
                   Sectores
-                </button>
-                <button
-                  type="button"
+                </Button>
+                <Button
+                  variant="ghost"
+                  hasBorder
                   onClick={handleDistributeEqually}
-                  className="px-2 py-1 text-[11px] font-semibold rounded-md border border-neutral-300 dark:border-neutral-700 hover:border-neutral-400 text-neutral-800 dark:text-neutral-200"
+                  className="px-2 py-1 text-[11px] font-semibold rounded-md border border-neutral-500 text-neutral-800"
                 >
                   Equitativo
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -524,10 +528,9 @@ export function NewDriverDrawer({ isOpen, onClose, onCreate }: NewDriverDrawerPr
                     handleAddCustomEntity();
                   }
                 }}
-                className="flex-1 px-3 py-2 text-xs rounded-xl bg-container border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-white placeholder:text-neutral-400 focus:outline-none focus:ring-1 focus:ring-red-500"
+                className="flex-1 px-3 py-2 text-xs rounded-xl bg-container border border-neutral-500 text-neutral-900 placeholder:text-neutral-800 focus:outline-none focus:ring-1 focus:ring-info-main"
               />
               <Button
-                type="button"
                 variant="info"
                 disabled={!newEntityInput.trim()}
                 onClick={handleAddCustomEntity}
@@ -552,9 +555,8 @@ export function NewDriverDrawer({ isOpen, onClose, onCreate }: NewDriverDrawerPr
         </div>
 
         {/* Footer Actions */}
-        <div className="pt-3 border-t border-neutral-200 dark:border-neutral-800 flex items-center justify-between gap-3 shrink-0">
+        <div className="pt-3 border-t border-neutral-500 flex items-center justify-between gap-3 shrink-0">
           <Button
-            type="button"
             variant="ghost"
             hasBorder
             onClick={onClose}
@@ -563,15 +565,15 @@ export function NewDriverDrawer({ isOpen, onClose, onCreate }: NewDriverDrawerPr
           </Button>
 
           <Button
+            variant="default"
             type="submit"
-            variant="danger"
             disabled={
               !name.trim() ||
               selectedAccountIds.length === 0 ||
               entities.length === 0 ||
               totalPercentage !== 100
             }
-            className="shadow-sm font-semibold"
+            className="bg-seidor-main text-white shadow-sm font-semibold"
           >
             Crear Driver ({selectedAccountIds.length} cuentas &bull; {entities.length} entidades)
           </Button>

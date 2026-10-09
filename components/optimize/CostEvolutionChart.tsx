@@ -478,7 +478,7 @@ export function CostEvolutionChart({ driver = null }: CostEvolutionChartProps) {
       )}
       <div
         className={`bg-container rounded-2xl shadow-sm flex flex-col gap-6 transition-all duration-300 ${isMaximized
-          ? 'fixed inset-2 sm:inset-4 z-[9999] p-6 sm:p-8 overflow-y-auto shadow-2xl border border-[var(--color-neutral-400)] dark:border-neutral-700 bg-container'
+          ? 'fixed inset-2 sm:inset-4 z-[9999] p-6 sm:p-8 overflow-y-auto shadow-2xl border border-neutral-500 bg-container'
           : 'w-full p-6'
           }`}
       >
@@ -491,7 +491,7 @@ export function CostEvolutionChart({ driver = null }: CostEvolutionChartProps) {
                 <div className="text-danger-main">
                   <CaralIcon name="screenChart" />
                 </div>
-                <h2 className="text-xl font-bold text-neutral-900 dark:text-white tracking-tight">
+                <h2 className="text-xl font-bold text-neutral-900 tracking-tight">
                   Gráfico Progresivo
                 </h2>
               </div>
@@ -499,26 +499,26 @@ export function CostEvolutionChart({ driver = null }: CostEvolutionChartProps) {
               <>
                 {driver ? (
                   <div className="px-3 py-2 bg-neutral-500 rounded-xl text-xs font-semibold flex items-center gap-2">
-                    <span className="font-mono text-xs font-extrabold bg-neutral-800 text-seidor-main dark:text-red-300 px-1.5 py-0.5 rounded">
+                    <span className="font-mono text-xs font-extrabold bg-container text-seidor-main px-1.5 py-0.5 rounded border border-neutral-500">
                       {driver.code}
                     </span>
-                    <span className="font-bold text-neutral-900 dark:text-white truncate max-w-[220px]">
+                    <span className="font-bold text-neutral-900 truncate max-w-[220px]">
                       {driver.name}
                     </span>
-                    <span className="text-[10px] bg-neutral-800 px-2 py-0.5 rounded-full font-bold">
+                    <span className="text-[10px] bg-container px-2 py-0.5 rounded-full font-bold border border-neutral-500 text-neutral-800">
                       {(driver.accounts || driver.connections || []).length} cuentas asignadas
                     </span>
                   </div>
                 ) : (
-                  <div className="px-3 py-1.5 rounded-xl text-xs font-semibold  flex items-center gap-2 shadow-2xs text-neutral-900 font-bold ">
+                  <div className="px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-2 shadow-2xs text-neutral-900">
                     <CaralIcon name="filter" size={14} />
                     Todos los Drivers (Consolidado)
                   </div>
                 )}
 
-                <div className="px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/60 text-xs font-semibold text-blue-700 dark:text-blue-300 flex items-center gap-1.5">
+                <div className="px-3 py-1 rounded-full bg-info-light border border-info-main/20 text-xs font-semibold text-info-hard flex items-center gap-1.5">
                   <span>📅 {startMonthLabel} — {endMonthLabel}</span>
-                  <span className="text-[10px] bg-blue-200 dark:bg-blue-800 px-1.5 py-0.2 rounded-full font-bold">
+                  <span className="text-[10px] bg-info-main/20 text-info-hard px-1.5 py-0.2 rounded-full font-bold">
                     {yearsSpan} años ({totalMonthsSelected} meses)
                   </span>
                 </div>
@@ -529,7 +529,7 @@ export function CostEvolutionChart({ driver = null }: CostEvolutionChartProps) {
                     {(driver.entities || []).map((ent) => (
                       <span
                         key={ent.id}
-                        className="inline-flex items-center gap-1 text-[11px] font-medium bg-neutral-100 dark:bg-neutral-800 px-2 py-0.5 rounded-full border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300"
+                        className="inline-flex items-center gap-1 text-[11px] font-medium bg-neutral-500 px-2 py-0.5 rounded-full border border-neutral-500 text-neutral-800"
                         title={`${ent.name} - ${ent.percentage}%`}
                       >
                         {ent.color && (
@@ -577,48 +577,52 @@ export function CostEvolutionChart({ driver = null }: CostEvolutionChartProps) {
                   : 'max-w-0 opacity-0 pointer-events-none -translate-x-2'
                   }`}
               >
-                <button
+                <Button
+                  variant={totalMonthsSelected === 8 ? "default" : "ghost"}
                   onClick={() => setQuickRange(8)}
-                  className={`whitespace-nowrap px-3 py-1.5 rounded-md font-medium transition-all duration-200 ${totalMonthsSelected === 8
-                    ? 'bg-white dark:bg-neutral-700 text-seidor-main dark:text-white shadow-xs font-bold scale-[1.02]'
-                    : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 hover:bg-black/5 dark:hover:bg-white/5'
+                  className={`whitespace-nowrap px-3 py-1.5 rounded-md font-medium text-xs transition-all duration-200 ${totalMonthsSelected === 8
+                    ? 'bg-seidor-main text-white shadow-xs font-bold scale-[1.02]'
+                    : 'text-neutral-800 hover:text-neutral-900 hover:bg-neutral-500/20'
                     }`}
                 >
                   8 meses (Mensual)
-                </button>
-                <button
+                </Button>
+                <Button
+                  variant={totalMonthsSelected === 84 ? "default" : "ghost"}
                   onClick={() => setQuickRange(84)}
-                  className={`whitespace-nowrap px-3 py-1.5 rounded-md font-medium transition-all duration-200 ${totalMonthsSelected === 84
-                    ? 'bg-white dark:bg-neutral-700 text-seidor-main dark:text-white shadow-xs font-bold scale-[1.02]'
-                    : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 hover:bg-black/5 dark:hover:bg-white/5'
+                  className={`whitespace-nowrap px-3 py-1.5 rounded-md font-medium text-xs transition-all duration-200 ${totalMonthsSelected === 84
+                    ? 'bg-seidor-main text-white shadow-xs font-bold scale-[1.02]'
+                    : 'text-neutral-800 hover:text-neutral-900 hover:bg-neutral-500/20'
                     }`}
                   title="7 Años - Consolidado en 4 cuartos/año"
                 >
                   7 Años (Trimestral)
-                </button>
-                <button
+                </Button>
+                <Button
+                  variant={totalMonthsSelected === 180 ? "default" : "ghost"}
                   onClick={() => setQuickRange(180)}
-                  className={`whitespace-nowrap px-3 py-1.5 rounded-md font-medium transition-all duration-200 ${totalMonthsSelected === 180
-                    ? 'bg-white dark:bg-neutral-700 text-seidor-main dark:text-white shadow-xs font-bold scale-[1.02]'
-                    : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 hover:bg-black/5 dark:hover:bg-white/5'
+                  className={`whitespace-nowrap px-3 py-1.5 rounded-md font-medium text-xs transition-all duration-200 ${totalMonthsSelected === 180
+                    ? 'bg-seidor-main text-white shadow-xs font-bold scale-[1.02]'
+                    : 'text-neutral-800 hover:text-neutral-900 hover:bg-neutral-500/20'
                     }`}
                   title="15 Años - Consolidado en semestres"
                 >
                   15 Años (Semestral)
-                </button>
-                <button
+                </Button>
+                <Button
+                  variant={totalMonthsSelected === totalMonths ? "default" : "ghost"}
                   onClick={() => {
                     setRangeStart(0);
                     setRangeEnd(totalMonths - 1);
                   }}
-                  className={`whitespace-nowrap px-3 py-1.5 rounded-md font-medium transition-all duration-200 ${totalMonthsSelected === totalMonths
-                    ? 'bg-white dark:bg-neutral-700 text-seidor-main dark:text-white shadow-xs font-bold scale-[1.02]'
-                    : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 hover:bg-black/5 dark:hover:bg-white/5'
+                  className={`whitespace-nowrap px-3 py-1.5 rounded-md font-medium text-xs transition-all duration-200 ${totalMonthsSelected === totalMonths
+                    ? 'bg-seidor-main text-white shadow-xs font-bold scale-[1.02]'
+                    : 'text-neutral-800 hover:text-neutral-900 hover:bg-neutral-500/20'
                     }`}
                   title="Todo el historial (15 Años / Semestral)"
                 >
                   Todo ({Math.round(totalMonths / 12)} Años)
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -630,20 +634,20 @@ export function CostEvolutionChart({ driver = null }: CostEvolutionChartProps) {
         <div className="w-full relative pt-4 pb-2">
           {/* Tooltip flotante al hacer hover */}
           {hoveredPoint && (
-            <div className="absolute top-0 right-4 bg-[var(--color-neutral-full)] border border-[var(--color-neutral-400)] rounded-lg p-3 shadow-xl text-xs z-30 flex flex-col gap-1.5 pointer-events-none min-w-[210px]">
-              <div className="flex justify-between items-center border-b border-neutral-200 dark:border-neutral-700 pb-1 font-bold text-[var(--color-neutral-900)] dark:text-white">
+            <div className="absolute top-0 right-4 bg-container border border-neutral-500 rounded-lg p-3 shadow-xl text-xs z-30 flex flex-col gap-1.5 pointer-events-none min-w-[210px]">
+              <div className="flex justify-between items-center border-b border-neutral-500 pb-1 font-bold text-neutral-900">
                 <span>{hoveredPoint.fullLabel}</span>
-                <span className="text-seidor-main dark:text-info-main">
+                <span className="text-info-main">
                   ${hoveredPoint.total.toLocaleString()}
                 </span>
               </div>
               <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-[11px] pt-1">
-                <span className="text-[#0191FF]">Compute: ${hoveredPoint.compute.toLocaleString()}</span>
-                <span className="text-[#10B981]">Storage: ${hoveredPoint.storage.toLocaleString()}</span>
-                <span className="text-[#F59E0B]">Database: ${hoveredPoint.database.toLocaleString()}</span>
-                <span className="text-[#8B5CF6]">Other: ${hoveredPoint.other.toLocaleString()}</span>
+                <span className="text-info-main">Compute: ${hoveredPoint.compute.toLocaleString()}</span>
+                <span className="text-success-main">Storage: ${hoveredPoint.storage.toLocaleString()}</span>
+                <span className="text-warning-main">Database: ${hoveredPoint.database.toLocaleString()}</span>
+                <span className="text-indigo-main">Other: ${hoveredPoint.other.toLocaleString()}</span>
               </div>
-              <div className="text-[10px] text-neutral-800 pt-1 border-t border-neutral-200 dark:border-neutral-700 flex justify-between">
+              <div className="text-[10px] text-neutral-800 pt-1 border-t border-neutral-500 flex justify-between">
                 <span>Presupuesto objetivo:</span>
                 <span className="font-semibold">${hoveredPoint.budget.toLocaleString()}</span>
               </div>
@@ -652,7 +656,7 @@ export function CostEvolutionChart({ driver = null }: CostEvolutionChartProps) {
 
           {/* Eje de Barras Adaptable */}
           <div
-            className={`grid gap-1.5 sm:gap-2.5 items-end px-2 border-b border-[var(--color-neutral-300)] dark:border-[var(--color-neutral-800)] pb-2 relative transition-all duration-300 ${isMaximized ? 'h-[calc(100vh-380px)] min-h-[380px]' : 'h-[220px]'
+            className={`grid gap-1.5 sm:gap-2.5 items-end px-2 border-b border-neutral-500 pb-2 relative transition-all duration-300 ${isMaximized ? 'h-[calc(100vh-380px)] min-h-[380px]' : 'h-[220px]'
               }`}
             style={{ gridTemplateColumns: `repeat(${displayData.length}, minmax(0, 1fr))` }}
           >
@@ -688,7 +692,7 @@ export function CostEvolutionChart({ driver = null }: CostEvolutionChartProps) {
                   {showTopLabel && (
                     <span
                       className={`text-[10px] font-semibold mb-1 transition-all duration-200 truncate ${isHovered
-                        ? "text-seidor-main dark:text-info-main scale-110 font-bold"
+                        ? "text-seidor-main scale-110 font-bold"
                         : "text-neutral-800 opacity-80"
                         }`}
                     >
@@ -706,34 +710,34 @@ export function CostEvolutionChart({ driver = null }: CostEvolutionChartProps) {
                       <>
                         <div
                           style={{ height: `${computePct}%` }}
-                          className="bg-[#0191FF] w-full transition-all"
+                          className="bg-info-main w-full transition-all"
                           title={`Compute: $${item.compute.toLocaleString()}`}
                         />
                         <div
                           style={{ height: `${storagePct}%` }}
-                          className="bg-[#10B981] w-full transition-all"
+                          className="bg-success-main w-full transition-all"
                           title={`Storage: $${item.storage.toLocaleString()}`}
                         />
                         <div
                           style={{ height: `${dbPct}%` }}
-                          className="bg-[#F59E0B] w-full transition-all"
+                          className="bg-warning-main w-full transition-all"
                           title={`Database: $${item.database.toLocaleString()}`}
                         />
                         <div
                           style={{ height: `${otherPct}%` }}
-                          className="bg-[#8B5CF6] w-full transition-all"
+                          className="bg-indigo-main w-full transition-all"
                           title={`Other: $${item.other.toLocaleString()}`}
                         />
                       </>
                     ) : (
                       <div
                         className={`w-full h-full transition-all ${activeCategory === 'compute'
-                          ? 'bg-[#0191FF]'
+                          ? 'bg-info-main'
                           : activeCategory === 'storage'
-                            ? 'bg-[#10B981]'
+                            ? 'bg-success-main'
                             : activeCategory === 'database'
-                              ? 'bg-[#F59E0B]'
-                              : 'bg-[#8B5CF6]'
+                              ? 'bg-warning-main'
+                              : 'bg-indigo-main'
                           }`}
                       />
                     )}
@@ -756,10 +760,10 @@ export function CostEvolutionChart({ driver = null }: CostEvolutionChartProps) {
                 <div key={item.id} className="min-w-0">
                   <span
                     className={`text-[10px] sm:text-xs block truncate transition-colors ${item.isYearStart && granularity !== 'annual'
-                      ? "text-[var(--color-info-main)] font-extrabold underline decoration-2 underline-offset-2"
+                      ? "text-info-main font-extrabold underline decoration-2 underline-offset-2"
                       : hoveredPoint?.id === item.id
-                        ? "text-seidor-main-text dark:text-white font-bold"
-                        : "text-neutral-600 dark:text-neutral-400"
+                        ? "text-seidor-main font-bold"
+                        : "text-neutral-800"
                       } ${!isVisible ? 'hidden' : ''}`}
                   >
                     {item.label}
@@ -778,8 +782,8 @@ export function CostEvolutionChart({ driver = null }: CostEvolutionChartProps) {
             <span>{allData[0]?.year || 2011} (Inicio histórico)</span>
 
             {/* Badge de Granularidad Activa */}
-            <div className="px-2.5 py-1 rounded-full bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-900/60 text-xs font-semibold text-purple-700 dark:text-purple-300 flex items-center gap-1.5 shadow-2xs">
-              <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
+            <div className="px-2.5 py-1 rounded-full bg-indigo-light border border-indigo-main/20 text-xs font-semibold text-indigo-hard flex items-center gap-1.5 shadow-2xs">
+              <span className="w-2 h-2 rounded-full bg-indigo-main animate-pulse" />
               <span>{granularityLabel}</span>
             </div>
 
@@ -788,7 +792,7 @@ export function CostEvolutionChart({ driver = null }: CostEvolutionChartProps) {
 
           <div
             ref={sliderTrackRef}
-            className="relative w-full h-[28px] bg-[var(--color-neutral-300)]/60 dark:bg-neutral-800 rounded-full flex items-center px-1 select-none overflow-visible shadow-inner"
+            className="relative w-full h-[28px] bg-neutral-500 rounded-full flex items-center px-1 select-none overflow-visible shadow-inner"
           >
             {/* Marcas anuales de referencia en la pista */}
             <div className="absolute inset-0 flex justify-between items-center px-4 pointer-events-none opacity-40">
@@ -809,7 +813,7 @@ export function CostEvolutionChart({ driver = null }: CostEvolutionChartProps) {
               {/* Manejador Izquierdo */}
               <div
                 onMouseDown={(e) => handleMouseDown('left', e)}
-                className="w-[26px] h-[26px] rounded-full bg-[#8E9CAE] hover:bg-[#6D7D93] active:bg-seidor-main border-2 border-white dark:border-neutral-900 shadow-md cursor-ew-resize flex items-center justify-center shrink-0 -ml-[13px] z-20 transition-transform hover:scale-110"
+                className="w-[26px] h-[26px] rounded-full bg-neutral-800 hover:bg-neutral-900 active:bg-seidor-main border-2 border-container shadow-md cursor-ew-resize flex items-center justify-center shrink-0 -ml-[13px] z-20 transition-transform hover:scale-110"
                 title="Arrastra para expandir/contraer el inicio del rango"
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-white" />
@@ -818,7 +822,7 @@ export function CostEvolutionChart({ driver = null }: CostEvolutionChartProps) {
               {/* Barra conectora central */}
               <div
                 onMouseDown={(e) => handleMouseDown('middle', e)}
-                className="flex-1 h-[22px] mx-[-6px] bg-[#D7DFE9] dark:bg-neutral-600/80 hover:bg-[#C8D3E2] active:bg-[#BAC8DB] rounded-full cursor-grab active:cursor-grabbing flex items-center justify-center transition-colors shadow-2xs border border-[#CBD5E1] dark:border-neutral-800"
+                className="flex-1 h-[22px] mx-[-6px] bg-neutral-500/80 hover:bg-neutral-500 rounded-full cursor-grab active:cursor-grabbing flex items-center justify-center transition-colors shadow-2xs border border-neutral-500"
                 title="Arrastra horizontalmente para mover la ventana de tiempo"
               >
                 <div className="flex gap-1 items-center opacity-60">
@@ -831,7 +835,7 @@ export function CostEvolutionChart({ driver = null }: CostEvolutionChartProps) {
               {/* Manejador Derecho */}
               <div
                 onMouseDown={(e) => handleMouseDown('right', e)}
-                className="w-[26px] h-[26px] rounded-full bg-[#8E9CAE] hover:bg-[#6D7D93] active:bg-seidor-main border-2 border-white dark:border-neutral-900 shadow-md cursor-ew-resize flex items-center justify-center shrink-0 -mr-[13px] z-20 transition-transform hover:scale-110"
+                className="w-[26px] h-[26px] rounded-full bg-neutral-800 hover:bg-neutral-900 active:bg-seidor-main border-2 border-container shadow-md cursor-ew-resize flex items-center justify-center shrink-0 -mr-[13px] z-20 transition-transform hover:scale-110"
                 title="Arrastra para expandir/contraer el final del rango"
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-white" />
@@ -841,70 +845,80 @@ export function CostEvolutionChart({ driver = null }: CostEvolutionChartProps) {
         </div>
 
         {/* Leyenda interactiva y Métricas resumidas */}
-        <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-[var(--color-neutral-200)] dark:border-[var(--color-neutral-800)] text-xs text-neutral-600 dark:text-neutral-400">
+        <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-neutral-500 text-xs text-neutral-800">
           {/* Filtros por Categoría */}
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
             <span className="font-semibold text-neutral-800 mr-1">Filtrar:</span>
-            <button
+            <Button
+              variant={activeCategory === 'all' ? "default" : "ghost"}
+              hasBorder
               onClick={() => setActiveCategory('all')}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border transition-all ${activeCategory === 'all'
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs transition-all ${activeCategory === 'all'
                 ? 'bg-neutral-500 text-neutral-900 font-bold border-transparent'
-                : 'text-neutral-900 border-neutral-300 hover:bg-neutral-500'
+                : 'text-neutral-900 border-neutral-500 hover:bg-neutral-500/20'
                 }`}
             >
               <span>Todos</span>
-            </button>
-            <button
+            </Button>
+            <Button
+              variant={activeCategory === 'compute' ? "default" : "ghost"}
+              hasBorder
               onClick={() => setActiveCategory('compute')}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border transition-all ${activeCategory === 'compute'
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs transition-all ${activeCategory === 'compute'
                 ? 'bg-neutral-500 text-neutral-900 font-bold border-transparent'
-                : 'text-neutral-900 border-neutral-300 hover:bg-neutral-500'
+                : 'text-neutral-900 border-neutral-500 hover:bg-neutral-500/20'
                 }`}
             >
-              <span className="w-2.5 h-2.5 rounded-full bg-[#0191FF]" />
+              <span className="w-2.5 h-2.5 rounded-full bg-info-main" />
               <span>Compute</span>
-            </button>
-            <button
+            </Button>
+            <Button
+              variant={activeCategory === 'storage' ? "default" : "ghost"}
+              hasBorder
               onClick={() => setActiveCategory('storage')}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border transition-all ${activeCategory === 'storage'
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs transition-all ${activeCategory === 'storage'
                 ? 'bg-neutral-500 text-neutral-900 font-bold border-transparent'
-                : 'text-neutral-900 border-neutral-300 hover:bg-neutral-500'
+                : 'text-neutral-900 border-neutral-500 hover:bg-neutral-500/20'
                 }`}
             >
-              <span className="w-2.5 h-2.5 rounded-full bg-[#10B981]" />
+              <span className="w-2.5 h-2.5 rounded-full bg-success-main" />
               <span>Storage</span>
-            </button>
-            <button
+            </Button>
+            <Button
+              variant={activeCategory === 'database' ? "default" : "ghost"}
+              hasBorder
               onClick={() => setActiveCategory('database')}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border transition-all ${activeCategory === 'database'
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs transition-all ${activeCategory === 'database'
                 ? 'bg-neutral-500 text-neutral-900 font-bold border-transparent'
-                : 'text-neutral-900 border-neutral-300 hover:bg-neutral-500'
+                : 'text-neutral-900 border-neutral-500 hover:bg-neutral-500/20'
                 }`}
             >
-              <span className="w-2.5 h-2.5 rounded-full bg-[#F59E0B]" />
+              <span className="w-2.5 h-2.5 rounded-full bg-warning-main" />
               <span>Database</span>
-            </button>
-            <button
+            </Button>
+            <Button
+              variant={activeCategory === 'other' ? "default" : "ghost"}
+              hasBorder
               onClick={() => setActiveCategory('other')}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border transition-all ${activeCategory === 'other'
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs transition-all ${activeCategory === 'other'
                 ? 'bg-neutral-500 text-neutral-900 font-bold border-transparent'
-                : 'text-neutral-900 border-neutral-300 hover:bg-neutral-500'
+                : 'text-neutral-900 border-neutral-500 hover:bg-neutral-500/20'
                 }`}
             >
-              <span className="w-2.5 h-2.5 rounded-full bg-[#8B5CF6]" />
+              <span className="w-2.5 h-2.5 rounded-full bg-indigo-main" />
               <span>Otros</span>
-            </button>
+            </Button>
           </div>
 
           {/* Resumen del período seleccionado */}
           <div className="flex items-center gap-4">
             <div>
               <span className="text-xs text-neutral-800 block">Total en ventana:</span>
-              <span className="font-bold text-[var(--color-neutral-900)] dark:text-white text-sm">
+              <span className="font-bold text-neutral-900 text-sm">
                 ${totalPeriodSpend.toLocaleString()}
               </span>
             </div>
-            <div className="border-l border-neutral-300 dark:border-neutral-700 pl-4">
+            <div className="border-l border-neutral-500 pl-4">
               <span className="text-xs text-neutral-800 block">Promedio por barra:</span>
               <span className="font-bold text-info-main text-sm">
                 ${averagePointSpend.toLocaleString()}

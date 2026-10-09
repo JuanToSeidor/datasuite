@@ -429,7 +429,7 @@ export default function ManageConnectionsPage() {
 
   const renderPagination = (roundedClass = "rounded-b-[20px]") => {
     return (
-      <div className={`flex items-center justify-between gap-6 text-sm  p-4 border-t border-neutral-500/10 dark:border-neutral-300/10 sticky bottom-0 bg-container ${roundedClass} z-10 select-none`}>
+      <div className={`flex items-center justify-between gap-6 text-sm p-4 border-t border-neutral-400 sticky bottom-0 bg-container ${roundedClass} z-10 select-none`}>
         {/* Rows per page dropdown */}
         <div className="flex items-center gap-2">
           <span className="text-xs text-neutral-800 font-medium">Rows per page</span>
@@ -439,7 +439,7 @@ export default function ManageConnectionsPage() {
               isDropdown
               isOpen={isDropdownOpen}
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="border bordr-neutral-500"
+              className="border border-neutral-400"
             >
               {rowsPerPage}
             </Button>
@@ -449,7 +449,7 @@ export default function ManageConnectionsPage() {
                   className="fixed inset-0 z-40"
                   onClick={() => setIsDropdownOpen(false)}
                 />
-                <div className="absolute bottom-full mb-1.5 left-0 z-50 w-20 bg-white dark:bg-neutral-800 border border-neutral-500/30 dark:border-neutral-300/10 rounded-[10px] shadow-lg py-1 flex flex-col animate-fade-in">
+                <div className="absolute bottom-full mb-1.5 left-0 z-50 w-20 bg-container border border-neutral-400 rounded-[10px] shadow-lg py-1 flex flex-col animate-fade-in">
                   {[5, 10, 25, 50].map((val) => (
                     <Button
                       key={val}
@@ -459,7 +459,7 @@ export default function ManageConnectionsPage() {
                         setCurrentPage(1);
                         setIsDropdownOpen(false);
                       }}
-                      className={`w-full justify-start text-left px-3 py-1.5 text-xs font-semibold hover:bg-neutral-500/10 dark:hover:bg-neutral-300/5 transition-colors cursor-pointer ${rowsPerPage === val ? "text-seidor-main font-bold" : "text-neutral-850 dark:text-white"
+                      className={`w-full justify-start text-left px-3 py-1.5 text-xs font-semibold hover:bg-neutral-500/10 transition-colors cursor-pointer ${rowsPerPage === val ? "text-seidor-main font-bold" : "text-neutral-900"
                         }`}
                     >
                       {val}
@@ -477,7 +477,7 @@ export default function ManageConnectionsPage() {
             variant="ghost"
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
-            className={`text-xs font-semibold flex items-center gap-1.5 px-3.5 py-1.5 h-auto cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed text-neutral-900 dark:text-white hover:bg-neutral-500/10 dark:hover:bg-neutral-300/5 rounded-lg transition-colors`}
+            className={`text-xs font-semibold flex items-center gap-1.5 px-3.5 py-1.5 h-auto cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed text-neutral-900 hover:bg-neutral-500/10 rounded-lg transition-colors`}
           >
             <CaralIcon name="chevronLeft" size={12} />
             Previous
@@ -486,7 +486,7 @@ export default function ManageConnectionsPage() {
             variant="ghost"
             onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
             disabled={currentPage === totalPages}
-            className={`text-xs font-semibold flex items-center gap-1.5 px-3.5 py-1.5 h-auto cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed text-neutral-900 dark:text-white hover:bg-neutral-500/10 dark:hover:bg-neutral-300/5 rounded-lg transition-colors`}
+            className={`text-xs font-semibold flex items-center gap-1.5 px-3.5 py-1.5 h-auto cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed text-neutral-900 hover:bg-neutral-500/10 rounded-lg transition-colors`}
           >
             Next
             <CaralIcon name="chevronRigth" size={12} />
@@ -503,11 +503,11 @@ export default function ManageConnectionsPage() {
       width: "25%",
       render: (conn: ConnectionItem) => (
         <div className="flex items-center gap-3">
-          <div className="bg-neutral-100 border border-neutral-800 p-1.5 rounded-[6px] flex items-center justify-center size-8 shrink-0">
+          <div className="bg-container border border-neutral-800 p-1.5 rounded-[6px] flex items-center justify-center size-8 shrink-0">
             <SourceLogo brandName={conn.brandName} size={16} />
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-neutral-900 dark:text-white font-semibold text-sm">{conn.name}</span>
+            <span className="text-neutral-900 font-semibold text-sm">{conn.name}</span>
             {conn.isProduction && (
               <div className="relative group flex items-center">
                 <span className="text-info-main cursor-help hover:text-info-hard transition-colors flex items-center">
@@ -515,14 +515,14 @@ export default function ManageConnectionsPage() {
                 </span>
 
                 {/* Popover */}
-                <div className="absolute top-6 left-0 z-50 w-72 p-4 bg-[#E2E8F0] dark:bg-neutral-450 border border-neutral-350 dark:border-neutral-600 rounded-[12px] shadow-xl text-left scale-95 opacity-0 pointer-events-none group-hover:scale-100 group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 origin-top-left">
-                  <div className="absolute -top-1.5 left-3 size-3 bg-[#E2E8F0] dark:bg-neutral-450 border-t border-l border-neutral-350 dark:border-neutral-600 rotate-45" />
+                <div className="absolute top-6 left-0 z-50 w-72 p-4 bg-container border border-neutral-400 rounded-[12px] shadow-xl text-left scale-95 opacity-0 pointer-events-none group-hover:scale-100 group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 origin-top-left">
+                  <div className="absolute -top-1.5 left-3 size-3 bg-container border-t border-l border-neutral-400 rotate-45" />
                   <div className="relative z-10 space-y-1.5 font-normal text-left">
-                    <div className="flex items-center gap-2 text-info-hard dark:text-info-main">
+                    <div className="flex items-center gap-2 text-info-hard">
                       <CaralIcon name="badgeSync" size={14} />
                       <span className="text-xs font-bold font-poppins">Productive environment</span>
                     </div>
-                    <p className="text-[11px] leading-relaxed text-neutral-900 dark:text-neutral-200">
+                    <p className="text-[11px] leading-relaxed text-neutral-800">
                       Only origins marked with this flag can be used in automated jobs. Connections without this flag are intended for testing, validation, or QA environments.
                     </p>
                   </div>
@@ -550,7 +550,7 @@ export default function ManageConnectionsPage() {
       header: "Location Type",
       width: "20%",
       render: (conn: ConnectionItem) => (
-        <span className="text-neutral-800 dark:text-neutral-200">{conn.locationType}</span>
+        <span className="text-neutral-800">{conn.locationType}</span>
       )
     },
     {
@@ -560,7 +560,7 @@ export default function ManageConnectionsPage() {
       render: (conn: ConnectionItem) => (
         <div className="flex items-center gap-2">
           <SourceLogo brandName={conn.brandName} size={14} />
-          <span className="text-neutral-800 dark:text-neutral-200">{conn.type}</span>
+          <span className="text-neutral-800">{conn.type}</span>
         </div>
       )
     },
@@ -569,7 +569,7 @@ export default function ManageConnectionsPage() {
       header: "Created day",
       width: "12%",
       render: (conn: ConnectionItem) => (
-        <span className="text-neutral-850 dark:text-neutral-300">{conn.createdDay}</span>
+        <span className="text-neutral-800">{conn.createdDay}</span>
       )
     },
     {
@@ -613,7 +613,7 @@ export default function ManageConnectionsPage() {
       {/* Main Content Container */}
       <div className="flex-1 p-[18px] flex flex-col justify-start gap-6">
         {/* Top Header Card */}
-        <div className="border rounded-[20px] p-5 shadow-sm space-y-6 bg-container transition-colors duration-300">
+        <div >
           <div className="flex items-end justify-between transition-colors duration-300">
             <div className="space-y-1 text-left">
               <h2 className="text-[30px] font-semibold tracking-tight leading-[35px] text-neutral-900 transition-colors duration-300 font-poppins">
@@ -628,7 +628,7 @@ export default function ManageConnectionsPage() {
 
         </div>
         {/* Controls row */}
-        <div className="flex justify-between items-center p-4 bg-container rounded-xl border border-neutral-500/20 dark:border-neutral-300/10">
+        <div className="flex justify-between items-center p-4 bg-container rounded-xl border border-neutral-400">
           {/* Horizontal Filter Tabs */}
           <Tabs
             activeIndex={tabs.indexOf(activeTab)}
@@ -639,7 +639,7 @@ export default function ManageConnectionsPage() {
           {/* Right Side actions */}
           <div className="flex items-center gap-3 justify-end shrink-0">
             {/* Search Bar */}
-            <div className="border border-neutral-300 dark:border-neutral-300 rounded-[12px] min-h-[40px] flex items-center gap-3 px-4 py-2 w-64 shadow-[0_2px_5px_rgba(0,0,0,0.04)] bg-white dark:bg-neutral-100 transition-colors duration-300">
+            <div className="border border-neutral-800 rounded-[12px] min-h-[40px] flex items-center gap-3 px-4 py-2 w-64 shadow-[0_2px_5px_rgba(0,0,0,0.04)] bg-container transition-colors duration-300">
               <CaralIcon name="search" size={16} />
               <input
                 type="text"
@@ -677,7 +677,7 @@ export default function ManageConnectionsPage() {
         {/* List/Cards view split rendering */}
         {isListView ? (
           /* LIST VIEW TABLE */
-          <div className="w-full bg-container border border-neutral-300 overflow-hidden rounded-[20px] shadow-sm transition-all duration-300 flex flex-col justify-between relative">
+          <div className="w-full bg-container border border-neutral-400 overflow-hidden rounded-[20px] shadow-sm transition-all duration-300 flex flex-col justify-between relative">
             <div className="w-full overflow-x-auto rounded-t-[20px]">
               {filteredConnections.length === 0 ? (
                 <div className="text-center py-16 text-neutral-800 text-xs">
@@ -701,7 +701,7 @@ export default function ManageConnectionsPage() {
               {paginatedConnections.map((conn) => (
                 <div
                   key={conn.id}
-                  className="border  border-neutral-300 rounded-[20px] p-5 shadow-sm space-y-4 bg-container transition-colors duration-300 text-left flex flex-col justify-between"
+                  className="border border-neutral-400 rounded-[20px] p-5 shadow-sm space-y-4 bg-container transition-colors duration-300 text-left flex flex-col justify-between"
                 >
                   <div className="space-y-4">
                     {/* Top: logo, name and status */}
@@ -710,19 +710,19 @@ export default function ManageConnectionsPage() {
                         {conn.isProduction && (
                           <div className="relative group">
                             {/* Productive Badge */}
-                            <div className="bg-info-light dark:bg-info-main/20 border border-info-main p-2 rounded-[12px] flex items-center justify-center size-10 shrink-0 text-info-main cursor-help transition-all duration-300">
+                            <div className="bg-info-light border border-info-main p-2 rounded-[12px] flex items-center justify-center size-10 shrink-0 text-info-main cursor-help transition-all duration-300">
                               <CaralIcon name="badgeSync" size={20} />
                             </div>
 
                             {/* Popover */}
-                            <div className="absolute top-12 left-0 z-50 w-72 p-4 bg-[#E2E8F0] dark:bg-neutral-450 border border-neutral-350 dark:border-neutral-600 rounded-[12px] shadow-xl text-left scale-95 opacity-0 pointer-events-none group-hover:scale-100 group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 origin-top-left">
-                              <div className="absolute -top-1.5 left-4 size-3 bg-[#E2E8F0] dark:bg-neutral-450 border-t border-l border-neutral-350 dark:border-neutral-600 rotate-45" />
+                            <div className="absolute top-12 left-0 z-50 w-72 p-4 bg-container border border-neutral-400 rounded-[12px] shadow-xl text-left scale-95 opacity-0 pointer-events-none group-hover:scale-100 group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 origin-top-left">
+                              <div className="absolute -top-1.5 left-4 size-3 bg-container border-t border-l border-neutral-400 rotate-45" />
                               <div className="relative z-10 space-y-1.5 font-normal">
-                                <div className="flex items-center gap-2 text-info-hard dark:text-info-main">
+                                <div className="flex items-center gap-2 text-info-hard">
                                   <CaralIcon name="badgeSync" size={16} />
                                   <span className="text-xs font-bold font-poppins">Productive environment</span>
                                 </div>
-                                <p className="text-[11px] leading-relaxed text-neutral-900 dark:text-neutral-200">
+                                <p className="text-[11px] leading-relaxed text-neutral-800">
                                   Only origins marked with this flag can be used in automated jobs. Connections without this flag are intended for testing, validation, or QA environments.
                                 </p>
                               </div>
@@ -730,14 +730,14 @@ export default function ManageConnectionsPage() {
                           </div>
                         )}
 
-                        <div className="bg-neutral-100 border border-neutral-800 p-2 rounded-[6px] flex items-center justify-center size-10 shrink-0">
+                        <div className="bg-container border border-neutral-800 p-2 rounded-[6px] flex items-center justify-center size-10 shrink-0">
                           <SourceLogo brandName={conn.brandName} size={20} />
                         </div>
                         <div>
-                          <h4 className="font-bold text-sm text-neutral-900 dark:text-white leading-tight">
+                          <h4 className="font-bold text-sm text-neutral-900 leading-tight">
                             {conn.name}
                           </h4>
-                          <p className="text-[10px] text-neutral-850 dark:text-neutral-300">
+                          <p className="text-[10px] text-neutral-800">
                             {conn.locationType} | {conn.type}
                           </p>
                         </div>
@@ -750,12 +750,12 @@ export default function ManageConnectionsPage() {
                     </div>
 
                     {/* Middle: author and avatar */}
-                    <div className="flex items-center gap-3 pt-3.5 border-t border-neutral-500/20 dark:border-neutral-300/10">
+                    <div className="flex items-center gap-3 pt-3.5 border-t border-neutral-400">
                       <div className="bg-warning-main w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white shadow-md">
                         {conn.avatarText}
                       </div>
                       <div>
-                        <p className="text-xs font-bold text-neutral-900 dark:text-white">
+                        <p className="text-xs font-bold text-neutral-900">
                           Create by {conn.createdBy}
                         </p>
                         <p className="text-[10px] text-neutral-800">
@@ -769,7 +769,7 @@ export default function ManageConnectionsPage() {
                   <div className="flex justify-end pt-4">
                     <Button
                       variant="info"
-                      className="text-xs font-semibold px-4 py-2 bg-[#00263E] hover:bg-neutral-800 text-white rounded-md h-auto cursor-pointer"
+                      className="text-xs font-semibold px-4 py-2 bg-seidor-main hover:bg-seidor-hard text-white rounded-md h-auto cursor-pointer"
                       onClick={() => {
                         setSelectedConnection(conn);
                         setIsEditDrawerOpen(true);
@@ -782,12 +782,12 @@ export default function ManageConnectionsPage() {
               ))}
             </div>
             {filteredConnections.length === 0 && (
-              <div className="col-span-full text-center py-16 border border-dashed border-neutral-300 rounded-[20px] text-zinc-500 text-xs bg-container">
+              <div className="col-span-full text-center py-16 border border-dashed border-neutral-400 rounded-[20px] text-neutral-800 text-xs bg-container">
                 No connections found.
               </div>
             )}
             {filteredConnections.length > 0 && (
-              <div className="bg-container border border-neutral-300  rounded-[20px] shadow-sm mt-6 relative">
+              <div className="bg-container border border-neutral-400 rounded-[20px] shadow-sm mt-6 relative">
                 {renderPagination("rounded-[20px]")}
               </div>
             )}
@@ -806,12 +806,12 @@ export default function ManageConnectionsPage() {
           <div className="flex-1 overflow-y-auto space-y-6 pt-4 pr-1.5 scrollbar-thin">
             {/* Header info - Brand name and location type */}
             {selectedConnection && (
-              <div className="flex items-center gap-4 p-4 rounded-[12px] bg-neutral-500/10 dark:bg-neutral-350/5 border border-neutral-500/20 dark:border-neutral-300/10 animate-fade-in">
-                <div className="bg-neutral-100 border border-neutral-800 p-2.5 rounded-[8px] flex items-center justify-center size-12 shrink-0">
+              <div className="flex items-center gap-4 p-4 rounded-[12px] bg-neutral-500/10 border border-neutral-400 animate-fade-in">
+                <div className="bg-container border border-neutral-800 p-2.5 rounded-[8px] flex items-center justify-center size-12 shrink-0">
                   <SourceLogo brandName={selectedConnection.brandName} size={24} />
                 </div>
                 <div>
-                  <h3 className="text-base font-bold text-neutral-900 dark:text-white leading-tight">
+                  <h3 className="text-base font-bold text-neutral-900 leading-tight">
                     {selectedConnection.type}
                   </h3>
                   <p className="text-xs text-neutral-800 font-sans">
@@ -823,7 +823,7 @@ export default function ManageConnectionsPage() {
 
             {/* Section 1: General Settings */}
             <div className="space-y-4 pt-2">
-              <h4 className="text-xs font-semibold uppercase tracking-wider text-neutral-800 border-b border-neutral-500/20 dark:border-neutral-300/10 pb-2">
+              <h4 className="text-xs font-semibold uppercase tracking-wider text-neutral-800 border-b border-neutral-400 pb-2">
                 General Settings
               </h4>
               <div className="grid grid-cols-1 gap-4">
@@ -838,9 +838,9 @@ export default function ManageConnectionsPage() {
 
               <div className="flex flex-col gap-3 pt-2">
                 {/* Status toggle */}
-                <div className="flex items-center justify-between p-3.5 border border-neutral-500/20 dark:border-neutral-300/10 rounded-[12px] bg-white dark:bg-neutral-800">
+                <div className="flex items-center justify-between p-3.5 border border-neutral-400 rounded-[12px] bg-container">
                   <div className="flex flex-col">
-                    <span className="text-xs font-semibold text-neutral-900 dark:text-white">Active Status</span>
+                    <span className="text-xs font-semibold text-neutral-900">Active Status</span>
                     <span className="text-[10px] text-neutral-800">Toggle whether this connection is enabled</span>
                   </div>
                   <Toggle
@@ -851,9 +851,9 @@ export default function ManageConnectionsPage() {
                 </div>
 
                 {/* Production environment toggle */}
-                <div className="flex items-center justify-between p-3.5 border border-neutral-500/20 dark:border-neutral-300/10 rounded-[12px] bg-white dark:bg-neutral-800">
+                <div className="flex items-center justify-between p-3.5 border border-neutral-400 rounded-[12px] bg-container">
                   <div className="flex flex-col">
-                    <span className="text-xs font-semibold text-neutral-900 dark:text-white flex items-center gap-1.5">
+                    <span className="text-xs font-semibold text-neutral-900 flex items-center gap-1.5">
                       Production Environment
                       {formIsProduction && (
                         <span className="text-info-main">
@@ -874,7 +874,7 @@ export default function ManageConnectionsPage() {
 
             {/* Section 2: Connection Parameters */}
             <div className="space-y-4 pt-4">
-              <h4 className="text-xs font-semibold uppercase tracking-wider text-neutral-800 border-b border-neutral-500/20 dark:border-neutral-300/10 pb-2">
+              <h4 className="text-xs font-semibold uppercase tracking-wider text-neutral-800 border-b border-neutral-400 pb-2">
                 Parameters & Credentials
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -918,14 +918,14 @@ export default function ManageConnectionsPage() {
               {/* Password field with asterisks and eye show/hide toggle */}
               <div className="w-full space-y-2">
                 <div className="flex flex-wrap items-baseline gap-2">
-                  <label className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+                  <label className="text-sm font-semibold text-neutral-900">
                     Password
                   </label>
                 </div>
                 <div className="relative">
                   <input
                     type={showPassword ? "text" : "password"}
-                    className="block w-full rounded-lg bg-white dark:bg-neutral-800 border border-neutral-300 focus:border-seidor-main focus:ring-seidor-main/20 px-3 py-2 pr-10 text-sm text-neutral-900 dark:text-neutral-100 outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="block w-full rounded-lg bg-container border border-neutral-400 focus:border-seidor-main focus:ring-seidor-main/20 px-3 py-2 pr-10 text-sm text-neutral-900 outline-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="Enter password"
                     value={formPassword}
                     onChange={(e) => setFormPassword(e.target.value)}
@@ -937,7 +937,7 @@ export default function ManageConnectionsPage() {
                     isIconButton
                     onClick={() => setShowPassword(!showPassword)}
                     disabled={isTesting}
-                    className="absolute inset-y-0 right-1 flex items-center text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed bg-transparent border-0 shadow-none hover:bg-transparent h-full px-2"
+                    className="absolute inset-y-0 right-1 flex items-center text-neutral-800 hover:text-neutral-900 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed bg-transparent border-0 shadow-none hover:bg-transparent h-full px-2"
                   >
                     <CaralIcon name={showPassword ? "eye" : "eyeSlash"} size={16} />
                   </Button>
@@ -949,14 +949,14 @@ export default function ManageConnectionsPage() {
                     variant="light"
                     onClick={handleTestConnection}
                     disabled={!isDirty || isTesting}
-                    className={`w-full text-xs font-semibold h-[40px] justify-center items-center gap-2 border border-neutral-500/50 text-neutral-900 dark:text-white transition-all cursor-pointer ${!isDirty || isTesting
-                      ? "opacity-50 cursor-not-allowed bg-neutral-500/20 dark:bg-neutral-800/40"
-                      : "hover:bg-neutral-500/10 dark:hover:bg-neutral-300/5"
+                    className={`w-full text-xs font-semibold h-[40px] justify-center items-center gap-2 border border-neutral-400 text-neutral-900 transition-all cursor-pointer ${!isDirty || isTesting
+                      ? "opacity-50 cursor-not-allowed bg-neutral-500/20"
+                      : "hover:bg-neutral-500/10"
                       }`}
                   >
                     {isTesting ? (
                       <>
-                        <span className="w-3.5 h-3.5 border-2 border-neutral-800 dark:border-white border-t-transparent rounded-full animate-spin" />
+                        <span className="w-3.5 h-3.5 border-2 border-neutral-800 border-t-transparent rounded-full animate-spin" />
                         Testing Connection...
                       </>
                     ) : (
@@ -975,9 +975,9 @@ export default function ManageConnectionsPage() {
               </div>
 
               {/* SSL Mode toggle */}
-              <div className="flex items-center justify-between p-3.5 border border-neutral-500/20 dark:border-neutral-300/10 rounded-[12px] bg-white dark:bg-neutral-800">
+              <div className="flex items-center justify-between p-3.5 border border-neutral-400 rounded-[12px] bg-container">
                 <div className="flex flex-col">
-                  <span className="text-xs font-semibold text-neutral-900 dark:text-white">Use SSL/TLS Connection</span>
+                  <span className="text-xs font-semibold text-neutral-900">Use SSL/TLS Connection</span>
                   <span className="text-[10px] text-neutral-800">Encrypt traffic between Crestone and data source</span>
                 </div>
                 <Toggle
@@ -989,9 +989,9 @@ export default function ManageConnectionsPage() {
             </div>
 
             {/* Section 3: Danger Zone */}
-            <div className="space-y-4 pt-4 border-t border-neutral-500/20 dark:border-neutral-300/10">
+            <div className="space-y-4 pt-4 border-t border-neutral-400">
               <div className="space-y-1">
-                <h4 className="text-sm font-bold text-neutral-900 dark:text-white">
+                <h4 className="text-sm font-bold text-neutral-900">
                   Danger Zone
                 </h4>
                 <p className="text-xs text-neutral-800">
@@ -999,9 +999,9 @@ export default function ManageConnectionsPage() {
                 </p>
               </div>
 
-              <div className="flex items-center justify-between p-4 border border-neutral-500/20 dark:border-neutral-300/10 rounded-[12px] bg-neutral-500/10 dark:bg-neutral-350/5">
+              <div className="flex items-center justify-between p-4 border border-neutral-400 rounded-[12px] bg-neutral-500/10">
                 <div className="flex flex-col text-left space-y-1">
-                  <span className="text-xs font-semibold text-neutral-900 dark:text-white">
+                  <span className="text-xs font-semibold text-neutral-900">
                     Delete {selectedConnection?.locationType || "Connection"}
                   </span>
                   <span className="text-[10px] text-neutral-800">
@@ -1022,12 +1022,12 @@ export default function ManageConnectionsPage() {
           </div>
 
           {/* Drawer Actions */}
-          <div className="flex gap-3 pt-4 border-t border-neutral-500/20 dark:border-neutral-300/10">
+          <div className="flex gap-3 pt-4 border-t border-neutral-400">
             <Button
               variant="ghost"
               onClick={() => setIsEditDrawerOpen(false)}
               disabled={isTesting}
-              className="flex-1 text-xs font-semibold h-[40px] bg-neutral-500 border border-neutral-800 text-neutral-900 hover:bg-neutral-300 justify-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 text-xs font-semibold h-[40px] bg-neutral-500 border border-neutral-800 text-neutral-900 hover:bg-neutral-500/20 justify-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Cancel
             </Button>

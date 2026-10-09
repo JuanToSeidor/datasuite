@@ -276,42 +276,33 @@ export function DriverAllocationRow({
 
 
   return (
-    <div className="flex flex-col gap-6 rounded-2xl bg-container border border-neutral-300 overflow-hidden dark:border-neutral-800 shadow-sm animate-in fade-in-50 duration-200">
+    <div className="flex flex-col gap-6 rounded-2xl bg-container border border-neutral-500 overflow-hidden shadow-sm animate-in fade-in-50 duration-200">
       {/* Top Header */}
       <div className="flex flex-wrap items-center justify-between gap-4 px-6 py-2 bg-neutral-500 ">
         <div className="flex items-center gap-3">
-
           <div>
             <div className="flex items-center gap-2">
               <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-neutral-800 text-neutral-100">
                 {driver.code}
               </span>
-              <h3 className="text-base font-bold text-neutral-900 dark:text-white">
+              <h3 className="text-base font-bold text-neutral-900">
                 {driver.name}
               </h3>
             </div>
             <p className="text-xs text-neutral-800 mt-0.5">
               Configuración de cuentas cloud asociadas y partición porcentual por entidades (sectores/unidades).
             </p>
-
-
           </div>
         </div>
 
-
-
         <div className="flex items-center gap-2.5">
-
-
           <Button
             variant="success"
             onClick={handleSave}
             iconName='save'
             size='sm'
             className="hover:text-success-hard!"
-
           >
-
             <span>{isSaved ? 'Guardado' : 'Guardar Cambios'}</span>
           </Button>
 
@@ -319,39 +310,37 @@ export function DriverAllocationRow({
         </div>
       </div>
 
-
-
       <div className="px-6 pb-4">
         {/* Cuentas relacionadas */}
         <div className="flex flex-wrap items-center gap-2 pb-4 border-b border-neutral-500 mb-4">
           {accounts.map((acc) => (
             <div
               key={acc.id}
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-container border border-neutral-300 dark:border-neutral-700 shadow-2xs group"
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-container border border-neutral-500 shadow-2xs group"
             >
-              <div className="p-1 bg-neutral-100 rounded-full">
+              <div className="p-1 bg-container rounded-full">
                 <Brand name={acc.brand} size={16} />
               </div>
-              <span className="text-xs font-medium text-neutral-900 dark:text-white truncate max-w-[200px]">
+              <span className="text-xs font-medium text-neutral-900 truncate max-w-[200px]">
                 {acc.name}
               </span>
               {accounts.length > 1 && (
-                <button
-                  type="button"
+                <Button
+                  variant="ghost"
+                  isIconButton
+                  iconName="x"
+                  size="sm"
                   onClick={() => handleRemoveAccount(acc.id)}
-                  className="text-neutral-400 hover:text-red-500! transition-colors p-0.5"
+                  className="text-neutral-800 hover:text-danger-main! transition-colors p-0.5"
                   title="Quitar cuenta del driver"
-                >
-                  <CaralIcon name="x" size={12} />
-                </button>
+                />
               )}
-
             </div>
           ))}
           <Button
             variant="ghost"
             hasBorder
-            className="text-xs py-1 px-2.5 flex items-center gap-1.5 hover:border-red-500 hover:text-red-500"
+            className="text-xs py-1 px-2.5 flex items-center gap-1.5 hover:border-info-main hover:text-info-main"
             onClick={() => setIsAddDrawerOpen(true)}
           >
             <CaralIcon name="plus" size={14} />
@@ -359,23 +348,23 @@ export function DriverAllocationRow({
           </Button>
         </div>
 
-
         {/* SECTION 2: Entidades y Prorrateo Porcentual */}
-        <div className="flex flex-col  gap-4">
+        <div className="flex flex-col gap-4">
           <div className="flex flex-wrap items-end justify-between gap-4">
             {/* Step Selection Dropdown */}
             <div className='flex gap-2 items-center'>
               <div className="relative">
-                <button
-                  type="button"
+                <Button
+                  variant="ghost"
+                  hasBorder
                   onClick={() => setIsStepDropdownOpen((prev) => !prev)}
-                  className="px-2.5 py-1 text-xs rounded-lg border border-neutral-300 dark:border-neutral-700 bg-container font-mono font-semibold flex items-center gap-1.5 text-neutral-800 dark:text-neutral-200 hover:border-neutral-400"
+                  className="px-2.5 py-1 text-xs font-mono font-semibold flex items-center gap-1.5 text-neutral-800 border-neutral-500"
                 >
                   <span>Paso: &plusmn;{step}%</span>
                   <CaralIcon name="chevronDown" size={12} />
-                </button>
+                </Button>
                 {isStepDropdownOpen && (
-                  <div className="absolute right-0 mt-1 w-28 bg-container rounded-lg border border-neutral-300 dark:border-neutral-700 shadow-lg py-1 z-30">
+                  <div className="absolute right-0 mt-1 w-28 bg-container rounded-lg border border-neutral-500 shadow-lg py-1 z-30">
                     {STEP_OPTIONS.map((opt) => (
                       <button
                         key={opt}
@@ -385,8 +374,8 @@ export function DriverAllocationRow({
                           setIsStepDropdownOpen(false);
                         }}
                         className={`w-full text-left px-3 py-1.5 text-xs font-mono transition-colors ${step === opt
-                          ? 'bg-red-500 text-white font-bold'
-                          : 'hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-800 dark:text-neutral-200'
+                          ? 'bg-seidor-main text-white font-bold'
+                          : 'hover:bg-neutral-500/20 text-neutral-800'
                           }`}
                       >
                         &plusmn;{opt}%
@@ -404,11 +393,9 @@ export function DriverAllocationRow({
               >
                 Repartir Equitativo
               </Button>
-
             </div>
 
             <div className="flex items-center gap-2">
-
               <Button
                 iconName='refreshPresentation'
                 isIconButton
@@ -431,7 +418,7 @@ export function DriverAllocationRow({
 
           {/* New Entity Input Inline */}
           {isAddingEntity && (
-            <div className="flex items-center gap-2 p-3 rounded-xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900/40 animate-in fade-in">
+            <div className="flex items-center gap-2 p-3 rounded-xl bg-info-light text-info-hard border border-info-main/30 animate-in fade-in">
               <input
                 type="text"
                 placeholder="Nombre de la nueva entidad (ej. Región Norte, Marketing, Preventas)..."
@@ -441,7 +428,7 @@ export function DriverAllocationRow({
                   if (e.key === 'Enter') handleAddEntity();
                 }}
                 autoFocus
-                className="flex-1 px-3 py-1.5 text-xs rounded-lg bg-container border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-white placeholder:text-neutral-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="flex-1 px-3 py-1.5 text-xs rounded-lg bg-container border border-neutral-500 text-neutral-900 placeholder:text-neutral-800 focus:outline-none focus:ring-1 focus:ring-info-main"
               />
               <Button variant="info" className="text-xs py-1.5 px-3" onClick={handleAddEntity}>
                 Agregar
@@ -505,7 +492,7 @@ export function DriverAllocationRow({
       >
         <div className="flex flex-col gap-4 p-1">
           <div>
-            <p className="text-xs text-neutral-800 dark:text-neutral-300">
+            <p className="text-xs text-neutral-800">
               Selecciona las cuentas cloud disponibles que deseas vincular a <strong>{driver.name}</strong>.
             </p>
           </div>
@@ -513,7 +500,7 @@ export function DriverAllocationRow({
           {/* Search & Provider Tabs */}
           <div className="flex flex-col gap-2.5">
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-neutral-500">
+              <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-neutral-800">
                 <CaralIcon name="search" size={14} />
               </div>
               <input
@@ -521,7 +508,7 @@ export function DriverAllocationRow({
                 placeholder="Buscar cuenta por nombre, número o proveedor..."
                 value={accountSearch}
                 onChange={(e) => setAccountSearch(e.target.value)}
-                className="w-full pl-8! pr-3 py-1.5 text-xs rounded-lg bg-container border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-white placeholder:text-neutral-400 focus:outline-none focus:ring-1 focus:ring-red-500"
+                className="w-full pl-8! pr-3 py-1.5 text-xs rounded-lg bg-container border border-neutral-500 text-neutral-900 placeholder:text-neutral-800 focus:outline-none focus:ring-1 focus:ring-info-main"
               />
             </div>
 
@@ -537,7 +524,7 @@ export function DriverAllocationRow({
           {/* Accounts List */}
           <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
             {filteredAvailableAccounts.length === 0 ? (
-              <div className="py-8 text-center text-xs text-neutral-500">
+              <div className="py-8 text-center text-xs text-neutral-800">
                 No hay cuentas disponibles que coincidan con la búsqueda.
               </div>
             ) : (
@@ -554,17 +541,17 @@ export function DriverAllocationRow({
                       );
                     }}
                     className={`p-2.5 rounded-xl border cursor-pointer flex items-center justify-between transition-all select-none ${isSelected
-                      ? 'border-red-500/60 bg-red-50/60 dark:bg-red-950/20 text-neutral-900 dark:text-white'
-                      : 'border-neutral-200 dark:border-neutral-800 bg-container text-neutral-700 dark:text-neutral-300 hover:border-neutral-300 dark:hover:border-neutral-700'
+                      ? 'border-info-main bg-info-light/20 text-neutral-900'
+                      : 'border-neutral-500 bg-container text-neutral-800 hover:border-neutral-800'
                       }`}
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
-                      <div className="p-1.5 rounded-lg bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shrink-0">
+                      <div className="p-1.5 rounded-lg bg-container border border-neutral-500 shrink-0">
                         <Brand name={acc.brand} size={18} />
                       </div>
                       <div className="min-w-0">
                         <p className="text-xs font-semibold truncate">{acc.name}</p>
-                        <p className="text-[10px] text-neutral-500">
+                        <p className="text-[10px] text-neutral-800">
                           {acc.provider} &bull; {acc.accountNumber || acc.id}
                         </p>
                       </div>
@@ -572,8 +559,8 @@ export function DriverAllocationRow({
 
                     <div
                       className={`size-4.5 rounded-md border flex items-center justify-center transition-colors ${isSelected
-                        ? 'bg-red-500 border-red-500 text-white'
-                        : 'border-neutral-300 dark:border-neutral-700 bg-transparent'
+                        ? 'bg-info-main border-info-main text-white'
+                        : 'border-neutral-500 bg-transparent'
                         }`}
                     >
                       {isSelected && <CaralIcon name="check" size={12} />}
@@ -585,8 +572,8 @@ export function DriverAllocationRow({
           </div>
 
           {/* Bottom Actions */}
-          <div className="pt-3 border-t border-neutral-200 dark:border-neutral-800 flex items-center justify-between gap-3">
-            <span className="text-xs text-neutral-500">
+          <div className="pt-3 border-t border-neutral-500 flex items-center justify-between gap-3">
+            <span className="text-xs text-neutral-800">
               {selectedAccountIds.length} cuenta{selectedAccountIds.length === 1 ? '' : 's'} seleccionada{selectedAccountIds.length === 1 ? '' : 's'}
             </span>
             <div className="flex items-center gap-2">
@@ -601,10 +588,10 @@ export function DriverAllocationRow({
                 Cancelar
               </Button>
               <Button
-                variant="danger"
+                variant="default"
                 disabled={selectedAccountIds.length === 0}
                 onClick={handleAddSelectedAccounts}
-                className="shadow-sm font-semibold"
+                className="bg-seidor-main text-white shadow-sm font-semibold"
               >
                 Vincular Cuentas {selectedAccountIds.length > 0 ? `(${selectedAccountIds.length})` : ''}
               </Button>
@@ -612,6 +599,6 @@ export function DriverAllocationRow({
           </div>
         </div>
       </Drawer>
-    </div >
+    </div>
   );
 }

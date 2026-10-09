@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "caralstable/style.css";
 import "./globals.css";
-import { DashboardLayout } from "@/components/layout/DashboardLayout";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Crestone Suite",
-  description: "Crestone Suite Dashboard",
+  description: "Crestone Suite Platform",
 };
 
 export default function RootLayout({
@@ -26,14 +26,14 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="es"
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <DashboardLayout>
+      <body className="min-h-full flex flex-col bg-[var(--color-neutral-full)] text-neutral-900 font-poppins">
+        <ThemeProvider>
           {children}
-        </DashboardLayout>
+        </ThemeProvider>
       </body>
     </html>
   );

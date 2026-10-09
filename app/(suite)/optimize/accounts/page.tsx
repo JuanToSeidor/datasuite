@@ -238,7 +238,7 @@ export default function OptimizeAccountsPage() {
             iconName="filter"
             variant="ghost"
             hasBorder
-            className="text-neutral-600 dark:text-neutral-300"
+            className="text-neutral-800"
             title="Filtros avanzados"
           />
           <Button
@@ -246,7 +246,7 @@ export default function OptimizeAccountsPage() {
             iconName="sync"
             variant="ghost"
             hasBorder
-            className="text-neutral-600 dark:text-neutral-300"
+            className="text-neutral-800"
             title="Sincronizar cuentas"
           />
           <Button
@@ -314,7 +314,7 @@ export default function OptimizeAccountsPage() {
       >
         <div className="flex flex-col gap-5 p-1">
           {/* Top Switcher Tabs (Suite vs Exclusivas) */}
-          <div className="border-b border-neutral-300 dark:border-neutral-800 pb-2">
+          <div className="border-b border-neutral-500 pb-2">
             <Tabs
               activeIndex={drawerTab}
               onChange={(idx) => setDrawerTab(idx)}
@@ -333,7 +333,7 @@ export default function OptimizeAccountsPage() {
 
               {/* Search Suite Connections */}
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-neutral-500">
+                <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-neutral-800">
                   <CaralIcon name="search" size={14} />
                 </div>
                 <input
@@ -341,7 +341,7 @@ export default function OptimizeAccountsPage() {
                   placeholder="Buscar conexión de la suite..."
                   value={suiteSearch}
                   onChange={(e) => setSuiteSearch(e.target.value)}
-                  className="w-full pl-8! pr-3 py-2 text-xs rounded-lg bg-container border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-white placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-red-500/50"
+                  className="w-full pl-8! pr-3 py-2 text-xs rounded-lg bg-container border border-neutral-500 text-neutral-900 placeholder:text-neutral-800 focus:outline-none focus:ring-2 focus:ring-info-main/40 focus:border-info-main"
                 />
               </div>
 
@@ -354,26 +354,26 @@ export default function OptimizeAccountsPage() {
                       key={conn.id}
                       onClick={() => toggleSuiteConn(conn.id)}
                       className={`p-3 rounded-xl border cursor-pointer flex items-center justify-between gap-3 transition-all ${isSelected
-                        ? "border-red-500 bg-red-50/30 dark:bg-red-950/20 shadow-xs"
-                        : "border-neutral-300 dark:border-neutral-700 bg-container hover:border-neutral-400"
+                        ? "border-info-main bg-info-light/20 shadow-xs"
+                        : "border-neutral-500 bg-container hover:border-neutral-800"
                         }`}
                     >
                       <div className="flex items-center gap-3 min-w-0">
                         <div
                           className={`w-4 h-4 rounded border flex items-center justify-center transition-colors shrink-0 ${isSelected
-                            ? "bg-red-500 border-red-500 text-white"
-                            : "border-neutral-400 bg-white dark:bg-neutral-800"
+                            ? "bg-info-main border-info-main text-white"
+                            : "border-neutral-500 bg-container"
                             }`}
                         >
                           {isSelected && <CaralIcon name="check" size={12} />}
                         </div>
 
-                        <div className="p-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800 shrink-0">
+                        <div className="p-1.5 rounded-lg bg-container shrink-0">
                           <Brand name={conn.brand} size={22} />
                         </div>
 
                         <div className="flex flex-col min-w-0">
-                          <span className="text-xs font-bold text-neutral-900 dark:text-white truncate">
+                          <span className="text-xs font-bold text-neutral-900 truncate">
                             {conn.name}
                           </span>
                           <span className="text-[11px] text-neutral-800 truncate">
@@ -383,10 +383,10 @@ export default function OptimizeAccountsPage() {
                       </div>
 
                       <div className="flex flex-col items-end shrink-0">
-                        <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-full">
+                        <span className="text-[10px] font-bold text-success-hard bg-success-light border border-success-main/30 px-2 py-0.5 rounded-full">
                           {conn.status}
                         </span>
-                        <span className="text-[10px] text-neutral-500 mt-1">
+                        <span className="text-[10px] text-neutral-800 mt-1">
                           ~${conn.baseAmount.toLocaleString()}/mes
                         </span>
                       </div>
@@ -396,7 +396,7 @@ export default function OptimizeAccountsPage() {
               </div>
 
               {/* Bottom Actions for Suite Tab */}
-              <div className="flex flex-col gap-3 pt-3 border-t border-neutral-200 dark:border-neutral-800 mt-1">
+              <div className="flex flex-col gap-3 pt-3 border-t border-neutral-500 mt-1">
                 <div className="flex items-center justify-between gap-3">
                   <Button
                     variant="ghost"
@@ -406,11 +406,11 @@ export default function OptimizeAccountsPage() {
                     Cancelar
                   </Button>
                   <Button
-                    variant="danger"
+                    variant="default"
                     type="button"
                     disabled={selectedSuiteConns.length === 0}
                     onClick={handleImportSuiteConnections}
-                    className="flex items-center gap-2"
+                    className="flex items-center gap-2 bg-seidor-main text-white"
                   >
                     <CaralIcon name="check" size={16} />
                     <span>
@@ -422,7 +422,7 @@ export default function OptimizeAccountsPage() {
                 <div className="flex items-center justify-center pt-2">
                   <Link
                     href="/connections/new"
-                    className="text-xs text-neutral-800 hover:text-red-500 flex items-center gap-1 transition-colors"
+                    className="text-xs text-neutral-800 hover:text-info-main flex items-center gap-1 transition-colors"
                   >
                     <span>¿Crear una nueva conexión en Crestone Suite?</span>
                     <CaralIcon name="chevronRigth" size={12} />
@@ -487,7 +487,7 @@ export default function OptimizeAccountsPage() {
               >
                 {/* Step 1: Cloud Provider */}
                 <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold text-neutral-800 dark:text-neutral-200">
+                  <label className="text-xs font-bold text-neutral-800">
                     1. Proveedor de Nube
                   </label>
                   <div className="grid grid-cols-2 gap-2.5">
@@ -499,7 +499,7 @@ export default function OptimizeAccountsPage() {
                     ].map((prov) => (
                       <label
                         key={prov.id}
-                        className="p-3 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:border-red-500 cursor-pointer flex items-center gap-3 transition-all bg-container has-checked:border-red-500 has-checked:bg-red-50/20 dark:has-checked:bg-red-950/20"
+                        className="p-3 rounded-xl border border-neutral-500 hover:border-info-main cursor-pointer flex items-center gap-3 transition-all bg-container has-checked:border-info-main has-checked:bg-info-light/20"
                       >
                         <input
                           type="radio"
@@ -510,7 +510,7 @@ export default function OptimizeAccountsPage() {
                         />
                         <Brand name={prov.brand} size={24} />
                         <div className="flex flex-col min-w-0">
-                          <span className="text-xs font-bold text-neutral-900 dark:text-white truncate">
+                          <span className="text-xs font-bold text-neutral-900 truncate">
                             {prov.name}
                           </span>
                           <span className="text-[10px] text-neutral-800 truncate">
@@ -525,7 +525,7 @@ export default function OptimizeAccountsPage() {
                 {/* Step 2: Account Name & Number */}
                 <div className="flex flex-col gap-3">
                   <div className="flex flex-col gap-1">
-                    <label className="text-xs font-bold text-neutral-800 dark:text-neutral-200">
+                    <label className="text-xs font-bold text-neutral-800">
                       2. Nombre descriptivo de la Cuenta
                     </label>
                     <input
@@ -533,15 +533,15 @@ export default function OptimizeAccountsPage() {
                       name="name"
                       required
                       placeholder="ej. AWS - Analytics Staging Cluster"
-                      className="w-full px-3 py-2 text-xs rounded-lg bg-container border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-white placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-red-500/50"
+                      className="w-full px-3 py-2 text-xs rounded-lg bg-container border border-neutral-500 text-neutral-900 placeholder:text-neutral-800 focus:outline-none focus:ring-2 focus:ring-info-main/40 focus:border-info-main"
                     />
                   </div>
 
-                  <hr />
-                  <h4> Connection</h4>
+                  <hr className="border-neutral-500" />
+                  <h4 className="text-xs font-bold text-neutral-900"> Connection</h4>
 
                   <div className="flex flex-col gap-1">
-                    <label className="text-xs font-bold text-neutral-800 dark:text-neutral-200">
+                    <label className="text-xs font-bold text-neutral-800">
                       Access Key ID
                     </label>
                     <input
@@ -549,12 +549,12 @@ export default function OptimizeAccountsPage() {
                       name="accountNumber"
                       required
                       placeholder="ej. 8831-9920-1123 ó sub-prod-ea"
-                      className="w-full px-3 py-2 text-xs rounded-lg bg-container border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-white font-mono placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-red-500/50"
+                      className="w-full px-3 py-2 text-xs rounded-lg bg-container border border-neutral-500 text-neutral-900 font-mono placeholder:text-neutral-800 focus:outline-none focus:ring-2 focus:ring-info-main/40 focus:border-info-main"
                     />
                   </div>
 
                   <div className="flex flex-col gap-1">
-                    <label className="text-xs font-bold text-neutral-800 dark:text-neutral-200">
+                    <label className="text-xs font-bold text-neutral-800">
                       Secret Access Key
                     </label>
                     <input
@@ -562,14 +562,14 @@ export default function OptimizeAccountsPage() {
                       name="accountNumber"
                       required
                       placeholder="ej. 8831-9920-1123 ó sub-prod-ea"
-                      className="w-full px-3 py-2 text-xs rounded-lg bg-container border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-white font-mono placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-red-500/50"
+                      className="w-full px-3 py-2 text-xs rounded-lg bg-container border border-neutral-500 text-neutral-900 font-mono placeholder:text-neutral-800 focus:outline-none focus:ring-2 focus:ring-info-main/40 focus:border-info-main"
                     />
                   </div>
                 </div>
 
 
                 {/* Bottom Actions */}
-                <div className="flex flex-col gap-3 pt-3 border-t border-neutral-200 dark:border-neutral-800">
+                <div className="flex flex-col gap-3 pt-3 border-t border-neutral-500">
                   <div className="flex items-center justify-between gap-3">
                     <Button
                       variant="ghost"
@@ -579,9 +579,9 @@ export default function OptimizeAccountsPage() {
                       Cancelar
                     </Button>
                     <Button
-                      variant="danger"
+                      variant="default"
                       type="submit"
-                      className="flex items-center gap-2"
+                      className="flex items-center gap-2 bg-seidor-main text-white"
                     >
                       <CaralIcon name="check" size={16} />
                       <span>Conectar Cuenta Exclusiva</span>
@@ -612,16 +612,16 @@ export default function OptimizeAccountsPage() {
 
         return (
           <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-            <div className="bg-container border border-neutral-300 dark:border-neutral-800 rounded-2xl max-w-4xl w-full p-6 shadow-2xl flex flex-col gap-5 max-h-[90vh] overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <div className="bg-container border border-neutral-500 rounded-2xl max-w-4xl w-full p-6 shadow-2xl flex flex-col gap-5 max-h-[90vh] overflow-hidden animate-in fade-in zoom-in-95 duration-200">
               {/* Header */}
-              <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-neutral-300 dark:border-neutral-800">
+              <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-neutral-500">
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className="p-2 rounded-full bg-neutral-100 shadow-2xs shrink-0 flex items-center justify-center">
+                  <div className="p-2 rounded-full bg-container shadow-2xs shrink-0 flex items-center justify-center">
                     <Brand name={selectedAccount.brand} size={30} />
                   </div>
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="text-lg font-bold text-neutral-900 dark:text-white truncate">
+                      <h3 className="text-lg font-bold text-neutral-900 truncate">
                         {selectedAccount.name}
                       </h3>
                       <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-neutral-800 text-neutral-100">
@@ -642,7 +642,7 @@ export default function OptimizeAccountsPage() {
                       <select
                         value={effectiveIndex}
                         onChange={(e) => setSelectedMonthIndex(Number(e.target.value))}
-                        className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-container border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-info-main cursor-pointer"
+                        className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-container border border-neutral-500 text-neutral-900 focus:outline-none focus:ring-2 focus:ring-info-main cursor-pointer"
                       >
                         {historyList.map((h, idx) => (
                           <option key={h.id || idx} value={idx}>
@@ -669,27 +669,27 @@ export default function OptimizeAccountsPage() {
 
               {/* KPI Summary Cards */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="p-3 rounded-xl bg-neutral-100 dark:bg-neutral-800/60 border border-neutral-200 dark:border-neutral-700/60 flex flex-col">
+                <div className="p-3 rounded-xl bg-container border border-neutral-500 flex flex-col">
                   <span className="text-[11px] font-medium text-neutral-800">Total Facturado</span>
-                  <span className="text-lg font-extrabold text-neutral-900 dark:text-white mt-0.5">
+                  <span className="text-lg font-extrabold text-neutral-900 mt-0.5">
                     ${monthTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </span>
                 </div>
-                <div className="p-3 rounded-xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-200/60 dark:border-blue-900/40 flex flex-col">
-                  <span className="text-[11px] font-medium text-blue-700 dark:text-blue-300">Compute</span>
-                  <span className="text-lg font-extrabold text-blue-900 dark:text-blue-200 mt-0.5">
+                <div className="p-3 rounded-xl bg-info-light text-info-hard border border-info-main/30 flex flex-col">
+                  <span className="text-[11px] font-medium text-info-hard">Compute</span>
+                  <span className="text-lg font-extrabold text-info-hard mt-0.5">
                     ${(currentMonthData?.compute || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </span>
                 </div>
-                <div className="p-3 rounded-xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200/60 dark:border-emerald-900/40 flex flex-col">
-                  <span className="text-[11px] font-medium text-emerald-700 dark:text-emerald-300">Storage</span>
-                  <span className="text-lg font-extrabold text-emerald-900 dark:text-emerald-200 mt-0.5">
+                <div className="p-3 rounded-xl bg-success-light text-success-hard border border-success-main/30 flex flex-col">
+                  <span className="text-[11px] font-medium text-success-hard">Storage</span>
+                  <span className="text-lg font-extrabold text-success-hard mt-0.5">
                     ${(currentMonthData?.storage || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </span>
                 </div>
-                <div className="p-3 rounded-xl bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200/60 dark:border-amber-900/40 flex flex-col">
-                  <span className="text-[11px] font-medium text-amber-700 dark:text-amber-300">Database & Otros</span>
-                  <span className="text-lg font-extrabold text-amber-900 dark:text-amber-200 mt-0.5">
+                <div className="p-3 rounded-xl bg-warning-light text-warning-hard border border-warning-main/30 flex flex-col">
+                  <span className="text-[11px] font-medium text-warning-hard">Database & Otros</span>
+                  <span className="text-lg font-extrabold text-warning-hard mt-0.5">
                     ${((currentMonthData?.database || 0) + (currentMonthData?.other || 0)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </span>
                 </div>
@@ -699,7 +699,7 @@ export default function OptimizeAccountsPage() {
               <div className="flex flex-col gap-3 flex-1 min-h-0">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
-                    <h4 className="text-sm font-bold text-neutral-900 dark:text-white">
+                    <h4 className="text-sm font-bold text-neutral-900">
                       Desglose de Servicios Internos ({filteredServices.length})
                     </h4>
                     <p className="text-[11px] text-neutral-800">
@@ -717,23 +717,23 @@ export default function OptimizeAccountsPage() {
                       placeholder="Buscar servicio (ej. CloudTrail, Glue)..."
                       value={serviceSearch}
                       onChange={(e) => setServiceSearch(e.target.value)}
-                      className="w-full pl-8 pr-2.5 py-1.5 text-xs rounded-lg bg-container border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-white placeholder:text-neutral-400 focus:outline-none focus:ring-1 focus:ring-info-main"
+                      className="w-full pl-8 pr-2.5 py-1.5 text-xs rounded-lg bg-container border border-neutral-500 text-neutral-900 placeholder:text-neutral-800 focus:outline-none focus:ring-1 focus:ring-info-main"
                     />
                   </div>
                 </div>
 
                 {/* Table Container */}
-                <div className="w-full overflow-y-auto flex-1 max-h-[340px] border border-neutral-300 dark:border-neutral-800 rounded-xl bg-container shadow-xs">
+                <div className="w-full overflow-y-auto flex-1 max-h-[340px] border border-neutral-500 rounded-xl bg-container shadow-xs">
                   <table className="w-full text-left border-collapse">
                     <thead className="sticky top-0 z-10">
-                      <tr className="border-b border-neutral-300 bg-neutral-500 font-bold text-neutral-900 text-xs uppercase tracking-wider">
+                      <tr className="border-b border-neutral-500 bg-neutral-500 font-bold text-neutral-900 text-xs uppercase tracking-wider">
                         <th className="py-2.5 px-3">Servicio Cloud</th>
                         <th className="py-2.5 px-3">Categoría</th>
                         <th className="py-2.5 px-3 text-right">Importe ($ USD)</th>
                         <th className="py-2.5 px-3 text-right w-36">% del Total</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-neutral-200 dark:divide-neutral-800 text-xs">
+                    <tbody className="divide-y divide-neutral-500 text-xs">
                       {filteredServices.length === 0 ? (
                         <tr>
                           <td colSpan={4} className="py-8 text-center text-neutral-800">
@@ -743,19 +743,19 @@ export default function OptimizeAccountsPage() {
                       ) : (
                         filteredServices.map((srv) => {
                           const categoryColorMap: Record<string, string> = {
-                            compute: 'bg-blue-100 text-blue-800 border-blue-200',
-                            storage: 'bg-emerald-100 text-emerald-800 border-emerald-200',
-                            database: 'bg-amber-100 text-amber-800 border-amber-200',
-                            other: 'bg-purple-100 text-purple-800 border-purple-200',
+                            compute: 'bg-info-light text-info-hard border-info-main/30',
+                            storage: 'bg-success-light text-success-hard border-success-main/30',
+                            database: 'bg-warning-light text-warning-hard border-warning-main/30',
+                            other: 'bg-indigo-light text-indigo-hard border-indigo-main/30',
                           };
-                          const badgeStyle = categoryColorMap[srv.category] || 'bg-neutral-100 text-neutral-800 border-neutral-200';
+                          const badgeStyle = categoryColorMap[srv.category] || 'bg-container text-neutral-800 border-neutral-500';
 
                           return (
                             <tr
                               key={srv.id || srv.name}
-                              className="hover:bg-neutral-100/60 dark:hover:bg-neutral-800/30 transition-colors"
+                              className="hover:bg-neutral-500/20 transition-colors"
                             >
-                              <td className="py-2 px-3 font-semibold text-neutral-900 dark:text-white">
+                              <td className="py-2 px-3 font-semibold text-neutral-900">
                                 {srv.name}
                               </td>
                               <td className="py-2 px-3">
@@ -763,12 +763,12 @@ export default function OptimizeAccountsPage() {
                                   {srv.category}
                                 </span>
                               </td>
-                              <td className="py-2 px-3 text-right font-mono font-bold text-neutral-900 dark:text-white">
+                              <td className="py-2 px-3 text-right font-mono font-bold text-neutral-900">
                                 ${srv.amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                               </td>
                               <td className="py-2 px-3 text-right">
                                 <div className="flex items-center justify-end gap-2">
-                                  <div className="w-16 bg-neutral-200 dark:bg-neutral-700 h-1.5 rounded-full overflow-hidden">
+                                  <div className="w-16 bg-neutral-500/30 h-1.5 rounded-full overflow-hidden">
                                     <div
                                       className="h-full bg-info-main rounded-full"
                                       style={{ width: `${Math.min(100, srv.percentage)}%` }}
@@ -789,7 +789,7 @@ export default function OptimizeAccountsPage() {
               </div>
 
               {/* Bottom Actions */}
-              <div className="flex items-center justify-between pt-2 border-t border-neutral-300 dark:border-neutral-800">
+              <div className="flex items-center justify-between pt-2 border-t border-neutral-500">
                 <Button
                   variant="ghost"
                   onClick={() => {

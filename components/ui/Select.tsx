@@ -14,6 +14,8 @@ export interface SelectOption {
 
 export interface SelectProps {
   label?: string;
+  helperText?: string;
+  detail?: string;
   iconName?: Icons;
   brand?: CaralBrandName;
   leftIcon?: React.ReactNode;
@@ -34,6 +36,8 @@ export interface SelectProps {
 
 export const Select: React.FC<SelectProps> = ({
   label,
+  helperText,
+  detail,
   iconName,
   brand,
   leftIcon,
@@ -148,10 +152,12 @@ export const Select: React.FC<SelectProps> = ({
     }
   };
 
+  const subText = helperText || detail;
+
   return (
-    <div ref={containerRef} className={`flex flex-col gap-1 relative ${containerClassName}`}>
+    <div ref={containerRef} className={`flex flex-col gap-1 w-full font-poppins relative ${containerClassName}`}>
       {label && (
-        <label className="text-xs font-bold text-neutral-800 select-none">
+        <label className="block text-xs font-semibold text-neutral-900 select-none">
           {label}
         </label>
       )}
@@ -162,9 +168,8 @@ export const Select: React.FC<SelectProps> = ({
           type="button"
           disabled={disabled}
           onClick={() => !disabled && setIsOpen((prev) => !prev)}
-          className={`w-full py-2 text-sm rounded-lg bg-container border border-neutral-500 text-neutral-900 placeholder:text-neutral-800 text-left flex items-center justify-between gap-2 focus:outline-none focus:ring-2 focus:ring-red-500/50 hover:border-neutral-600 transition-all cursor-pointer ${
-            activeIcon ? 'pl-9! pr-8!' : 'px-3! pr-8!'
-          } ${error ? 'border-red-500 ring-1 ring-red-500' : ''} ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
+          className={`w-full py-2 text-sm rounded-lg bg-container border border-neutral-500 text-neutral-900 placeholder:text-neutral-800 text-left flex items-center justify-between gap-2 focus:outline-none focus:border-info-main focus:ring-2 focus:ring-info-main/20 hover:border-neutral-500 transition-all cursor-pointer ${activeIcon ? 'pl-9! pr-8!' : 'px-3! pr-8!'
+            } ${error ? 'border-danger-main ring-1 ring-danger-main/30' : ''} ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
         >
           {activeIcon && (
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-800 z-10">
@@ -177,9 +182,8 @@ export const Select: React.FC<SelectProps> = ({
           </span>
 
           <div
-            className={`absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-neutral-800 transition-transform duration-200 ${
-              isOpen ? 'rotate-180' : ''
-            }`}
+            className={`absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-neutral-800 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''
+              }`}
           >
             <CaralIcon name="chevronDown" size={14} />
           </div>
@@ -188,10 +192,10 @@ export const Select: React.FC<SelectProps> = ({
         {/* Floating Custom Dropdown Menu with Rounded Corners & Soft Shadow */}
         {isOpen && (
           <div
-            className={`absolute top-[calc(100%+6px)] left-0 min-w-full z-[100] bg-container border border-neutral-300 dark:border-neutral-700 rounded-2xl shadow-xl py-1.5 max-h-64 overflow-y-auto custom-scrollbar animate-in fade-in zoom-in-95 duration-150 ${dropdownClassName}`}
+            className={`absolute top-[calc(100%+6px)] left-0 min-w-full z-[100] bg-container border border-neutral-400 rounded-xl shadow-xl py-1.5 max-h-64 overflow-y-auto custom-scrollbar animate-in fade-in zoom-in-95 duration-150 ${dropdownClassName}`}
           >
             {parsedOptions.length === 0 ? (
-              <div className="px-3 py-2 text-xs text-neutral-800">No hay opciones</div>
+              <div className="px-3 py-2 text-xs text-neutral-800">No options available</div>
             ) : (
               parsedOptions.map((opt) => {
                 const isSelected = String(opt.value) === String(currentValue);
@@ -209,11 +213,10 @@ export const Select: React.FC<SelectProps> = ({
                     type="button"
                     disabled={opt.disabled}
                     onClick={() => handleSelectOption(opt)}
-                    className={`w-full text-left px-3 py-2 text-xs font-semibold flex items-center justify-between gap-2 transition-colors cursor-pointer select-none ${
-                      isSelected
-                        ? 'bg-full text-info-main font-bold'
-                        : 'bg-container! hover:bg-full! text-neutral-800'
-                    } ${opt.disabled ? 'opacity-40 cursor-not-allowed' : ''}`}
+                    className={`w-full text-left px-3 py-2 text-xs font-medium flex items-center justify-between gap-2 transition-colors cursor-pointer select-none ${isSelected
+                        ? 'bg-neutral-500 text-info-main font-semibold'
+                        : 'bg-container hover:bg-neutral-500/10 text-neutral-800 hover:text-neutral-900'
+                      } ${opt.disabled ? 'opacity-40 cursor-not-allowed' : ''}`}
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
                       {optIcon && (
@@ -237,9 +240,11 @@ export const Select: React.FC<SelectProps> = ({
         )}
       </div>
 
-      {error && (
-        <span className="text-xs text-red-500 font-medium">{error}</span>
-      )}
+      {error ? (
+        <span className="text-[11px] text-danger-main font-medium">{error}</span>
+      ) : subText ? (
+        <p className="text-sm text-neutral-800">{subText}</p>
+      ) : null}
     </div>
   );
 };

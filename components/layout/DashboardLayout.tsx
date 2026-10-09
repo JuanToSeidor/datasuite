@@ -6,6 +6,7 @@ import { Navbar } from './Navbar';
 import { Sidebar } from './Sidebar';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import { suiteConfig } from '@/config/suite';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);

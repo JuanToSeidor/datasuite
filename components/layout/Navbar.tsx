@@ -7,6 +7,7 @@ import { Button, Drawer, Tabs } from 'caralstable';
 import { useNewsData } from '@/hooks/useNewsData';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { UserMenu } from './UserMenu';
 
 export function Navbar({
   className,
@@ -35,7 +36,7 @@ export function Navbar({
   const NOTIF_TABS = [{ label: 'Notifications' }, { label: 'Version' }];
 
   return (
-    <div className={`bg-container content-stretch flex items-center justify-between overflow-visible px-[10px] py-[20px] relative w-full h-[84px] shrink-0 z-50 ${className || ''}`}>
+    <div className={`bg-container shadow-md content-stretch flex items-center justify-between overflow-visible px-[10px] py-[20px] relative w-full h-[84px] shrink-0 z-50 ${className || ''}`}>
       <div className="content-stretch flex gap-[10px] items-center relative shrink-0">
         <Button isIconButton iconName="menu" variant="ghost" hasBorder onClick={onToggleSidebar} />
         <Link
@@ -169,9 +170,7 @@ export function Navbar({
 
           </Drawer>
         </div>
-        <div className="relative rounded-full shrink-0 size-[44px] bg-info-main overflow-hidden border border-[var(--color-neutral-800)] flex items-center justify-center cursor-pointer">
-          <span className="text-white font-bold text-lg">U</span>
-        </div>
+        <UserMenu />
       </div>
     </div>
   );

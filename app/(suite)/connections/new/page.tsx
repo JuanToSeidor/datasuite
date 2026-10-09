@@ -609,9 +609,9 @@ export default function CrestoneConnectionPage() {
                         onClick={() => !selectedSource && selectSourceAndPrepopulate(source)}
                         className={`border p-2 pr-4 rounded-[20px] transition-all duration-300 flex gap-4 h-[72px] items-center ${selectedSource
                           ? isSelected
-                            ? "cursor-default border-success-main shadow-[0_0_15px_rgba(68,202,159,0.35)] ring-1 ring-success-main/20 bg-white dark:bg-neutral-400"
-                            : "cursor-not-allowed opacity-45 bg-transparent border-neutral-500 dark:border-neutral-300"
-                          : "cursor-pointer bg-container border-neutral-500 dark:border-neutral-300 hover:bg-neutral-400 hover:shadow-md"
+                            ? "cursor-default border-success-main shadow-[0_0_15px_rgba(68,202,159,0.35)] ring-1 ring-success-main/20 bg-container"
+                            : "cursor-not-allowed opacity-45 bg-transparent border-neutral-500"
+                          : "cursor-pointer bg-container border-neutral-500 hover:bg-neutral-500/20 hover:shadow-md"
                           }`}
                       >
                         <div className="bg-container border border-neutral-800 p-2.5 rounded-[12px] flex items-center justify-center size-[56px] shrink-0">
@@ -620,10 +620,10 @@ export default function CrestoneConnectionPage() {
 
                         <div className="w-40 shrink-0 text-left">
                           <h4 className={`font-semibold text-sm tracking-tight transition-colors duration-350 ${isSelected
-                            ? "text-success-hard dark:text-success-main"
+                            ? "text-success-hard"
                             : selectedSource
                               ? "text-neutral-800"
-                              : "text-seidor-main-text dark:text-seidor-light"
+                              : "text-seidor-main-text"
                             }`}>
                             {source.name}
                           </h4>
@@ -651,7 +651,7 @@ export default function CrestoneConnectionPage() {
                     );
                   })}
                   {filteredSources.length === 0 && (
-                    <div className="text-center py-16 border border-dashed border-zinc-350 rounded-[20px] text-zinc-500 text-xs">
+                    <div className="text-center py-16 border border-dashed border-neutral-500 rounded-[20px] text-neutral-800 text-xs">
                       No compatible data sources found.
                     </div>
                   )}
@@ -666,13 +666,13 @@ export default function CrestoneConnectionPage() {
                         onClick={() => !selectedSource && selectSourceAndPrepopulate(source)}
                         className={`border p-5 rounded-[20px] transition-all duration-300 flex flex-col justify-between space-y-4 ${selectedSource
                           ? isSelected
-                            ? "cursor-default border-success-main shadow-[0_0_15px_rgba(68,202,159,0.35)] ring-1 ring-success-main/20 bg-white dark:bg-neutral-400"
-                            : "cursor-not-allowed opacity-45 bg-transparent border-neutral-500 dark:border-neutral-300"
-                          : "cursor-pointer bg-container border-neutral-500 dark:border-neutral-300 hover:bg-neutral-400 hover:shadow-md"
+                            ? "cursor-default border-success-main shadow-[0_0_15px_rgba(68,202,159,0.35)] ring-1 ring-success-main/20 bg-container"
+                            : "cursor-not-allowed opacity-45 bg-transparent border-neutral-500"
+                          : "cursor-pointer bg-container border-neutral-500 hover:bg-neutral-500/20 hover:shadow-md"
                           }`}
                       >
                         <div className="flex items-center justify-between">
-                          <div className="bg-neutral-100 border border-neutral-800 p-2.5 rounded-[6px] flex items-center justify-center">
+                          <div className="bg-container border border-neutral-800 p-2.5 rounded-[6px] flex items-center justify-center">
                             <SourceLogo brandName={source.brandName} size={24} muted={!isSelected && !!selectedSource} />
                           </div>
                           <Chip
@@ -684,10 +684,10 @@ export default function CrestoneConnectionPage() {
 
                         <div className="space-y-1.5 text-left">
                           <h4 className={`font-semibold text-base tracking-tight transition-colors duration-350 ${isSelected
-                            ? "text-success-hard dark:text-success-main"
+                            ? "text-success-hard"
                             : selectedSource
                               ? "text-neutral-800"
-                              : "text-seidor-main-text-text"
+                              : "text-seidor-main-text"
                             }`}>
                             {source.name}
                           </h4>
@@ -704,7 +704,7 @@ export default function CrestoneConnectionPage() {
                     );
                   })}
                   {filteredSources.length === 0 && (
-                    <div className="col-span-full text-center py-16 border border-dashed border-zinc-350 rounded-[20px] text-zinc-500 text-xs">
+                    <div className="col-span-full text-center py-16 border border-dashed border-neutral-500 rounded-[20px] text-neutral-800 text-xs">
                       No compatible data sources found.
                     </div>
                   )}
@@ -713,7 +713,7 @@ export default function CrestoneConnectionPage() {
 
               {/* STAGE 3: Parameter Configuration (Right side column) */}
               {selectedSource && (
-                <div ref={formRef} className="scroll-mt-28 md:w-80 lg:w-96 border border-neutral-500 dark:border-neutral-300 rounded-[20px] p-5 space-y-6 shadow-sm shrink-0 flex flex-col justify-between self-start animate-in slide-in-from-right-4 bg-container text-neutral-900 dark:text-white transition-all duration-300">
+                <div ref={formRef} className="scroll-mt-28 md:w-80 lg:w-96 border border-neutral-500 rounded-[20px] p-5 space-y-6 shadow-sm shrink-0 flex flex-col justify-between self-start animate-in slide-in-from-right-4 bg-container text-neutral-900 transition-all duration-300">
                   <style>{`
                     @keyframes checkmark-draw {
                       to {
@@ -730,27 +730,26 @@ export default function CrestoneConnectionPage() {
                     <div className="flex flex-col justify-between h-full space-y-6">
                       <div className="space-y-5">
                         {/* Form Header */}
-                        <div className="flex items-center justify-between pb-3.5 border-b border-neutral-500 dark:border-neutral-300 transition-colors duration-300">
+                        <div className="flex items-center justify-between pb-3.5 border-b border-neutral-500 transition-colors duration-300">
                           <div className="flex items-center gap-3">
-                            <div className="bg-neutral-500 border border-neutral-800 p-2 rounded-[6px] flex items-center justify-center">
+                            <div className="bg-container border border-neutral-800 p-2 rounded-[6px] flex items-center justify-center">
                               <SourceLogo brandName={selectedSource.brandName} size={20} />
                             </div>
                             <div>
-                              <h3 className="text-sm font-bold text-seidor-main-text dark:text-white transition-colors duration-300">
+                              <h3 className="text-sm font-bold text-seidor-main-text transition-colors duration-300">
                                 {selectedSource.name} Settings
                               </h3>
                               <p className="text-[10px] text-neutral-800">Provide connection credentials</p>
                             </div>
                           </div>
-                          <button
+                          <Button
+                            variant="ghost"
+                            isIconButton
+                            iconName="x"
+                            size="sm"
                             onClick={handleCloseForm}
-                            className="p-1 rounded bg-neutral-500 text-neutral-800 hover:text-neutral-900 transition-colors"
                             title="Close"
-                          >
-                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                          </button>
+                          />
                         </div>
 
                         {/* Credentials inputs using caralstable TextInput */}
@@ -803,21 +802,21 @@ export default function CrestoneConnectionPage() {
                                 </span>
 
                                 {/* Popover */}
-                                <div className="absolute top-6 right-0 z-50 w-72 p-4 bg-[#E2E8F0] dark:bg-neutral-450 border border-neutral-350 dark:border-neutral-600 rounded-[12px] shadow-xl text-left scale-95 opacity-0 pointer-events-none group-hover:scale-100 group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 origin-top-right">
-                                  <div className="absolute -top-1.5 right-2 size-3 bg-[#E2E8F0] dark:bg-neutral-450 border-t border-l border-neutral-350 dark:border-neutral-600 rotate-45" />
+                                <div className="absolute top-6 right-0 z-50 w-72 p-4 bg-container border border-neutral-500 rounded-[12px] shadow-xl text-left scale-95 opacity-0 pointer-events-none group-hover:scale-100 group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 origin-top-right">
+                                  <div className="absolute -top-1.5 right-2 size-3 bg-container border-t border-l border-neutral-500 rotate-45" />
                                   <div className="relative z-10 space-y-1.5 font-normal">
-                                    <div className="flex items-center gap-2 text-info-hard dark:text-info-main">
+                                    <div className="flex items-center gap-2 text-info-hard">
                                       <CaralIcon name="badgeSync" size={14} />
                                       <span className="text-xs font-bold font-poppins">Productive environment</span>
                                     </div>
-                                    <p className="text-[11px] leading-relaxed text-neutral-900 dark:text-neutral-200">
+                                    <p className="text-[11px] leading-relaxed text-neutral-800">
                                       Only origins marked with this flag can be used in automated jobs. Connections without this flag are intended for testing, validation, or QA environments.
                                     </p>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                            <div className="border rounded-[6px] flex items-center justify-between pr-3 overflow-hidden bg-info-light dark:bg-info-main/20 border-info-hard dark:border-info-main transition-colors duration-300">
+                            <div className="border rounded-[6px] flex items-center justify-between pr-3 overflow-hidden bg-info-light border-info-hard transition-colors duration-300">
                               <div className="flex items-center gap-3">
                                 <div className="bg-info-hard flex h-[38px] w-[38px] items-center justify-center text-white">
                                   <CaralIcon name="badgeSync" size={24} />
@@ -833,7 +832,7 @@ export default function CrestoneConnectionPage() {
                       </div>
 
                       {/* Action buttons - Only Test Connection */}
-                      <div className="pt-4 border-t border-neutral-500 dark:border-neutral-350 flex flex-col gap-2.5 transition-colors duration-300">
+                      <div className="pt-4 border-t border-neutral-500 flex flex-col gap-2.5 transition-colors duration-300">
                         <Button
                           variant="info"
                           iconName="sync"
@@ -850,22 +849,22 @@ export default function CrestoneConnectionPage() {
                     <div className="flex flex-col justify-between h-full space-y-6">
                       <div className="space-y-5">
                         {/* Header */}
-                        <div className="flex items-center justify-between pb-3.5 border-b border-neutral-500 dark:border-neutral-300 transition-colors duration-300">
-                          <h3 className="text-sm font-bold text-seidor-main-text dark:text-white transition-colors duration-300">
+                        <div className="flex items-center justify-between pb-3.5 border-b border-neutral-500 transition-colors duration-300">
+                          <h3 className="text-sm font-bold text-seidor-main-text transition-colors duration-300">
                             Connector details
                           </h3>
-                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#E0F2FE] text-[#0369A1] dark:bg-[#0369A1]/20 dark:text-[#38BDF8]">
+                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-info-light text-info-hard">
                             Selected
                           </span>
                         </div>
 
                         {/* Connector details card */}
-                        <div className="bg-neutral-500/10 dark:bg-neutral-300/5 border border-neutral-500/20 dark:border-neutral-300/10 rounded-[12px] p-3.5 flex items-center gap-3.5 text-left">
-                          <div className="bg-white dark:bg-neutral-100 border border-neutral-350 p-2 rounded-[6px] flex items-center justify-center size-10 shrink-0">
+                        <div className="bg-neutral-500/10 border border-neutral-500/20 rounded-[12px] p-3.5 flex items-center gap-3.5 text-left">
+                          <div className="bg-container border border-neutral-500 p-2 rounded-[6px] flex items-center justify-center size-10 shrink-0">
                             <SourceLogo brandName={selectedSource.brandName} size={20} />
                           </div>
                           <div>
-                            <h4 className="font-bold text-xs text-neutral-900 dark:text-white">
+                            <h4 className="font-bold text-xs text-neutral-900">
                               {selectedSource.name}
                             </h4>
                             <p className="text-[10px] text-neutral-800">
@@ -881,20 +880,20 @@ export default function CrestoneConnectionPage() {
                               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
-                            <span className="absolute text-xs font-semibold text-neutral-900 dark:text-white">
+                            <span className="absolute text-xs font-semibold text-neutral-900">
                               {testProgress}%
                             </span>
                           </div>
 
                           <div className="text-center space-y-1">
-                            <p className="text-xs font-bold text-neutral-900 dark:text-white">Testing connection...</p>
+                            <p className="text-xs font-bold text-neutral-900">Testing connection...</p>
                             <p className="text-[10px] text-neutral-800">Verifying host {host}:{port}...</p>
                           </div>
                         </div>
                       </div>
 
                       {/* Cancel Test Button */}
-                      <div className="pt-4 border-t border-neutral-500 dark:border-neutral-350">
+                      <div className="pt-4 border-t border-neutral-500">
                         <Button
                           variant="ghost"
                           onClick={() => {
@@ -902,7 +901,7 @@ export default function CrestoneConnectionPage() {
                             setTestCompleted(false);
                             setTestProgress(0);
                           }}
-                          className="w-full h-[40px] text-xs font-semibold border border-neutral-350 dark:border-neutral-600 text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-700 justify-center"
+                          className="w-full h-[40px] text-xs font-semibold border border-neutral-500 text-neutral-800 hover:bg-neutral-500/20 justify-center"
                         >
                           Cancel
                         </Button>
@@ -913,25 +912,25 @@ export default function CrestoneConnectionPage() {
                     <div className="flex flex-col justify-between h-full space-y-6 animate-in fade-in duration-300">
                       <div className="space-y-5">
                         {/* Header */}
-                        <div className="flex items-center justify-between pb-3.5 border-b border-neutral-500 dark:border-neutral-300 transition-colors duration-300">
-                          <h3 className="text-sm font-bold text-seidor-main-text dark:text-white transition-colors duration-300">
+                        <div className="flex items-center justify-between pb-3.5 border-b border-neutral-500 transition-colors duration-300">
+                          <h3 className="text-sm font-bold text-seidor-main-text transition-colors duration-300">
                             Connector details
                           </h3>
-                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#E0F2FE] text-[#0369A1] dark:bg-[#0369A1]/20 dark:text-[#38BDF8]">
+                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-info-light text-info-hard">
                             Selected
                           </span>
                         </div>
 
                         {/* Connector details card */}
-                        <div className="bg-[#EAFDF7] dark:bg-success-main/10 border border-success-main/20 rounded-[12px] p-3.5 flex items-center gap-3.5 text-left transition-colors duration-300">
-                          <div className="bg-white dark:bg-neutral-100 border border-neutral-350 p-2 rounded-[6px] flex items-center justify-center size-10 shrink-0">
+                        <div className="bg-success-light border border-success-main/20 rounded-[12px] p-3.5 flex items-center gap-3.5 text-left transition-colors duration-300">
+                          <div className="bg-container border border-neutral-500 p-2 rounded-[6px] flex items-center justify-center size-10 shrink-0">
                             <SourceLogo brandName={selectedSource.brandName} size={20} />
                           </div>
                           <div>
-                            <h4 className="font-bold text-xs text-neutral-900 dark:text-white">
+                            <h4 className="font-bold text-xs text-neutral-900">
                               {selectedSource.name}
                             </h4>
-                            <p className="text-[10px] text-[#059669] dark:text-[#34D399] font-medium">
+                            <p className="text-[10px] text-success-hard font-medium">
                               {selectedSource.type}
                             </p>
                           </div>
@@ -939,8 +938,8 @@ export default function CrestoneConnectionPage() {
 
                         {/* Success Icon Animation */}
                         <div className="flex flex-col items-center justify-center py-6 space-y-4">
-                          <div className="relative size-16 flex items-center justify-center bg-[#EAFDF7] dark:bg-success-main/15 rounded-full border border-success-main/30 shadow-sm animate-in zoom-in-50 duration-500">
-                            <svg className="w-8 h-8 text-[#059669] dark:text-[#34D399]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                          <div className="relative size-16 flex items-center justify-center bg-success-light rounded-full border border-success-main/30 shadow-sm animate-in zoom-in-50 duration-500">
+                            <svg className="w-8 h-8 text-success-hard" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                               <polyline
                                 points="20 6 9 17 4 12"
                                 strokeLinecap="round"
@@ -953,14 +952,14 @@ export default function CrestoneConnectionPage() {
                               />
                             </svg>
                           </div>
-                          <p className="text-sm font-bold text-[#059669] dark:text-[#34D399]">
+                          <p className="text-sm font-bold text-success-hard">
                             Connection established
                           </p>
                         </div>
                       </div>
 
                       {/* Actions Cancel & Create source */}
-                      <div className="flex gap-3 pt-4 border-t border-neutral-500 dark:border-neutral-350">
+                      <div className="flex gap-3 pt-4 border-t border-neutral-500">
                         <Button
                           variant="ghost"
                           onClick={() => {
@@ -968,7 +967,7 @@ export default function CrestoneConnectionPage() {
                             setTestCompleted(false);
                             setTestProgress(0);
                           }}
-                          className="flex-1 h-[44px] text-xs font-semibold border border-neutral-350 dark:border-neutral-600 text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-700 justify-center"
+                          className="flex-1 h-[44px] text-xs font-semibold border border-neutral-500 text-neutral-800 hover:bg-neutral-500/20 justify-center"
                         >
                           Cancel
                         </Button>
@@ -996,8 +995,8 @@ export default function CrestoneConnectionPage() {
           </div>
         ) : (
           /* Stage 1 Helper Text Empty Name */
-          <div className="flex-1 flex flex-col items-center justify-center border border-dashed border-neutral-800/50 dark:border-neutral-300 rounded-[20px] py-20 text-center bg-container transition-colors duration-300">
-            <svg className="mx-auto h-12 w-12 text-neutral-800/60 dark:text-neutral-300 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="flex-1 flex flex-col items-center justify-center border border-dashed border-neutral-500 rounded-[20px] py-20 text-center bg-container transition-colors duration-300">
+            <svg className="mx-auto h-12 w-12 text-neutral-800 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
             </svg>
             <h3 className="mt-4 text-sm font-semibold text-neutral-900 transition-colors duration-300">
@@ -1051,11 +1050,11 @@ export default function CrestoneConnectionPage() {
             </div>
 
             {/* Cloud Filter */}
-            <div className="space-y-3 text-left pt-4 border-t border-neutral-500 dark:border-neutral-300">
+            <div className="space-y-3 text-left pt-4 border-t border-neutral-500">
               <h4 className="text-xs font-semibold uppercase tracking-wider text-neutral-800">Features</h4>
-              <div className="flex items-center justify-between p-3.5 border border-neutral-500 dark:border-neutral-300 rounded-[12px] bg-white dark:bg-neutral-450">
+              <div className="flex items-center justify-between p-3.5 border border-neutral-500 rounded-[12px] bg-container">
                 <div className="flex flex-col text-left">
-                  <span className="text-xs font-semibold text-neutral-900 dark:text-white">Cloud Only</span>
+                  <span className="text-xs font-semibold text-neutral-900">Cloud Only</span>
                   <span className="text-[10px] text-neutral-800">Show only cloud data sources</span>
                 </div>
                 <Toggle checked={onlyCloud} onChange={setOnlyCloud} />
@@ -1064,14 +1063,14 @@ export default function CrestoneConnectionPage() {
           </div>
 
           {/* Drawer Actions */}
-          <div className="flex gap-3 pt-6 border-t border-neutral-500 dark:border-neutral-300">
+          <div className="flex gap-3 pt-6 border-t border-neutral-500">
             <Button
               variant="ghost"
               onClick={() => {
                 setSelectedCompanies([]);
                 setOnlyCloud(false);
               }}
-              className="flex-1 text-xs font-semibold h-[40px] bg-neutral-500 border border-neutral-800 text-neutral-900 hover:bg-neutral-300 justify-center"
+              className="flex-1 text-xs font-semibold h-[40px] bg-neutral-500 border border-neutral-800 text-neutral-900 hover:bg-neutral-500/20 justify-center"
             >
               Clear
             </Button>
@@ -1104,22 +1103,22 @@ export default function CrestoneConnectionPage() {
                 We are actively working on adding support for these data sources:
               </p>
               <div className="grid grid-cols-2 gap-3">
-                <div className="flex items-center gap-3 p-3 border border-neutral-500/20 dark:border-neutral-300/10 rounded-[12px] bg-neutral-500/10 dark:bg-neutral-300/5">
-                  <div className="bg-white dark:bg-neutral-100 p-1.5 rounded-[4px] border border-neutral-350 flex items-center justify-center size-8">
+                <div className="flex items-center gap-3 p-3 border border-neutral-500/20 rounded-[12px] bg-neutral-500/10">
+                  <div className="bg-container p-1.5 rounded-[4px] border border-neutral-500 flex items-center justify-center size-8">
                     <SourceLogo brandName="Sybase" size={16} />
                   </div>
                   <div>
-                    <span className="text-xs font-semibold block text-neutral-900 dark:text-white">Sybase ASE</span>
+                    <span className="text-xs font-semibold block text-neutral-900">Sybase ASE</span>
                     <span className="text-[9px] text-warning-hard font-medium">In Development</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 border border-neutral-500/20 dark:border-neutral-300/10 rounded-[12px] bg-neutral-500/10 dark:bg-neutral-300/5">
-                  <div className="bg-white dark:bg-neutral-100 p-1.5 rounded-[4px] border border-neutral-350 flex items-center justify-center size-8">
+                <div className="flex items-center gap-3 p-3 border border-neutral-500/20 rounded-[12px] bg-neutral-500/10">
+                  <div className="bg-container p-1.5 rounded-[4px] border border-neutral-500 flex items-center justify-center size-8">
                     <SourceLogo brandName="IBMDb2" size={16} />
                   </div>
                   <div>
-                    <span className="text-xs font-semibold block text-neutral-900 dark:text-white">IBM Db2</span>
+                    <span className="text-xs font-semibold block text-neutral-900">IBM Db2</span>
                     <span className="text-[9px] text-warning-hard font-medium">In Development</span>
                   </div>
                 </div>
@@ -1127,7 +1126,7 @@ export default function CrestoneConnectionPage() {
             </div>
 
             {/* Link to all connections */}
-            <div className="pt-4 border-t border-neutral-500 dark:border-neutral-300 space-y-2">
+            <div className="pt-4 border-t border-neutral-500 space-y-2">
               <h4 className="text-xs font-semibold uppercase tracking-wider text-neutral-800">
                 Crestone Documentation
               </h4>
@@ -1138,7 +1137,7 @@ export default function CrestoneConnectionPage() {
                 href="https://crestone-help.seidoranalytics.com/docs/documentation/sections/conections/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-xs font-bold text-info-hard dark:text-info-main hover:underline transition-colors mt-1"
+                className="inline-flex items-center gap-2 text-xs font-bold text-info-hard hover:underline transition-colors mt-1"
               >
                 <span>View all supported connections</span>
                 <CaralIcon name="upRightFromSquare" size={12} />
@@ -1146,7 +1145,7 @@ export default function CrestoneConnectionPage() {
             </div>
 
             {/* Form to leave suggestions */}
-            <div className="pt-4 border-t border-neutral-500 dark:border-neutral-300 space-y-4">
+            <div className="pt-4 border-t border-neutral-500 space-y-4">
               <h4 className="text-xs font-semibold uppercase tracking-wider text-neutral-800">
                 Submit a Suggestion
               </h4>
@@ -1162,13 +1161,13 @@ export default function CrestoneConnectionPage() {
                   required
                 />
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-medium text-neutral-850 dark:text-neutral-300">Use case / Details</label>
+                  <label className="text-xs font-medium text-neutral-800">Use case / Details</label>
                   <textarea
                     placeholder="Describe how your team plans to use this connection..."
                     value={suggestedDetails}
                     onChange={(e) => setSuggestedDetails(e.target.value)}
                     rows={3}
-                    className="w-full border border-neutral-500 dark:border-neutral-300 rounded-[12px] bg-white dark:bg-neutral-100/40 text-xs p-3 focus:outline-none focus:border-info-main text-neutral-900 dark:text-white transition-colors placeholder:text-neutral-800"
+                    className="w-full border border-neutral-500 rounded-[12px] bg-container text-xs p-3 focus:outline-none focus:border-info-main text-neutral-900 transition-colors placeholder:text-neutral-800"
                     required
                   />
                 </div>
@@ -1177,7 +1176,7 @@ export default function CrestoneConnectionPage() {
           </div>
 
           {/* Drawer Actions */}
-          <div className="flex gap-3 pt-6 border-t border-neutral-500 dark:border-neutral-300">
+          <div className="flex gap-3 pt-6 border-t border-neutral-500">
             <Button
               variant="ghost"
               onClick={() => {
@@ -1185,7 +1184,7 @@ export default function CrestoneConnectionPage() {
                 setSuggestedDetails("");
                 setIsSuggestDrawerOpen(false);
               }}
-              className="flex-1 text-xs font-semibold h-[40px] border border-neutral-350 text-neutral-800 hover:bg-neutral-100 justify-center"
+              className="flex-1 text-xs font-semibold h-[40px] border border-neutral-500 text-neutral-800 hover:bg-neutral-500/20 justify-center"
             >
               Cancel
             </Button>

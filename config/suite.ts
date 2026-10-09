@@ -200,19 +200,19 @@ export const suiteConfig: SuiteConfig = {
       ]
     },
     {
-      id: "profile",
-      title: "Profile",
+      id: "profiler",
+      title: "Profiler",
       description: "Analiza automáticamente la calidad y consistencia de los datos extraídos desde distintos sistemas, detectando anomalías y relaciones rotas antes de que impacten en los procesos analíticos.​",
       color: "var(--color-danger-hard)", // Rojo Oscuro
-      href: "/profile",
+      href: "/profiler",
       tags: ["AI generativa", "Propios"],
       sidebarSections: [
         {
           sectionTitle: "Data Quality",
           items: [
-            { label: "Overview", iconName: "house", href: "/profile" },
-            { label: "Quality Rules", iconName: "shieldHalved", href: "/profile/rules" },
-            { label: "Anomalies", iconName: "screenChart", href: "/profile/anomalies" },
+            { label: "Overview", iconName: "house", href: "/profiler" },
+            { label: "Quality Rules", iconName: "shieldHalved", href: "/profiler/rules" },
+            { label: "Anomalies", iconName: "screenChart", href: "/profiler/anomalies" },
           ]
         }
       ]

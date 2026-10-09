@@ -2,7 +2,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: var(--color-neutral-full);
+  --background: var(--color-full);
   --foreground: var(--color-neutral-900);
 
   /* --- Caral Figma Colors --- */
@@ -15,7 +15,7 @@
   --color-neutral-900: #242528;
 
   /* Layout / Body */
-  --color-neutral-full: var(--color-neutral-500);
+  --color-full: var(--color-neutral-500);
   --color-container: var(--color-neutral-400);
   --color-container-50: color-mix(in srgb, var(--color-neutral-400) 50%, transparent);
   --color-seidor-main-text: var(--color-seidor-main);
@@ -71,7 +71,7 @@
   --color-neutral-800: var(--color-neutral-800);
   --color-neutral-900: var(--color-neutral-900);
 
-  --color-neutral-full: var(--color-neutral-full);
+  --color-full: var(--color-full);
   --color-container: var(--color-container);
   --color-container-50: var(--color-container-50);
 
@@ -106,7 +106,7 @@
 }
 
 :root.dark {
-  --background: var(--color-neutral-full);
+  --background: var(--color-full);
   --foreground: var(--color-neutral-400);
 
   /* --- Caral Figma Colors (Dark Mode Overrides) --- */
@@ -117,7 +117,7 @@
   --color-neutral-900: #f1f5f9;
 
   /* Layout / Body */
-  --color-neutral-full: #0f172b;
+  --color-full: #0f172b;
   --color-container: #202938;
   --color-container-50: color-mix(in srgb, #202938 50%, transparent);
 
@@ -137,6 +137,7 @@ body {
     opacity: 0;
     transform: translateY(-8px) scale(0.995);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);

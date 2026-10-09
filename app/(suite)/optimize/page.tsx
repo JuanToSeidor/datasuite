@@ -71,7 +71,7 @@ export default function OptimizeDashboardPage() {
       {/* Top Page Header (Matching Figma Frame 58) */}
       <div className="flex flex-wrap items-center justify-between gap-4 py-2">
         <div>
-          <h1 className="text-3xl font-extrabold text-seidor-main-text dark:text-white tracking-tight">
+          <h1 className="text-3xl font-extrabold text-seidor-main-text tracking-tight">
             Dashboard
           </h1>
           <p className="text-sm text-neutral-800 mt-1">
@@ -95,14 +95,14 @@ export default function OptimizeDashboardPage() {
                   <span className="font-mono text-xs font-bold text-info-hard bg-info-light px-1.5 py-0.5 rounded">
                     {selectedDriver.code}
                   </span>
-                  <span className="truncate max-w-[200px] text-neutral-900 dark:text-white">
+                  <span className="truncate max-w-[200px] text-neutral-900">
                     {selectedDriver.name}
                   </span>
                 </div>
               ) : (
                 <div className="flex items-center gap-2">
                   <CaralIcon name="filter" size={16} />
-                  <span className="text-neutral-900 dark:text-white">Todos los Drivers</span>
+                  <span className="text-neutral-900">Todos los Drivers</span>
                 </div>
               )}
             </Button>
@@ -113,10 +113,10 @@ export default function OptimizeDashboardPage() {
                   className="fixed inset-0 z-40"
                   onClick={() => setIsDriverDropdownOpen(false)}
                 />
-                <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 rounded-2xl shadow-xl z-50 p-2 flex flex-col gap-2 animate-in fade-in zoom-in-95 duration-150">
+                <div className="absolute right-0 mt-2 w-80 bg-container border border-neutral-500 rounded-2xl shadow-xl z-50 p-2 flex flex-col gap-2 animate-in fade-in zoom-in-95 duration-150">
                   {/* Search driver */}
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-neutral-400">
+                    <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-neutral-800">
                       <CaralIcon name="search" size={14} />
                     </div>
                     <input
@@ -124,22 +124,22 @@ export default function OptimizeDashboardPage() {
                       placeholder="Buscar driver..."
                       value={driverSearch}
                       onChange={(e) => setDriverSearch(e.target.value)}
-                      className="w-full pl-8 pr-2.5 py-1.5 text-xs rounded-lg bg-neutral-100 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-white placeholder:text-neutral-400 focus:outline-none focus:ring-1 focus:ring-red-500"
+                      className="w-full pl-8 pr-2.5 py-1.5 text-xs rounded-lg bg-neutral-500 border border-neutral-500 text-neutral-900 placeholder:text-neutral-800 focus:outline-none focus:ring-1 focus:ring-seidor-main"
                     />
                   </div>
 
                   {/* Options List */}
                   <div className="flex flex-col gap-1 max-h-64 overflow-y-auto pr-0.5">
                     {/* All Drivers option */}
-                    <button
-                      type="button"
+                    <Button
+                      variant={selectedDriverId === null ? "default" : "ghost"}
                       onClick={() => {
                         setSelectedDriverId(null);
                         setIsDriverDropdownOpen(false);
                       }}
                       className={`w-full p-2 rounded-xl text-left text-xs font-semibold flex items-center justify-between transition-colors ${selectedDriverId === null
-                        ? "bg-neutral-100 dark:bg-neutral-800 text-red-500 font-bold"
-                        : "text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800/50"
+                        ? "bg-seidor-light text-seidor-main font-bold border border-seidor-main/30"
+                        : "text-neutral-800 hover:bg-neutral-500/20"
                         }`}
                     >
                       <div className="flex items-center gap-2">
@@ -147,24 +147,24 @@ export default function OptimizeDashboardPage() {
                         <span>Todos los Drivers (Consolidado)</span>
                       </div>
                       {selectedDriverId === null && <CaralIcon name="check" size={14} />}
-                    </button>
+                    </Button>
 
-                    <div className="h-px bg-neutral-200 dark:bg-neutral-800 my-1" />
+                    <div className="h-px bg-neutral-500 my-1" />
 
                     {/* Individual Drivers */}
                     {filteredDrivers.map((driver) => {
                       const isSelected = selectedDriverId === driver.id;
                       return (
-                        <button
+                        <Button
                           key={driver.id}
-                          type="button"
+                          variant={isSelected ? "default" : "ghost"}
                           onClick={() => {
                             setSelectedDriverId(driver.id);
                             setIsDriverDropdownOpen(false);
                           }}
                           className={`w-full p-2 rounded-xl text-left transition-colors flex items-center justify-between gap-2 ${isSelected
-                            ? "bg-red-50/50 dark:bg-red-950/30 border border-red-500/30"
-                            : "hover:bg-neutral-50 dark:hover:bg-neutral-800/50"
+                            ? "bg-seidor-light text-seidor-main border border-seidor-main/30"
+                            : "hover:bg-neutral-500/20 text-neutral-900"
                             }`}
                         >
                           <div className="flex flex-col gap-1 min-w-0">
@@ -172,7 +172,7 @@ export default function OptimizeDashboardPage() {
                               <span className="font-mono text-[10px] font-bold text-info-hard bg-info-light px-1.5 py-0.5 rounded shrink-0">
                                 {driver.code}
                               </span>
-                              <span className="text-xs font-bold text-neutral-900 dark:text-white truncate">
+                              <span className="text-xs font-bold text-neutral-900 truncate">
                                 {driver.name}
                               </span>
                             </div>
@@ -182,14 +182,14 @@ export default function OptimizeDashboardPage() {
                               {(driver.accounts || driver.connections || []).map((c) => (
                                 <div
                                   key={c.id}
-                                  className="inline-flex items-center gap-0.5 text-[10px] text-neutral-500"
+                                  className="inline-flex items-center gap-0.5 text-[10px] text-neutral-800"
                                   title={c.name}
                                 >
                                   <Brand name={c.brand} size={12} />
                                 </div>
                               ))}
                               {driver.entities && driver.entities.length > 0 && (
-                                <span className="text-[10px] text-neutral-400">
+                                <span className="text-[10px] text-neutral-800">
                                   &bull; {driver.entities.length} entidades ({driver.entities.map(e => e.name).join(', ')})
                                 </span>
                               )}
@@ -197,11 +197,11 @@ export default function OptimizeDashboardPage() {
                           </div>
 
                           {isSelected && (
-                            <div className="shrink-0 text-red-500">
+                            <div className="shrink-0 text-seidor-main">
                               <CaralIcon name="check" size={14} />
                             </div>
                           )}
-                        </button>
+                        </Button>
                       );
                     })}
                   </div>
