@@ -162,8 +162,8 @@ export interface DataTableProps<T = any> {
   iconName?: Icons;
 
   // Custom toolbar slots
-  toolbarLeft?: React.ReactNode;
-  toolbarRight?: React.ReactNode;
+  toolbarLeft?: React.ReactNode | ((props: { isMaximized: boolean }) => React.ReactNode);
+  toolbarRight?: React.ReactNode | ((props: { isMaximized: boolean }) => React.ReactNode);
 }
 
 export function evaluateAgnosticTextFilter(value: any, operator: string, filterVal: string): boolean {
@@ -638,15 +638,15 @@ export function DataTable<T = any>({
       {isMaximized && (
         <div
           onClick={() => setIsMaximized(false)}
-          className="fixed inset-0 bg-black/60 backdrop-blur-xs z-[9990] transition-opacity duration-300"
+          className="fixed inset-0 bg-black/60 backdrop-blur-xs z-[60] transition-opacity duration-300"
         />
       )}
 
       {/* Main Container */}
       <div
-        className={`w-full overflow-x-auto rounded-2xl border border-neutral-500 bg-container transition-all duration-300 ${isMaximized
-            ? 'fixed inset-2 sm:inset-4 z-[9999] p-2 sm:p-4 overflow-auto shadow-2xl flex flex-col'
-            : ''
+        className={`w-full max-h-[calc(100vh-130px)] flex flex-col rounded-2xl border border-neutral-500 bg-container transition-all duration-300 ${isMaximized
+          ? 'fixed inset-2 sm:inset-4 z-[70] p-2 sm:p-4 overflow-auto shadow-2xl !max-h-none h-[calc(100vh-32px)]'
+          : ''
           } ${className}`}
       >
         {/* Header Toolbar */}
@@ -676,7 +676,7 @@ export function DataTable<T = any>({
               </div>
             )}
 
-            {toolbarLeft}
+            {typeof toolbarLeft === 'function' ? toolbarLeft({ isMaximized }) : toolbarLeft}
 
             {/* Error Mismatch Chip */}
             {canFilterErrors && rowErrorPredicate && (
@@ -739,7 +739,7 @@ export function DataTable<T = any>({
             {/* Column Filters Drawer Trigger */}
             {canFilterColumns && filterableColumns.length > 0 && (
               <Button
-                variant={activeFiltersList.length > 0 ? 'info' : 'light'}
+                variant={activeFiltersList.length > 0 ? 'info' : 'ghost'}
                 iconName="filter"
                 isIconButton
                 onClick={() => setDrawerOpen(true)}
@@ -754,7 +754,7 @@ export function DataTable<T = any>({
             {/* Export CSV */}
             {canExport && (
               <Button
-                variant={exportStatus === 'warning' ? 'warning' : 'light'}
+                variant={exportStatus === 'warning' ? 'warning' : 'ghost'}
                 iconName="fileDown"
                 isIconButton
                 onClick={handleExportClick}
@@ -765,7 +765,7 @@ export function DataTable<T = any>({
             {/* Fullscreen Expand */}
             {canExpand && (
               <Button
-                variant="light"
+                variant="ghost"
                 iconName={isMaximized ? 'arrowsMinimize' : 'arrowsMaximize'}
                 isIconButton
                 onClick={() => setIsMaximized(!isMaximized)}
@@ -774,7 +774,7 @@ export function DataTable<T = any>({
             )}
 
             {/* Custom Toolbar Right Actions (Furthest Right) */}
-            {toolbarRight}
+            {typeof toolbarRight === 'function' ? toolbarRight({ isMaximized }) : toolbarRight}
           </div>
         </div>
 
@@ -828,193 +828,195 @@ export function DataTable<T = any>({
           </div>
         )}
 
-        {/* Agnostic Table */}
-        <table className="w-full text-left border-separate border-spacing-0 table-fixed">
-          <thead>
-            <tr className="bg-neutral-500 font-bold text-neutral-900 text-xs uppercase tracking-wider">
-              {columns.map((col, idx) => {
-                const width = getColWidth(col);
-                const alignClass =
-                  col.align === 'right'
-                    ? 'text-right'
-                    : col.align === 'center'
-                      ? 'text-center'
-                      : 'text-left';
-                const isFilterActive = !!activeFilters[col.id]?.active;
-                const canFilterThisCol =
-                  canFilterColumns && col.filterable !== false && col.filterType !== 'none';
-
-                return (
-                  <th
-                    key={col.id}
-                    style={{ width: `${width}px`, minWidth: `${col.minWidth ?? 70}px` }}
-                    className={`py-4 px-4 relative select-none border-b border-neutral-500 ${alignClass} ${col.headerClassName || ''
-                      }`}
-                  >
-                    <div
-                      className={`flex items-center ${col.align === 'right'
-                          ? 'justify-end'
-                          : col.align === 'center'
-                            ? 'justify-center'
-                            : 'justify-between'
-                        } gap-1.5 overflow-hidden pr-1`}
-                    >
-                      {/* Left color dot if any */}
-                      {col.headerColor && (
-                        <span
-                          style={{ backgroundColor: col.headerColor }}
-                          className="size-2 rounded-full shrink-0 shadow-xs"
-                        />
-                      )}
-
-                      {/* Header Content */}
-                      <div className="truncate flex items-center gap-1">
-                        {typeof col.header === 'function' ? (
-                          col.header({ column: col })
-                        ) : (
-                          <span className="truncate block" title={String(col.header)}>
-                            {col.header}
-                          </span>
-                        )}
-                        {col.headerSubtitle && (
-                          <span className="text-[11px] font-mono text-neutral-800 font-bold shrink-0">
-                            {col.headerSubtitle}
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Filter Icon button */}
-                      {canFilterThisCol && (
-                        <Button
-                          variant="ghost"
-                          isIconButton
-                          iconName="filter"
-                          onClick={() => {
-                            const tabIdx = filterableColumns.findIndex((c) => c.id === col.id);
-                            if (tabIdx >= 0) setDrawerTabIndex(tabIdx);
-                            setDrawerOpen(true);
-                          }}
-                          className={`p-1 rounded transition-colors hover:bg-neutral-500/50 shrink-0 ${isFilterActive
-                              ? 'text-seidor-main font-bold'
-                              : 'text-neutral-800 hover:text-neutral-900'
-                            }`}
-                          title={`Filtrar por ${col.filterLabel || col.id}`}
-                        />
-                      )}
-                    </div>
-
-                    {/* Resizer */}
-                    {canReadjust && col.resizable !== false && (
-                      <div
-                        onMouseDown={(e) => handleStartResize(col.id, width, e)}
-                        onDoubleClick={(e) => {
-                          e.stopPropagation();
-                          setColumnWidths((prev) => {
-                            const next = { ...prev };
-                            delete next[col.id];
-                            return next;
-                          });
-                        }}
-                        title="Arrastrar para redimensionar (doble clic para restaurar)"
-                        className="absolute right-0 top-0 bottom-0 w-3 cursor-col-resize z-10 flex items-center justify-center group/resizer"
-                      >
-                        <div
-                          className={`w-[2px] h-3/5 rounded-full transition-all duration-150 ${activeResizingCol === col.id
-                              ? 'bg-info-main w-[3px] shadow-xs'
-                              : 'bg-neutral-300 w-[1px] group-hover/resizer:bg-info-main group-hover/resizer:w-[1px]'
-                            }`}
-                        />
-                      </div>
-                    )}
-                  </th>
-                );
-              })}
-            </tr>
-          </thead>
-
-          <tbody className="text-xs">
-            {filteredData.length === 0 ? (
-              <tr>
-                <td
-                  colSpan={columns.length}
-                  className="py-12 text-center text-neutral-800 border-b border-neutral-500"
-                >
-                  {resolvedLabels.emptyMessage}
-                </td>
-              </tr>
-            ) : (
-              filteredData.map((row, rowIndex) => {
-                const rowKey = keyExtractor ? keyExtractor(row, rowIndex) : String(rowIndex);
-
-                return (
-                  <tr
-                    key={rowKey}
-                    className="hover:bg-neutral-500/20 transition-colors border-b border-neutral-500 font-poppins"
-                  >
-                    {columns.map((col) => {
-                      const value = getCellValue(row, col);
-                      const alignClass =
-                        col.align === 'right'
-                          ? 'text-right'
-                          : col.align === 'center'
-                            ? 'text-center'
-                            : 'text-left';
-
-                      return (
-                        <td
-                          key={col.id}
-                          className={`py-3.5 px-4 ${alignClass} ${col.cellClassName || ''}`}
-                        >
-                          {col.cell ? (
-                            col.cell({ row, value, rowIndex })
-                          ) : (
-                            <span className="truncate block">{String(value ?? '')}</span>
-                          )}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                );
-              })
-            )}
-          </tbody>
-
-          {/* Footer Row */}
-          {hasFooters && filteredData.length > 0 && (
-            <tfoot>
-              <tr className="bg-neutral-500/40 border-t-2 border-neutral-500 font-bold text-xs">
-                {columns.map((col) => {
+        {/* Scrollable Table Area */}
+        <div className="w-full flex-1 overflow-auto">
+          <table className="w-full text-left border-separate border-spacing-0 table-fixed">
+            <thead className="sticky top-0 z-10">
+              <tr className="bg-neutral-500 font-bold text-neutral-900 text-xs uppercase tracking-wider">
+                {columns.map((col, idx) => {
+                  const width = getColWidth(col);
                   const alignClass =
                     col.align === 'right'
                       ? 'text-right'
                       : col.align === 'center'
                         ? 'text-center'
                         : 'text-left';
-
-                  let content: React.ReactNode = null;
-                  if (typeof col.footer === 'function') {
-                    content = col.footer({ data, filteredData, column: col });
-                  } else if (col.footer !== undefined) {
-                    content = col.footer;
-                  }
+                  const isFilterActive = !!activeFilters[col.id]?.active;
+                  const canFilterThisCol =
+                    canFilterColumns && col.filterable !== false && col.filterType !== 'none';
 
                   return (
-                    <td
+                    <th
                       key={col.id}
-                      className={`py-3.5 px-4 ${alignClass} ${col.footerClassName || ''}`}
+                      style={{ width: `${width}px`, minWidth: `${col.minWidth ?? 70}px` }}
+                      className={`py-4 px-4 relative select-none border-b border-neutral-500 ${alignClass} ${col.headerClassName || ''
+                        }`}
                     >
-                      {content}
-                    </td>
+                      <div
+                        className={`flex items-center ${col.align === 'right'
+                          ? 'justify-end'
+                          : col.align === 'center'
+                            ? 'justify-center'
+                            : 'justify-between'
+                          } gap-1.5 overflow-hidden pr-1`}
+                      >
+                        {/* Left color dot if any */}
+                        {col.headerColor && (
+                          <span
+                            style={{ backgroundColor: col.headerColor }}
+                            className="size-2 rounded-full shrink-0 shadow-xs"
+                          />
+                        )}
+
+                        {/* Header Content */}
+                        <div className="truncate flex items-center gap-1">
+                          {typeof col.header === 'function' ? (
+                            col.header({ column: col })
+                          ) : (
+                            <span className="truncate block" title={String(col.header)}>
+                              {col.header}
+                            </span>
+                          )}
+                          {col.headerSubtitle && (
+                            <span className="text-[11px] font-mono text-neutral-800 font-bold shrink-0">
+                              {col.headerSubtitle}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Filter Icon button */}
+                        {canFilterThisCol && (
+                          <Button
+                            variant="ghost"
+                            isIconButton
+                            iconName="filter"
+                            onClick={() => {
+                              const tabIdx = filterableColumns.findIndex((c) => c.id === col.id);
+                              if (tabIdx >= 0) setDrawerTabIndex(tabIdx);
+                              setDrawerOpen(true);
+                            }}
+                            className={`p-1 rounded transition-colors hover:bg-neutral-500/50 shrink-0 ${isFilterActive
+                              ? 'text-seidor-main font-bold'
+                              : 'text-neutral-800 hover:text-neutral-900'
+                              }`}
+                            title={`Filtrar por ${col.filterLabel || col.id}`}
+                          />
+                        )}
+                      </div>
+
+                      {/* Resizer */}
+                      {canReadjust && col.resizable !== false && (
+                        <div
+                          onMouseDown={(e) => handleStartResize(col.id, width, e)}
+                          onDoubleClick={(e) => {
+                            e.stopPropagation();
+                            setColumnWidths((prev) => {
+                              const next = { ...prev };
+                              delete next[col.id];
+                              return next;
+                            });
+                          }}
+                          title="Arrastrar para redimensionar (doble clic para restaurar)"
+                          className="absolute right-0 top-0 bottom-0 w-3 cursor-col-resize z-10 flex items-center justify-center group/resizer"
+                        >
+                          <div
+                            className={`w-[2px] h-3/5 rounded-full transition-all duration-150 ${activeResizingCol === col.id
+                              ? 'bg-info-main w-[3px] shadow-xs'
+                              : 'bg-neutral-300 w-[1px] group-hover/resizer:bg-info-main group-hover/resizer:w-[1px]'
+                              }`}
+                          />
+                        </div>
+                      )}
+                    </th>
                   );
                 })}
               </tr>
-            </tfoot>
-          )}
-        </table>
+            </thead>
+
+            <tbody className="text-xs">
+              {filteredData.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan={columns.length}
+                    className="py-12 text-center text-neutral-800 border-b border-neutral-500"
+                  >
+                    {resolvedLabels.emptyMessage}
+                  </td>
+                </tr>
+              ) : (
+                filteredData.map((row, rowIndex) => {
+                  const rowKey = keyExtractor ? keyExtractor(row, rowIndex) : String(rowIndex);
+
+                  return (
+                    <tr
+                      key={rowKey}
+                      className="hover:bg-neutral-500/20 transition-colors border-b border-neutral-500 font-poppins"
+                    >
+                      {columns.map((col) => {
+                        const value = getCellValue(row, col);
+                        const alignClass =
+                          col.align === 'right'
+                            ? 'text-right'
+                            : col.align === 'center'
+                              ? 'text-center'
+                              : 'text-left';
+
+                        return (
+                          <td
+                            key={col.id}
+                            className={`py-3.5 px-4 ${alignClass} ${col.cellClassName || ''}`}
+                          >
+                            {col.cell ? (
+                              col.cell({ row, value, rowIndex })
+                            ) : (
+                              <span className="truncate block">{String(value ?? '')}</span>
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+
+            {/* Footer Row */}
+            {hasFooters && filteredData.length > 0 && (
+              <tfoot className="sticky bottom-0 z-10 bg-container">
+                <tr className="bg-neutral-500/30 border-t border-neutral-500 font-bold text-xs">
+                  {columns.map((col) => {
+                    const alignClass =
+                      col.align === 'right'
+                        ? 'text-right'
+                        : col.align === 'center'
+                          ? 'text-center'
+                          : 'text-left';
+
+                    let content: React.ReactNode = null;
+                    if (typeof col.footer === 'function') {
+                      content = col.footer({ data, filteredData, column: col });
+                    } else if (col.footer !== undefined) {
+                      content = col.footer;
+                    }
+
+                    return (
+                      <td
+                        key={col.id}
+                        className={`py-2 px-4 ${alignClass} ${col.footerClassName || ''}`}
+                      >
+                        {content}
+                      </td>
+                    );
+                  })}
+                </tr>
+              </tfoot>
+            )}
+          </table>
+        </div>
       </div>
 
       {/* Agnostic Filter Drawer */}
-      {canFilterColumns && filterableColumns.length > 0 && (
+      {canFilterColumns && filterableColumns.length > 0 && isDrawerOpen && (
         <Drawer
           isOpen={isDrawerOpen}
           onClose={() => setDrawerOpen(false)}
@@ -1097,8 +1099,8 @@ export function DataTable<T = any>({
                                 );
                               }}
                               className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer select-none ${isSelected
-                                  ? 'bg-info-light text-info-hard border-info-main shadow-xs ring-1 ring-info-main/30'
-                                  : 'bg-container text-neutral-800 border-neutral-500 hover:border-neutral-800 hover:bg-neutral-500/10'
+                                ? 'bg-info-light text-info-hard border-info-main shadow-xs ring-1 ring-info-main/30'
+                                : 'bg-container text-neutral-800 border-neutral-500 hover:border-neutral-800 hover:bg-neutral-500/10'
                                 }`}
                             >
                               {isSelected && <CaralIcon name="check" size={13} />}

@@ -345,7 +345,7 @@ export function UsersTab() {
         minWidth: 200,
         cell: ({ value }) => (
           <div className="flex items-center gap-1.5 text-neutral-800">
-            <span className="text-neutral-700 shrink-0">
+            <span className="shrink-0">
               <CaralIcon name="envelope" size={14} />
             </span>
             <span className="font-mono text-xs text-neutral-900 truncate" title={String(value)}>

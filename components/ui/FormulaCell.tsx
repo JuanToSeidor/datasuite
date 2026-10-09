@@ -114,7 +114,7 @@ export function FormulaCell({
   return (
     <div className={`flex items-center justify-end gap-1 ${className}`}>
       {currencySymbol && (
-        <span className="text-neutral-700 text-xs select-none">{currencySymbol}</span>
+        <span className="text-xs select-none">{currencySymbol}</span>
       )}
       <input
         type="text"
@@ -122,9 +122,9 @@ export function FormulaCell({
           isFocused
             ? inputValue
             : Number(value || 0).toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
         }
         onFocus={(e) => {
           setIsFocused(true);
