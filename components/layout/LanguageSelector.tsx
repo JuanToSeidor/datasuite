@@ -46,19 +46,18 @@ export function LanguageSelector({ className = "" }: { className?: string }) {
 
   return (
     <div className={`relative ${className}`} ref={containerRef}>
-      <button
-        type="button"
+      <Button
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Seleccionar idioma"
         aria-expanded={isOpen}
-        className="h-[44px] px-3 rounded-md border border-[var(--color-neutral-400)] bg-transparent hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-800 dark:text-neutral-200 flex items-center gap-2 cursor-pointer transition-all duration-150 active:scale-95"
+        variant="ghost"
       >
         <CaralIcon name="globe" size={18} />
         <span className="text-xs font-semibold uppercase tracking-wider">{currentLanguageOption.shortLabel}</span>
         <span className={`inline-flex transition-transform duration-200 opacity-60 ${isOpen ? "rotate-180" : ""}`}>
           <CaralIcon name="chevronDown" size={14} />
         </span>
-      </button>
+      </Button>
 
       {isOpen && (
         <div className="absolute right-0 top-[calc(100%+8px)] w-[180px] bg-container border border-neutral-400 rounded-xl shadow-xl p-1.5 flex flex-col gap-1 z-50 animate-in fade-in zoom-in-95 duration-150">
@@ -73,14 +72,13 @@ export function LanguageSelector({ className = "" }: { className?: string }) {
                 key={item.code}
                 type="button"
                 onClick={() => handleSelect(item.code)}
-                className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors cursor-pointer text-left ${
-                  isSelected
-                    ? "bg-info-light/20 text-info-main font-semibold"
-                    : "text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 font-medium"
-                }`}
+                className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors cursor-pointer text-left ${isSelected
+                  ? "bg-info-light/20 text-info-main font-semibold"
+                  : "text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 font-medium"
+                  }`}
               >
                 <div className="flex items-center gap-2.5">
-                  <span className="text-base leading-none">{item.flag}</span>
+
                   <span>{item.label}</span>
                 </div>
                 {isSelected && (

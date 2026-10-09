@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { CaralIcon } from '@/components/icons';
+import { CaralIcon, Icons } from '@/components/icons';
 import { Button } from 'caralstable';
 import { WorkspaceCard } from './WorkspaceCard';
 import Link from 'next/link';
@@ -9,6 +9,7 @@ import { usePathname } from 'next/navigation';
 import { suiteConfig, SidebarSection } from '@/config/suite';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useLanguage } from '@/contexts/LanguageContext';
+import workspacesData from '@/data/workspaces.json';
 
 export function Sidebar({
   className,
@@ -25,6 +26,13 @@ export function Sidebar({
   const { dict, t } = useLanguage();
   const [isGearMenuOpen, setIsGearMenuOpen] = useState(false);
   const pathname = usePathname();
+
+  const workspacesList = workspacesData.workspaces;
+  const [selectedWorkspaceId, setSelectedWorkspaceId] = useState<string>(
+    workspacesList[0]?.id || 'default'
+  );
+  const selectedWorkspace =
+    workspacesList.find((w) => w.id === selectedWorkspaceId) || workspacesList[0];
 
   // Encontrar si la ruta actual pertenece a uno de los hijos (branches)
   const currentBranch = suiteConfig.branches.find(
@@ -94,12 +102,24 @@ export function Sidebar({
                   {dict.sidebar.defaultWorkspace}
                 </p>
               )}
-              <WorkspaceCard
-                title="Innovation Crew"
-                colorClass="text-info-main"
-                bgColorClass="bg-info-main"
-                isExpanded={isExpanded}
-              />
+              {workspacesList
+                .filter((w) => w.type === 'system')
+                .map((ws) => (
+                  <WorkspaceCard
+                    key={ws.id}
+                    title={ws.name}
+                    description={ws.description}
+                    iconName={ws.iconName as Icons}
+                    color={ws.color}
+                    isSelected={selectedWorkspace?.id === ws.id}
+                    isExpanded={isExpanded}
+                    showColorBar
+                    onClick={() => {
+                      setSelectedWorkspaceId(ws.id);
+                      setIsWorkspacesView?.(false);
+                    }}
+                  />
+                ))}
             </div>
 
             <div className="flex flex-col w-full">
@@ -109,29 +129,24 @@ export function Sidebar({
                 </p>
               )}
 
-              <WorkspaceCard
-                title="Innovation Crew"
-                colorClass="text-info-main"
-                bgColorClass="bg-info-main"
-                isExpanded={isExpanded}
-                showColorBar
-              />
-
-              <WorkspaceCard
-                title="People Crew"
-                colorClass="text-[#f97316]"
-                bgColorClass="bg-[#f97316]"
-                isExpanded={isExpanded}
-                showColorBar
-              />
-
-              <WorkspaceCard
-                title="Juan Crew"
-                colorClass="text-[#ef4444]"
-                bgColorClass="bg-[#ef4444]"
-                isExpanded={isExpanded}
-                showColorBar
-              />
+              {workspacesList
+                .filter((w) => w.type !== 'system')
+                .map((ws) => (
+                  <WorkspaceCard
+                    key={ws.id}
+                    title={ws.name}
+                    description={ws.description}
+                    iconName={ws.iconName as Icons}
+                    color={ws.color}
+                    isSelected={selectedWorkspace?.id === ws.id}
+                    isExpanded={isExpanded}
+                    showColorBar
+                    onClick={() => {
+                      setSelectedWorkspaceId(ws.id);
+                      setIsWorkspacesView?.(false);
+                    }}
+                  />
+                ))}
             </div>
           </div>
 
@@ -299,21 +314,28 @@ export function Sidebar({
             )}
 
             <Button
-              variant="success"
               isIconButton={!isExpanded}
-              iconName={!isExpanded ? "users" : undefined}
+              iconName={!isExpanded ? ((selectedWorkspace?.iconName as Icons) || "grid") : undefined}
+              style={{
+                backgroundColor: selectedWorkspace?.color || '#0191FF',
+                borderColor: selectedWorkspace?.color || '#0191FF',
+                color: '#ffffff',
+              }}
               className={
                 isExpanded
-                  ? "w-full !justify-between px-4 flex items-center font-normal! text-sm"
-                  : "w-full"
+                  ? "w-full !justify-between px-3 flex items-center font-medium text-sm text-white! shadow-sm transition-all hover:brightness-110 active:scale-[0.98]"
+                  : "w-full text-white! shadow-sm transition-all hover:brightness-110 active:scale-[0.98]"
               }
               onClick={() => setIsWorkspacesView?.(true)}
             >
               {isExpanded && (
-                <>
-                  <span className="truncate">Workspace name</span>
-                  <CaralIcon name="chevronRigth" size={16} />
-                </>
+                <div className="flex items-center justify-between w-full min-w-0">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <CaralIcon name={(selectedWorkspace?.iconName as Icons) || "grid"} size={16} />
+                    <span className="truncate font-medium text-white">{selectedWorkspace?.name || "Workspace"}</span>
+                  </div>
+                  <CaralIcon name="chevronRigth" size={16} classname="text-white shrink-0 ml-1" />
+                </div>
               )}
             </Button>
           </div>

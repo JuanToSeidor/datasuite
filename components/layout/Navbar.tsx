@@ -116,7 +116,9 @@ export function Navbar({
           </Drawer>
         </div>
         <div className="relative">
-          <Button isIconButton iconName="grid" variant="light" className='bg-transparent hover:text-seidor-main' hasBorder onClick={() => setIsLauncherOpen(true)} />
+          <Button isIconButton iconName="grid"
+            variant="ghost"
+            hasBorder onClick={() => setIsLauncherOpen(true)} />
 
           <Drawer isOpen={isLauncherOpen} onClose={() => setIsLauncherOpen(false)} title={suiteConfig.name} >
 
@@ -140,10 +142,12 @@ export function Navbar({
           </Drawer>
         </div>
         <div className="relative">
-          <Button hasBorder variant="light" className='bg-transparent h-[44px] w-[44px] p-0' onClick={() => setIsChatOpen(true)}>
-            <Brand name='Daiana' size={24} />
-          </Button>
-
+          <Button
+            hasBorder
+            variant="ghost"
+            onClick={() => setIsChatOpen(true)}
+            iconName='squareFace'
+          />
           <Drawer isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} title={dict.navbar.chatWithDaiana}>
 
             <div className="flex flex-col h-full justify-center gap-4">
@@ -171,7 +175,7 @@ export function Navbar({
 
           </Drawer>
         </div>
-        
+
         {/* Language Selector */}
         <LanguageSelector />
 
