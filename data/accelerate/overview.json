@@ -1,0 +1,28 @@
+{
+  "customer": "Austral Aceros",
+  "kpis": {
+    "dashboardsPublished": 6,
+    "dashboardsPlatform": "Power BI en Microsoft Fabric",
+    "sapTablesUpToDate": 15,
+    "sapTablesTotal": 16,
+    "staleTable": "LIPS",
+    "staleSystem": "S4P",
+    "lastMoveLoadTime": "09:18",
+    "lastMoveLoadDate": "16/10/2026",
+    "lastMoveLoadMinutesAgo": 42
+  },
+  "alerts": [
+    {
+      "id": "alert-zsd-lips-delta",
+      "severity": "danger",
+      "flow": "ZSD_LIPS_DELTA",
+      "pausedSince": "13/10",
+      "affects": "ACT-IN SD · Producción y Perú"
+    }
+  ],
+  "move": {
+    "activeFlows": 15,
+    "recordsToday": "412K",
+    "pausedFlows": 1
+  }
+}

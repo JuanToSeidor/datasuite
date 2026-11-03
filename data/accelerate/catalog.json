@@ -1,0 +1,117 @@
+[
+  {
+    "id": "actin-sd",
+    "code": "SD",
+    "name": "ACT-IN SD",
+    "area": "Ventas y Distribución",
+    "description": "Pedidos, entregas y facturación de SAP SD listos para analizar: ventas por cliente, material y organización de ventas, backlog de pedidos abiertos, cumplimiento de entregas (OTIF) y margen bruto facturado.",
+    "availability": "available",
+    "contracted": true,
+    "platforms": [
+      "SAP HANA"
+    ],
+    "stats": {
+      "dashboards": 4,
+      "destinationObjects": 9,
+      "version": "V2.3.1"
+    },
+    "sapTables": [
+      "VBAK",
+      "VBAP",
+      "LIKP",
+      "LIPS",
+      "VBRK",
+      "VBRP",
+      "KMN1",
+      "WARA"
+    ],
+    "destinations": [
+      {
+        "brand": "Fabric",
+        "name": "Microsoft Fabric",
+        "available": true
+      },
+      {
+        "brand": "Snowflake",
+        "name": "Snowflake",
+        "available": false,
+        "stage": 2
+      },
+      {
+        "brand": "Databricks",
+        "name": "Databricks",
+        "available": false,
+        "stage": 2
+      },
+      {
+        "brand": "AWS",
+        "name": "AWS",
+        "available": false,
+        "stage": 2
+      }
+    ]
+  },
+  {
+    "id": "actin-mm",
+    "code": "MM",
+    "name": "ACT-IN MM",
+    "area": "Gestión de Materiales",
+    "description": "Compras, inventario y movimientos de materiales de SAP MM: órdenes de compra abiertas, cumplimiento de proveedores, rotación de stock y valorización de inventario por centro y almacén.",
+    "availability": "available",
+    "contracted": false,
+    "platforms": [
+      "SAP HANA"
+    ],
+    "stats": {
+      "dashboards": 3,
+      "destinationObjects": 7,
+      "version": "V1.4.0"
+    },
+    "sapTables": [
+      "EKKO",
+      "EKPO",
+      "MSEG",
+      "MKPF",
+      "MARD",
+      "MBEW",
+      "LFA1"
+    ],
+    "destinations": [
+      {
+        "brand": "Fabric",
+        "name": "Microsoft Fabric",
+        "available": true
+      },
+      {
+        "brand": "Snowflake",
+        "name": "Snowflake",
+        "available": false,
+        "stage": 2
+      }
+    ]
+  },
+  {
+    "id": "actin-fi",
+    "code": "FI",
+    "name": "ACT-IN FI",
+    "area": "Finanzas",
+    "description": "Libro mayor, cuentas por cobrar y por pagar sobre el Universal Journal de S/4HANA: resultados por sociedad y centro de beneficio, antigüedad de saldos y días de cobro.",
+    "availability": "comingSoon",
+    "stage": 2,
+    "contracted": false,
+    "platforms": [
+      "SAP HANA"
+    ],
+    "sapTables": [
+      "VBAK",
+      "VBAP",
+      "LIKP",
+      "LIPS",
+      "VBRK",
+      "VBRP",
+      "KMN1",
+      "WARA"
+    ],
+    "destinations": []
+  }
+]

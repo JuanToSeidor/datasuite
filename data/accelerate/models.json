@@ -1,0 +1,93 @@
+[
+  {
+    "id": "actin-sd-prd",
+    "catalogId": "actin-sd",
+    "name": "ACT-IN SD · Producción",
+    "companies": ["1000", "3000"],
+    "version": "v2.3.1",
+    "status": "active",
+    "progress": 100,
+    "source": { "brand": "SAP", "system": "S4P", "product": "S/4HANA PRD", "client": "300" },
+    "destination": { "brand": "Fabric", "name": "Microsoft Fabric", "lakehouse": "LH_Austral_SD", "workspace": "WS-Analítica-PRD" },
+    "freshness": { "lastLoad": "16/10/2026 09:18", "minutesAgo": 42, "tablesUpToDate": 7, "tablesTotal": 8 },
+    "dashboards": 4
+  },
+  {
+    "id": "actin-sd-qas",
+    "catalogId": "actin-sd",
+    "name": "ACT-IN SD · Calidad",
+    "companies": ["1000"],
+    "version": "v2.3.1",
+    "status": "deploying",
+    "progress": 69,
+    "source": { "brand": "SAP", "system": "S4Q", "product": "S/4HANA QAS", "client": "200" },
+    "destination": { "brand": "Fabric", "name": "Microsoft Fabric", "lakehouse": "LH_Austral_SD_QA", "workspace": "WS-Analítica-QA" },
+    "freshness": { "lastLoad": "16/10/2026 08:55", "minutesAgo": 60, "tablesUpToDate": 8, "tablesTotal": 8 },
+    "dashboards": 0
+  },
+  {
+    "id": "actin-sd-pe",
+    "catalogId": "actin-sd",
+    "name": "ACT-IN SD · Producción",
+    "companies": ["1000", "3000"],
+    "version": "v2.3.1",
+    "status": "error",
+    "progress": 0,
+    "source": { "brand": "SAP", "system": "S4P", "product": "S/4HANA PRD", "client": "300" },
+    "destination": { "brand": "Fabric", "name": "Microsoft Fabric", "lakehouse": "LH_Austral_SD_PE", "workspace": "WS-Analítica-PRD" },
+    "freshness": { "lastLoad": "16/10/2026 09:18", "minutesAgo": 42, "tablesUpToDate": 7, "tablesTotal": 8 },
+    "dashboards": 2
+  },
+  {
+    "id": "actin-sd-cl",
+    "catalogId": "actin-sd",
+    "name": "ACT-IN SD · Chile",
+    "companies": ["2000"],
+    "version": "v2.3.1",
+    "status": "active",
+    "progress": 100,
+    "source": { "brand": "SAP", "system": "S4P", "product": "S/4HANA PRD", "client": "300" },
+    "destination": { "brand": "Fabric", "name": "Microsoft Fabric", "lakehouse": "LH_Austral_SD_CL", "workspace": "WS-Analítica-PRD" },
+    "freshness": { "lastLoad": "16/10/2026 09:18", "minutesAgo": 42, "tablesUpToDate": 7, "tablesTotal": 8 },
+    "dashboards": 4
+  },
+  {
+    "id": "actin-sd-ar",
+    "catalogId": "actin-sd",
+    "name": "ACT-IN SD · Argentina",
+    "companies": ["4000"],
+    "version": "v2.3.1",
+    "status": "active",
+    "progress": 100,
+    "source": { "brand": "SAP", "system": "S4P", "product": "S/4HANA PRD", "client": "300" },
+    "destination": { "brand": "Fabric", "name": "Microsoft Fabric", "lakehouse": "LH_Austral_SD_AR", "workspace": "WS-Analítica-PRD" },
+    "freshness": { "lastLoad": "16/10/2026 09:10", "minutesAgo": 50, "tablesUpToDate": 8, "tablesTotal": 8 },
+    "dashboards": 4
+  },
+  {
+    "id": "actin-sd-co",
+    "catalogId": "actin-sd",
+    "name": "ACT-IN SD · Colombia",
+    "companies": ["5000"],
+    "version": "v2.3.0",
+    "status": "active",
+    "progress": 100,
+    "source": { "brand": "SAP", "system": "S4P", "product": "S/4HANA PRD", "client": "300" },
+    "destination": { "brand": "Fabric", "name": "Microsoft Fabric", "lakehouse": "LH_Austral_SD_CO", "workspace": "WS-Analítica-PRD" },
+    "freshness": { "lastLoad": "16/10/2026 08:47", "minutesAgo": 73, "tablesUpToDate": 8, "tablesTotal": 8 },
+    "dashboards": 3
+  },
+  {
+    "id": "actin-sd-mx",
+    "catalogId": "actin-sd",
+    "name": "ACT-IN SD · México",
+    "companies": ["6000", "6100"],
+    "version": "v2.3.1",
+    "status": "active",
+    "progress": 100,
+    "source": { "brand": "SAP", "system": "S4P", "product": "S/4HANA PRD", "client": "300" },
+    "destination": { "brand": "Fabric", "name": "Microsoft Fabric", "lakehouse": "LH_Austral_SD_MX", "workspace": "WS-Analítica-PRD" },
+    "freshness": { "lastLoad": "16/10/2026 09:18", "minutesAgo": 42, "tablesUpToDate": 7, "tablesTotal": 8 },
+    "dashboards": 4
+  }
+]

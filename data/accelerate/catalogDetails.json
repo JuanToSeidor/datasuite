@@ -1,0 +1,405 @@
+{
+  "actin-sd": {
+    "destinationVersions": [
+      {
+        "brand": "Fabric",
+        "version": "Microsoft Fabric"
+      }
+    ],
+    "functionalDescription": "ACT-IN SD convierte los documentos de ventas, entregas y facturas de SAP SD en un modelo dimensional listo para Power BI. Unifica las sociedades y organizaciones de ventas, convierte a moneda de reporte y calcula los indicadores comerciales que el área de ventas usa todos los meses.",
+    "features": [
+      {
+        "title": "Ventas facturadas",
+        "description": "Por cliente, material, org. de ventas y canal"
+      },
+      {
+        "title": "Backlog de pedidos",
+        "description": "Pedidos abiertos, sin entregar y sin facturar"
+      },
+      {
+        "title": "Cumplimiento de entregas",
+        "description": "OTIF y días de atraso contra fecha comprometida"
+      },
+      {
+        "title": "Margen bruto",
+        "description": "Ingreso neto menos costo de la factura"
+      }
+    ],
+    "sheet": {
+      "sapModule": "SD · Ventas y Distribución",
+      "source": "SAP S/4HANA 1909 o superior",
+      "destinations": "Microsoft Fabric",
+      "destinationsDetail": "Lakehouse + Direct Lake",
+      "extraction": "CRESTONE Move · delta por cambio",
+      "reportingCurrency": "USD + moneda local"
+    },
+    "reports": [
+      "Resumen ejecutivo de ventas",
+      "Pedidos abiertos y backlog",
+      "Cumplimiento de entregas (OTIF)",
+      "Facturación y margen"
+    ],
+    "sourceTables": {
+      "consultedAt": "16/10/2026 10:00",
+      "environments": [
+        {
+          "id": "prd",
+          "label": "SAP - Producción",
+          "tables": [
+            {
+              "table": "VBAK",
+              "description": "Documento de ventas: cabecera",
+              "records": 1284310,
+              "lastLoad": "16/10/2026 09:18",
+              "flow": "ZSD_VBAK_DELTA",
+              "frequencyMinutes": 15,
+              "status": "available"
+            },
+            {
+              "table": "VBAP",
+              "description": "Documento de ventas: posición",
+              "records": 4902877,
+              "lastLoad": "16/10/2026 09:18",
+              "flow": "ZSD_VBAP_DELTA",
+              "frequencyMinutes": 15,
+              "status": "available"
+            },
+            {
+              "table": "LIKP",
+              "description": "Entrega: cabecera",
+              "records": 1102554,
+              "lastLoad": "16/10/2026 09:18",
+              "flow": "ZSD_LIKP_DELTA",
+              "frequencyMinutes": 15,
+              "status": "available"
+            },
+            {
+              "table": "MARA",
+              "description": "Material: Datos básicos",
+              "records": 5678345,
+              "lastLoad": "16/10/2026 09:20",
+              "flow": "ZSD_MARA_DELTA",
+              "frequencyMinutes": 30,
+              "status": "outdated"
+            },
+            {
+              "table": "EKKO",
+              "description": "Pedido: cabecera",
+              "records": 3456789,
+              "lastLoad": "16/10/2026 09:22",
+              "flow": "ZSD_EKKO_DELTA",
+              "frequencyMinutes": 30,
+              "status": "available"
+            },
+            {
+              "table": "EKPO",
+              "description": "Pedido: posición",
+              "records": 7890123,
+              "lastLoad": "16/10/2026 09:25",
+              "flow": "ZSD_EKPO_DELTA",
+              "frequencyMinutes": 30,
+              "status": "available"
+            },
+            {
+              "table": "KNA1",
+              "description": "Cliente: Datos básicos",
+              "records": 8234567,
+              "lastLoad": "16/10/2026 09:27",
+              "flow": "ZSD_KNA1_DELTA",
+              "frequencyMinutes": 60,
+              "status": "available"
+            }
+          ]
+        },
+        {
+          "id": "qas",
+          "label": "SAP - Calidad",
+          "tables": [
+            {
+              "table": "VBAK",
+              "description": "Documento de ventas: cabecera",
+              "records": 154117,
+              "lastLoad": "16/10/2026 08:55",
+              "flow": "ZSD_VBAK_DELTA",
+              "frequencyMinutes": 15,
+              "status": "available"
+            },
+            {
+              "table": "VBAP",
+              "description": "Documento de ventas: posición",
+              "records": 588345,
+              "lastLoad": "16/10/2026 08:55",
+              "flow": "ZSD_VBAP_DELTA",
+              "frequencyMinutes": 15,
+              "status": "available"
+            },
+            {
+              "table": "LIKP",
+              "description": "Entrega: cabecera",
+              "records": 132306,
+              "lastLoad": "16/10/2026 08:55",
+              "flow": "ZSD_LIKP_DELTA",
+              "frequencyMinutes": 15,
+              "status": "available"
+            },
+            {
+              "table": "MARA",
+              "description": "Material: Datos básicos",
+              "records": 681401,
+              "lastLoad": "16/10/2026 08:55",
+              "flow": "ZSD_MARA_DELTA",
+              "frequencyMinutes": 30,
+              "status": "available"
+            },
+            {
+              "table": "EKKO",
+              "description": "Pedido: cabecera",
+              "records": 414815,
+              "lastLoad": "16/10/2026 08:55",
+              "flow": "ZSD_EKKO_DELTA",
+              "frequencyMinutes": 30,
+              "status": "available"
+            },
+            {
+              "table": "EKPO",
+              "description": "Pedido: posición",
+              "records": 946815,
+              "lastLoad": "16/10/2026 08:55",
+              "flow": "ZSD_EKPO_DELTA",
+              "frequencyMinutes": 30,
+              "status": "available"
+            },
+            {
+              "table": "KNA1",
+              "description": "Cliente: Datos básicos",
+              "records": 988148,
+              "lastLoad": "16/10/2026 08:55",
+              "flow": "ZSD_KNA1_DELTA",
+              "frequencyMinutes": 60,
+              "status": "missing"
+            }
+          ]
+        }
+      ]
+    },
+    "destinationObjects": {
+      "destination": "Microsoft Fabric",
+      "lakehouse": "LH_Austral_SD",
+      "workspace": "WS-Analítica-PRD",
+      "objects": [
+        {
+          "name": "dim_cliente",
+          "type": "deltaTable",
+          "builtFrom": "KNA1",
+          "content": "Clientes con país, región y grupo de cuentas"
+        },
+        {
+          "name": "dim_material",
+          "type": "deltaTable",
+          "builtFrom": "MARA",
+          "content": "Materiales, grupo de artículos y unidad base"
+        },
+        {
+          "name": "dim_org_ventas",
+          "type": "deltaTable",
+          "builtFrom": "VBAK",
+          "content": "Sociedad, organización de ventas, canal y sector"
+        },
+        {
+          "name": "dim_tiempo",
+          "type": "deltaTable",
+          "builtFrom": "generada",
+          "content": "Calendario fiscal V3 con períodos de SAP"
+        },
+        {
+          "name": "fact_pedidos",
+          "type": "deltaTable",
+          "builtFrom": "VBAK, VBAP",
+          "content": "Posiciones de pedido con importes y cantidades"
+        },
+        {
+          "name": "fact_entregas",
+          "type": "deltaTable",
+          "builtFrom": "LIKP, LIPS",
+          "content": "Entregas con fecha comprometida y real"
+        },
+        {
+          "name": "fact_facturacion",
+          "type": "deltaTable",
+          "builtFrom": "VBRK, VBRP",
+          "content": "Facturas, notas de crédito, costo y margen"
+        },
+        {
+          "name": "vw_backlog_pedidos",
+          "type": "sqlView",
+          "builtFrom": "fact_pedidos, fact_entregas",
+          "content": "Pedidos abiertos sin entregar o sin facturar"
+        },
+        {
+          "name": "SM_ACTIN_SD",
+          "type": "semanticModel",
+          "builtFrom": "Lakehouse",
+          "content": "Direct Lake con 42 medidas comerciales"
+        }
+      ]
+    }
+  },
+  "actin-mm": {
+    "destinationVersions": [
+      {
+        "brand": "Fabric",
+        "version": "V 1.4.0"
+      }
+    ],
+    "functionalDescription": "ACT-IN MM transforma compras, inventario y movimientos de materiales de SAP MM en un modelo dimensional para Power BI, con valorización de stock por centro y almacén y seguimiento del cumplimiento de proveedores.",
+    "features": [
+      {
+        "title": "Órdenes de compra abiertas",
+        "description": "Por proveedor, material y grupo de compras"
+      },
+      {
+        "title": "Cumplimiento de proveedores",
+        "description": "Entregas a tiempo y en cantidad"
+      },
+      {
+        "title": "Rotación de inventario",
+        "description": "Días de cobertura y stock inmovilizado"
+      },
+      {
+        "title": "Valorización de stock",
+        "description": "Por centro, almacén y tipo de material"
+      }
+    ],
+    "sheet": {
+      "sapModule": "MM · Gestión de Materiales",
+      "source": "SAP S/4HANA 1909 o superior",
+      "destinations": "Microsoft Fabric",
+      "destinationsDetail": "Lakehouse + Direct Lake",
+      "extraction": "CRESTONE Move · delta por cambio",
+      "reportingCurrency": "USD + moneda local"
+    },
+    "reports": [
+      "Compras y proveedores",
+      "Inventario y rotación",
+      "Valorización de stock"
+    ],
+    "sourceTables": {
+      "consultedAt": "16/10/2026 10:00",
+      "environments": [
+        {
+          "id": "prd",
+          "label": "SAP - Producción",
+          "tables": [
+            {
+              "table": "EKKO",
+              "description": "Pedido: cabecera",
+              "records": 3456789,
+              "lastLoad": "16/10/2026 09:22",
+              "flow": "ZMM_EKKO_DELTA",
+              "frequencyMinutes": 30,
+              "status": "available"
+            },
+            {
+              "table": "EKPO",
+              "description": "Pedido: posición",
+              "records": 7890123,
+              "lastLoad": "16/10/2026 09:25",
+              "flow": "ZMM_EKPO_DELTA",
+              "frequencyMinutes": 30,
+              "status": "available"
+            },
+            {
+              "table": "MSEG",
+              "description": "Documento de material: posición",
+              "records": 12450331,
+              "lastLoad": "",
+              "flow": "",
+              "frequencyMinutes": 0,
+              "status": "missing"
+            },
+            {
+              "table": "MARD",
+              "description": "Stock por almacén",
+              "records": 845120,
+              "lastLoad": "16/10/2026 08:10",
+              "flow": "ZMM_MARD_DELTA",
+              "frequencyMinutes": 60,
+              "status": "outdated"
+            },
+            {
+              "table": "LFA1",
+              "description": "Proveedor: Datos básicos",
+              "records": 23110,
+              "lastLoad": "16/10/2026 06:00",
+              "flow": "ZMM_LFA1_FULL",
+              "frequencyMinutes": 1440,
+              "status": "available"
+            }
+          ]
+        }
+      ]
+    },
+    "destinationObjects": {
+      "destination": "Microsoft Fabric",
+      "lakehouse": "LH_Austral_MM",
+      "workspace": "WS-Analítica-PRD",
+      "objects": [
+        {
+          "name": "dim_proveedor",
+          "type": "deltaTable",
+          "builtFrom": "LFA1",
+          "content": "Proveedores con país y condiciones de pago"
+        },
+        {
+          "name": "fact_compras",
+          "type": "deltaTable",
+          "builtFrom": "EKKO, EKPO",
+          "content": "Posiciones de pedido de compra con importes"
+        },
+        {
+          "name": "fact_stock",
+          "type": "deltaTable",
+          "builtFrom": "MARD, MBEW",
+          "content": "Stock valorizado por centro y almacén"
+        },
+        {
+          "name": "SM_ACTIN_MM",
+          "type": "semanticModel",
+          "builtFrom": "Lakehouse",
+          "content": "Direct Lake con 28 medidas de abastecimiento"
+        }
+      ]
+    }
+  },
+  "actin-fi": {
+    "destinationVersions": [],
+    "functionalDescription": "ACT-IN FI llevará el Universal Journal de S/4HANA a un modelo financiero listo para Power BI: resultados por sociedad y centro de beneficio, cuentas por cobrar y por pagar con antigüedad de saldos.",
+    "features": [
+      {
+        "title": "Estado de resultados",
+        "description": "Por sociedad, centro de beneficio y período"
+      },
+      {
+        "title": "Cuentas por cobrar",
+        "description": "Antigüedad de saldos y días de cobro (DSO)"
+      },
+      {
+        "title": "Cuentas por pagar",
+        "description": "Vencimientos y días de pago (DPO)"
+      },
+      {
+        "title": "Libro mayor",
+        "description": "Saldos y movimientos por cuenta contable"
+      }
+    ],
+    "sheet": {
+      "sapModule": "FI · Finanzas",
+      "source": "SAP S/4HANA 1909 o superior",
+      "destinations": "Microsoft Fabric",
+      "destinationsDetail": "Lakehouse + Direct Lake",
+      "extraction": "CRESTONE Move · delta por cambio",
+      "reportingCurrency": "USD + moneda local"
+    },
+    "reports": []
+  }
+}

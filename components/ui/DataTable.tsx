@@ -120,6 +120,15 @@ export interface DataTableProps<T = any> {
   data: T[];
   columns: DataTableColumn<T>[];
   keyExtractor?: (row: T, index: number) => string;
+  /** Clases extra por fila (p.ej. resaltar filas con error). */
+  rowClassName?: (row: T, index: number) => string | undefined;
+  /**
+   * Apariencia del contenedor:
+   * - default: card con borde y toolbar separado por línea (Connections, Users...).
+   * - embedded: sin card propia, título grande, botones con borde y la tabla en su
+   *   propia caja redondeada. Pensado para tablas dentro de una sección/card de página.
+   */
+  variant?: 'default' | 'embedded';
 
   // Global search
   canSearch?: boolean;
@@ -156,6 +165,8 @@ export interface DataTableProps<T = any> {
   stickyHeader?: boolean;
   labels?: DataTableLabels;
   className?: string;
+  /** Clases extra del contenedor de la tabla (p.ej. color de borde en `variant="embedded"`). */
+  tableContainerClassName?: string;
 
   // Title & Header details in toolbar
   title?: React.ReactNode;
@@ -234,6 +245,8 @@ export function DataTable<T = any>({
   data,
   columns,
   keyExtractor,
+  rowClassName,
+  variant = 'default',
 
   // Search
   canSearch = true,
@@ -270,6 +283,7 @@ export function DataTable<T = any>({
   stickyHeader = true,
   labels,
   className = '',
+  tableContainerClassName = '',
 
   // Title & Subtitle in header
   title,
@@ -281,6 +295,8 @@ export function DataTable<T = any>({
   toolbarRight,
 }: DataTableProps<T>) {
   const { dict } = useLanguage();
+  const isEmbedded = variant === 'embedded';
+  const toolbarIconButtonClass = isEmbedded ? 'border border-neutral-500' : '';
 
   // 1. Resolved Labels
   const resolvedLabels = useMemo(() => {
@@ -313,6 +329,18 @@ export function DataTable<T = any>({
       return true;
     });
   }, [columns]);
+
+  const hasToolbar = Boolean(
+    title ||
+      description ||
+      toolbarLeft ||
+      toolbarRight ||
+      canSearch ||
+      canExport ||
+      canExpand ||
+      (canFilterErrors && rowErrorPredicate) ||
+      (canFilterColumns && filterableColumns.length > 0)
+  );
 
   // 3. Search State
   const [internalSearch, setInternalSearch] = useState<string>('');
@@ -647,24 +675,25 @@ export function DataTable<T = any>({
 
       {/* Main Container */}
       <div
-        className={`w-full max-h-[calc(100vh-130px)] flex flex-col rounded-2xl border border-neutral-500 bg-container transition-all duration-300 ${isMaximized
-          ? 'fixed inset-2 sm:inset-4 z-[70] p-2 sm:p-4 overflow-auto shadow-2xl !max-h-none h-[calc(100vh-32px)]'
+        className={`w-full max-h-[calc(100vh-130px)] flex flex-col transition-all duration-300 ${isEmbedded ? 'gap-3' : 'bg-container rounded-2xl border border-neutral-500'} ${isMaximized
+          ? 'fixed inset-2 sm:inset-4 z-[70] p-2 sm:p-4 overflow-auto shadow-2xl !max-h-none h-[calc(100vh-32px)] rounded-2xl bg-container'
           : ''
           } ${className}`}
       >
-        {/* Header Toolbar */}
+        {/* Header Toolbar (se omite si no hay nada que mostrar) */}
+        {hasToolbar && (
         <div
           className={`w-full ${stickyHeader ? 'sticky top-0 z-20' : ''
-            } bg-container p-3.5 border-b border-neutral-500 flex flex-wrap items-center justify-between gap-3 shrink-0`}
+            } ${isEmbedded ? '' : 'bg-container p-3.5 border-b border-neutral-500'} flex flex-wrap items-center justify-between gap-3 shrink-0`}
         >
           {/* Left Toolbar Side */}
           <div className="flex items-center gap-3 flex-wrap">
             {title && (
               <div className="flex flex-col pr-1">
                 <div className="flex items-center gap-2">
-                  {iconName && <CaralIcon name={iconName} size={18} />}
+                  {iconName && !isEmbedded && <CaralIcon name={iconName} size={18} />}
                   {typeof title === 'string' ? (
-                    <h3 className="text-sm sm:text-base font-extrabold text-neutral-900 tracking-tight">
+                    <h3 className={isEmbedded ? 'text-xl font-bold text-seidor-main-text font-poppins' : 'text-sm sm:text-base font-extrabold text-neutral-900 tracking-tight'}>
                       {title}
                     </h3>
                   ) : (
@@ -672,7 +701,7 @@ export function DataTable<T = any>({
                   )}
                 </div>
                 {description && (
-                  <p className="text-[11px] sm:text-xs text-neutral-800 font-normal mt-0.5">
+                  <p className={isEmbedded ? 'text-sm text-neutral-800 font-normal font-poppins' : 'text-[11px] sm:text-xs text-neutral-800 font-normal mt-0.5'}>
                     {description}
                   </p>
                 )}
@@ -745,6 +774,7 @@ export function DataTable<T = any>({
                 variant={activeFiltersList.length > 0 ? 'info' : 'ghost'}
                 iconName="filter"
                 isIconButton
+                className={toolbarIconButtonClass}
                 onClick={() => setDrawerOpen(true)}
                 title={
                   activeFiltersList.length > 0
@@ -760,6 +790,7 @@ export function DataTable<T = any>({
                 variant={exportStatus === 'warning' ? 'warning' : 'ghost'}
                 iconName="fileDown"
                 isIconButton
+                className={toolbarIconButtonClass}
                 onClick={handleExportClick}
                 title={dict.common.exportCsv}
               />
@@ -771,6 +802,7 @@ export function DataTable<T = any>({
                 variant="ghost"
                 iconName={isMaximized ? 'arrowsMinimize' : 'arrowsMaximize'}
                 isIconButton
+                className={toolbarIconButtonClass}
                 onClick={() => setIsMaximized(!isMaximized)}
                 title={isMaximized ? `${dict.common.restoreSize} (Esc)` : dict.common.fullscreen}
               />
@@ -780,6 +812,7 @@ export function DataTable<T = any>({
             {typeof toolbarRight === 'function' ? toolbarRight({ isMaximized }) : toolbarRight}
           </div>
         </div>
+        )}
 
         {/* Active Filters Bar */}
         {activeFiltersList.length > 0 && (
@@ -832,10 +865,10 @@ export function DataTable<T = any>({
         )}
 
         {/* Scrollable Table Area */}
-        <div className="w-full flex-1 overflow-auto">
+        <div className={`w-full flex-1 overflow-auto ${isEmbedded ? 'rounded-xl border border-neutral-500 bg-container' : ''} ${tableContainerClassName}`}>
           <table className="w-full text-left border-separate border-spacing-0 table-fixed">
             <thead className="sticky top-0 z-10">
-              <tr className="bg-neutral-500 font-bold text-neutral-900 text-xs uppercase tracking-wider">
+              <tr className={`bg-neutral-500 text-neutral-900 ${isEmbedded ? 'font-semibold text-base font-poppins' : 'font-bold text-xs uppercase tracking-wider'}`}>
                 {columns.map((col, idx) => {
                   const width = getColWidth(col);
                   const alignClass =
@@ -925,7 +958,9 @@ export function DataTable<T = any>({
                           <div
                             className={`w-[2px] h-3/5 rounded-full transition-all duration-150 ${activeResizingCol === col.id
                               ? 'bg-info-main w-[3px] shadow-xs'
-                              : 'bg-neutral-300 w-[1px] group-hover/resizer:bg-info-main group-hover/resizer:w-[1px]'
+                              : isEmbedded
+                                ? 'bg-transparent w-[1px] group-hover/resizer:bg-info-main'
+                                : 'bg-neutral-300 w-[1px] group-hover/resizer:bg-info-main group-hover/resizer:w-[1px]'
                               }`}
                           />
                         </div>
@@ -936,7 +971,7 @@ export function DataTable<T = any>({
               </tr>
             </thead>
 
-            <tbody className="text-xs">
+            <tbody className={isEmbedded ? 'text-sm' : 'text-xs'}>
               {filteredData.length === 0 ? (
                 <tr>
                   <td
@@ -953,7 +988,7 @@ export function DataTable<T = any>({
                   return (
                     <tr
                       key={rowKey}
-                      className="hover:bg-neutral-500/20 transition-colors border-b border-neutral-500 font-poppins"
+                      className={`hover:bg-neutral-500/20 transition-colors border-b border-neutral-500 font-poppins ${rowClassName?.(row, rowIndex) || ''}`}
                     >
                       {columns.map((col) => {
                         const value = getCellValue(row, col);

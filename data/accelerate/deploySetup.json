@@ -1,0 +1,134 @@
+{
+  "sapSources": [
+    {
+      "id": "s4p",
+      "name": "S4P Productivo",
+      "system": "S4P",
+      "metadataEnvironment": "prd",
+      "product": "S/4HANA 2022",
+      "environment": "production",
+      "client": "300",
+      "health": "healthy",
+      "verifiedAt": "09:55",
+      "companies": [
+        {
+          "code": "1000",
+          "name": "Austral Aceros Chile SpA",
+          "currency": "CLP",
+          "country": "CL"
+        },
+        {
+          "code": "2000",
+          "name": "Austral Aceros Perú S.A.C.",
+          "currency": "PEN",
+          "country": "PE"
+        },
+        {
+          "code": "3000",
+          "name": "Austral Argentina S.A.",
+          "currency": "ARS",
+          "country": "AR"
+        }
+      ],
+      "defaultCompanies": [
+        "1000",
+        "3000"
+      ]
+    },
+    {
+      "id": "s4q",
+      "name": "S4Q Calidad",
+      "system": "S4Q",
+      "metadataEnvironment": "qas",
+      "product": "S/4HANA 2022",
+      "environment": "quality",
+      "client": "200",
+      "health": "healthy",
+      "verifiedAt": "09:41",
+      "companies": [
+        {
+          "code": "1000",
+          "name": "Austral Aceros Chile SpA",
+          "currency": "CLP",
+          "country": "CL"
+        },
+        {
+          "code": "3000",
+          "name": "Austral Argentina S.A.",
+          "currency": "ARS",
+          "country": "AR"
+        }
+      ],
+      "defaultCompanies": [
+        "1000"
+      ]
+    },
+    {
+      "id": "ecd",
+      "name": "ECD Desarrollo",
+      "system": "ECD",
+      "metadataEnvironment": "qas",
+      "product": "SAP ECC 6.0 EHP8",
+      "environment": "development",
+      "client": "100",
+      "health": "degraded",
+      "verifiedAt": "08:12",
+      "companies": [
+        {
+          "code": "1000",
+          "name": "Austral Aceros Chile SpA",
+          "currency": "CLP",
+          "country": "CL"
+        },
+        {
+          "code": "4000",
+          "name": "Austral Colombia S.A.S.",
+          "currency": "COP",
+          "country": "CO"
+        },
+        {
+          "code": "5000",
+          "name": "Austral México S.A. de C.V.",
+          "currency": "MXN",
+          "country": "MX"
+        }
+      ],
+      "defaultCompanies": []
+    }
+  ],
+  "platformDescriptions": {
+    "Fabric": "Lakehouse + Direct Lake + Power BI",
+    "Snowflake": "Warehouse + Streamlit",
+    "Databricks": "Unity Catalog + Delta Lake",
+    "AWS": "S3 + Redshift + QuickSight"
+  },
+  "workspaces": {
+    "Fabric": [
+      {
+        "id": "FAB_WS_ANALYTICS_PRD",
+        "name": "WS-Analítica-PRD",
+        "capacity": "F64"
+      },
+      {
+        "id": "FAB_WS_ANALYTICS_QA",
+        "name": "WS-Analítica-QA",
+        "capacity": "F16"
+      },
+      {
+        "id": "FAB_WS_SANDBOX",
+        "name": "WS-Sandbox",
+        "capacity": "F8"
+      }
+    ]
+  },
+  "lakehousePrefix": "LH_Austral",
+  "deployment": {
+    "servicePrincipal": "crestone-sp",
+    "masterDataDailyAt": "06:00",
+    "defaultEstimatedMinutes": 15,
+    "estimatedMinutes": {
+      "actin-sd": 15,
+      "actin-mm": 10
+    }
+  }
+}

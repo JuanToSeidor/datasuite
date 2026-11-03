@@ -116,14 +116,8 @@ export const suiteConfig: SuiteConfig = {
         {
           sectionTitle: "Analytics",
           items: [
-            { label: "Overview", iconName: "house", href: "/accelerate" },
-            { label: "Data Models", iconName: "chartSimple", href: "/accelerate/models" },
-            { label: "SAP Connectors", iconName: "link", href: "/accelerate/connectors" },
-          ]
-        },
-        {
-          sectionTitle: "Insights",
-          items: [
+            { label: "Overview", iconName: "bank", href: "/accelerate" },
+            { label: "Data Models", iconName: "bars", href: "/accelerate/models" },
             { label: "Dashboards", iconName: "screenChart", href: "/accelerate/dashboards" },
           ]
         }

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "sd-sales-margin",
+    "catalogId": "actin-sd",
+    "title": "Evolución de ventas y margen",
+    "description": "Ingresos, costes y margen por producto frente al año anterior",
+    "owner": "Marta López",
+    "cover": "sales.jpg",
+    "platform": { "brand": "Fabric", "name": "Microsoft Fabric" },
+    "status": "active",
+    "dataAsOf": "2026-10-15T08:00",
+    "updatedMinutesAgo": 42,
+    "url": "https://app.fabric.microsoft.com/"
+  },
+  {
+    "id": "sd-profitability",
+    "catalogId": "actin-sd",
+    "title": "Rentabilidad por región y canal",
+    "description": "Margen neto y EBITDA por región y canal de venta",
+    "owner": "Laura Sánchez",
+    "cover": "profitability.jpg",
+    "platform": { "brand": "Fabric", "name": "Microsoft Fabric" },
+    "status": "active",
+    "dataAsOf": "2026-10-15T06:00",
+    "updatedMinutesAgo": 60,
+    "url": "https://app.fabric.microsoft.com/"
+  },
+  {
+    "id": "sd-demand-forecast",
+    "catalogId": "actin-sd",
+    "title": "Forecast de demanda y cobertura de stock",
+    "description": "Proyección de demanda semanal y nivel de inventario por SKU y almacén",
+    "owner": "Carlos Romero",
+    "cover": "forecast.jpg",
+    "platform": { "brand": "Fabric", "name": "Microsoft Fabric" },
+    "status": "active",
+    "dataAsOf": "2026-10-14T07:00",
+    "updatedMinutesAgo": 180,
+    "url": "https://app.fabric.microsoft.com/"
+  },
+  {
+    "id": "sd-logistics-kpis",
+    "catalogId": "actin-sd",
+    "title": "KPIs de operaciones logísticas",
+    "description": "Tasa de entrega a tiempo, costo por envío y eficiencia de rutas por operador",
+    "owner": "Ana Torres",
+    "cover": "logistics.jpg",
+    "platform": { "brand": "Fabric", "name": "Microsoft Fabric" },
+    "status": "active",
+    "dataAsOf": "2026-10-15T09:00",
+    "updatedMinutesAgo": 20,
+    "url": "https://app.fabric.microsoft.com/"
+  },
+  {
+    "id": "sd-marketing-campaigns",
+    "catalogId": "actin-sd",
+    "title": "Rendimiento de campañas de marketing",
+    "description": "ROI, tasa de conversión y coste por lead por canal y segmento de audiencia",
+    "owner": "Pedro Vega",
+    "cover": "marketing.jpg",
+    "platform": { "brand": "Fabric", "name": "Microsoft Fabric" },
+    "status": "active",
+    "dataAsOf": "2026-10-13T10:00",
+    "updatedMinutesAgo": 2880,
+    "url": "https://app.fabric.microsoft.com/"
+  }
+]
