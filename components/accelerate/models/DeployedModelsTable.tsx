@@ -18,6 +18,8 @@ interface DeployedModelsTableProps {
   toolbarRight?: React.ReactNode | ((props: { isMaximized: boolean }) => React.ReactNode);
   /** Borde marcado alrededor de la tabla (página Modelos, donde va directo sobre el fondo). */
   bordered?: boolean;
+  /** Vista previa (Resumen): sin buscador, filtros ni pantalla completa. */
+  preview?: boolean;
 }
 
 /** Texto secundario de una celda: rojo cuando la fila está en error. */
@@ -29,7 +31,7 @@ function SubText({ isError, children }: { isError: boolean; children: React.Reac
   );
 }
 
-export function DeployedModelsTable({ models, onOpenActions, showTitle = true, toolbarRight, bordered = false }: DeployedModelsTableProps) {
+export function DeployedModelsTable({ models, onOpenActions, showTitle = true, toolbarRight, bordered = false, preview = false }: DeployedModelsTableProps) {
   const { dict } = useLanguage();
   const t = dict.accelerate.overview;
 
@@ -170,7 +172,7 @@ export function DeployedModelsTable({ models, onOpenActions, showTitle = true, t
       columns={columns}
       keyExtractor={(row) => row.id}
       rowClassName={(row) => (row.status === "error" ? "bg-danger-light" : undefined)}
-      canSearch={true}
+      canSearch={!preview}
       searchPlaceholder={t.searchModels}
       customSearchFn={(row, query) =>
         [
@@ -183,10 +185,10 @@ export function DeployedModelsTable({ models, onOpenActions, showTitle = true, t
           row.destination.workspace,
         ].some((v) => v.toLowerCase().includes(query.toLowerCase()))
       }
-      canFilterColumns={true}
+      canFilterColumns={!preview}
       canFilterErrors={false}
       canExport={false}
-      canExpand={true}
+      canExpand={!preview}
       toolbarRight={toolbarRight}
     />
   );

@@ -557,7 +557,7 @@ export const en: TranslationDictionary = {
       kpiTablesDetail: "{table} outdated in {system}",
       kpiLastLoad: "Last load via Move",
       alertPausedFlow: "Flow {flow} has been paused since {date}. Affects {affects}.",
-      modelsTitle: "Deployed models",
+      modelsTitle: "Latest deployed models",
       modelsDescription: "Status, SAP source, destination and freshness of each ACT-IN model.",
       searchModels: "Search by model, SAP system or destination...",
       viewAllModels: "View all models",

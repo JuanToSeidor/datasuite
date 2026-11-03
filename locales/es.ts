@@ -555,7 +555,7 @@ export const es = {
       kpiTablesDetail: "{table} desactualizada en {system}",
       kpiLastLoad: "Última carga vía Move",
       alertPausedFlow: "El flujo {flow} está pausado desde el {date}. Afecta a {affects}.",
-      modelsTitle: "Modelos desplegados",
+      modelsTitle: "Últimos modelos desplegados",
       modelsDescription: "Estado, origen SAP, destino y frescura de cada modelo ACT-IN.",
       searchModels: "Buscar por modelo, sistema SAP o destino...",
       viewAllModels: "Ver todos los modelos",

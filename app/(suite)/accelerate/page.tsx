@@ -114,7 +114,7 @@ export default function AccelerateOverviewPage() {
 
       {/* Modelos desplegados */}
       <section className="flex flex-col gap-2 rounded-2xl bg-container p-4">
-        <DeployedModelsTable models={overviewModels} onOpenActions={openActions} />
+        <DeployedModelsTable models={overviewModels} onOpenActions={openActions} preview />
         <div className="flex justify-end">
           <Button variant="ghost" size="sm" onClick={() => router.push("/accelerate/models?tab=deployed")}>
             <span className="flex items-center gap-1 font-normal text-neutral-800">
