@@ -1,0 +1,52 @@
+{
+  "vaults": [
+    {
+      "id": "vault-001",
+      "archive": "ARC-S4P-2025-03",
+      "source": { "system": "S4P_PRD_300", "product": "SAP S/4HANA 2022", "client": "300" },
+      "cutOffDate": "2025-03-01 00:00",
+      "destination": { "platform": "Snowflake", "schema": "AUSTRAL_ARCHIVE.SAP_PE" },
+      "volume": { "size": "1.8 TB", "tables": 214, "rows": "3,912" },
+      "status": "queryable"
+    },
+    {
+      "id": "vault-002",
+      "archive": "ARC-S4P-2025-03",
+      "source": { "system": "S4P_PRD_300", "product": "SAP S/4HANA 2022", "client": "300" },
+      "cutOffDate": "2026-05-14 30:00",
+      "destination": { "platform": "Snowflake", "schema": "AUSTRAL_ARCHIVE.SAP_PE" },
+      "volume": { "size": "1.8 TB", "tables": 214, "rows": "3,912" },
+      "status": "extracting",
+      "progress": 64
+    },
+    {
+      "id": "vault-003",
+      "archive": "ARC-S4P-2025-03",
+      "source": { "system": "S4P_PRD_300", "product": "SAP S/4HANA 2022", "client": "300" },
+      "cutOffDate": "2025-03-01 00:00",
+      "destination": { "platform": "Snowflake", "schema": "AUSTRAL_ARCHIVE.SAP_PE" },
+      "volume": { "size": "1.8 TB", "tables": 214, "rows": "3,912" },
+      "status": "queryable"
+    }
+  ],
+  "tables": [
+    { "table": "EKKO", "description": "Purchasing document: header", "component": "MM-PUR", "dataClass": "APPL1", "dataKind": "Transactional", "records": 4201334, "availability": "servable", "reconciliation": { "type": "matches" } },
+    { "table": "EKPO", "description": "Purchasing document: item", "component": "MM-PUR", "dataClass": "APPL1", "dataKind": "Transactional", "records": 18904551, "availability": "servable", "reconciliation": { "type": "matches" } },
+    { "table": "EKBE", "description": "Purchasing document history", "component": "MM-PUR", "dataClass": "APPL1", "dataKind": "Transactional", "records": 22118440, "availability": "servable", "reconciliation": { "type": "matches" } },
+    { "table": "LFA1", "description": "Vendor master", "component": "LO-MD-BP", "dataClass": "APPL0", "dataKind": "Master", "records": 21904, "availability": "servableAsOf", "reconciliation": { "type": "matches" } },
+    { "table": "VBAK", "description": "Sales document: header", "component": "SD-SLS", "dataClass": "APPL1", "dataKind": "Transactional", "records": 6102330, "availability": "servable", "reconciliation": { "type": "matches" } },
+    { "table": "VBRK", "description": "Billing document: header", "component": "SD-BIL", "dataClass": "APPL1", "dataKind": "Transactional", "records": 5704118, "availability": "servable", "reconciliation": { "type": "matches" } },
+    { "table": "VBRP", "description": "Billing document: item", "component": "SD-BIL", "dataClass": "APPL1", "dataKind": "Transactional", "records": 24310870, "availability": "servable", "reconciliation": { "type": "matches" } },
+    { "table": "MATDOC", "description": "Material document", "component": "MM-IM", "dataClass": "APPL1", "dataKind": "Transactional", "records": 2140118412, "availability": "servable", "reconciliation": { "type": "missing", "n": 3 } },
+    { "table": "ACDOCA", "description": "Universal Journal", "component": "FI-GL", "dataClass": "APPL1", "dataKind": "Transactional", "records": 1380442106, "availability": "servable", "reconciliation": { "type": "matches" } },
+    { "table": "MBEW", "description": "Material valuation", "component": "MM-IV", "dataClass": "APPL0", "dataKind": "Master", "records": 401220, "availability": "servableAsOf", "reconciliation": { "type": "matches" } },
+    { "table": "MARA", "description": "Material master", "component": "LO-MD-MM", "dataClass": "APPL0", "dataKind": "Master", "records": 302114, "availability": "servableAsOf", "reconciliation": { "type": "matches" } },
+    { "table": "T134", "description": "Material types", "component": "LO-MD-MM", "dataClass": "APPL2", "dataKind": "Customizing", "records": 58, "availability": "servable", "reconciliation": { "type": "matches" } },
+    { "table": "TCURX", "description": "Currency decimal places", "component": "BC-SRV", "dataClass": "APPL2", "dataKind": "Customizing", "records": 41, "availability": "servable", "reconciliation": { "type": "matches" } },
+    { "table": "LIPS", "description": "Delivery: item", "component": "LE-SHP", "dataClass": "APPL1", "dataKind": "Transactional", "records": 9801223, "availability": "notServable", "reconciliation": { "type": "matches" } },
+    { "table": "RESB", "description": "Reservations", "component": "PP-MRP", "dataClass": "APPL1", "dataKind": "Transactional", "records": 3102441, "availability": "notServable", "reconciliation": { "type": "matches" } },
+    { "table": "TVBST", "description": "Status texts", "component": "SD-BF", "dataClass": "APPL2", "dataKind": "Customizing", "records": null, "availability": "notExtracted", "reconciliation": { "type": "notInDump" } },
+    { "table": "DD07L", "description": "Domain fixed values", "component": "BC-DWB-DIC", "dataClass": "SDIC", "dataKind": "Dictionary", "records": null, "availability": "notExtracted", "reconciliation": { "type": "notInDump" } },
+    { "table": "DD07T", "description": "Domain fixed value texts", "component": "BC-DWB-DIC", "dataClass": "SDIC", "dataKind": "Dictionary", "records": null, "availability": "notExtracted", "reconciliation": { "type": "notInDump" } }
+  ]
+}

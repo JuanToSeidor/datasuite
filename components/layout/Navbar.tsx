@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { CaralIcon, Brand, CrestoneLogo } from '@/components/icons';
+import { AnaliceIcon } from '@/components/icons/AnaliceIcon';
 import { suiteConfig } from '@/config/suite';
 import { Button, Drawer, Tabs } from 'caralstable';
 import { useNewsData } from '@/hooks/useNewsData';
@@ -13,13 +14,16 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 export function Navbar({
   className,
-  onToggleSidebar
+  onToggleSidebar,
+  onToggleAnalice,
+  isAnaliceOpen = false
 }: {
   className?: string;
   onToggleSidebar?: () => void;
+  onToggleAnalice?: () => void;
+  isAnaliceOpen?: boolean;
 }) {
   const [isLauncherOpen, setIsLauncherOpen] = useState(false);
-  const [isChatOpen, setIsChatOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [activeNotifTab, setActiveNotifTab] = useState(0);
   const { data: newsData, loading: newsLoading } = useNewsData();
@@ -141,47 +145,33 @@ export function Navbar({
 
           </Drawer>
         </div>
-        <div className="relative">
-          <Button
-            hasBorder
-            variant="ghost"
-            onClick={() => setIsChatOpen(true)}
-            iconName='squareFace'
-          />
-          <Drawer isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} title={dict.navbar.chatWithDaiana}>
-
-            <div className="flex flex-col h-full justify-center gap-4">
-              <div className="bg-[var(--color-neutral-full)] rounded-[16px] border border-white/10 p-4 flex flex-col gap-8 w-full">
-                <span className="text-[var(--color-neutral-800)] text-sm">{dict.navbar.chatPlaceholder}</span>
-                <div className="flex justify-between items-center text-[var(--color-neutral-200)]! ">
-                  <Button isIconButton iconName="plus" variant="ghost" />
-                  <Button isIconButton iconName="plane" isPill variant="info" />
-                </div>
-              </div>
-
-              <Button variant='light' className='w-full border border-neutral-500!'>
-                {dict.navbar.promptSummarize}
-              </Button>
-
-              <Button variant='light' className='w-full border border-neutral-500!'>
-                {dict.navbar.promptSapToAws}
-              </Button>
-
-              <Button variant='light' className='w-full border border-neutral-500!'>
-                {dict.navbar.promptAwsToSap}
-              </Button>
-
-            </div>
-
-          </Drawer>
-        </div>
-
-        {/* Language Selector */}
+         {/* Language Selector */}
         <LanguageSelector />
+        {isAnaliceOpen ? (
+          <Button
+            isIconButton
+            className="text-neutral-100!"
+            iconName="closeSidebarLeft"
+            onClick={onToggleAnalice}
+          />
+        ) : (
+          <Button
+            onClick={onToggleAnalice}
+          >
+            <span className="flex items-center gap-2 text-neutral-100">
+              <AnaliceIcon size={24} />
+              {dict.navbar.analice}
+            </span>
+          </Button>
+        )}
+
+
+       
 
         {/* User Menu */}
         <UserMenu />
       </div>
+
     </div>
   );
 }

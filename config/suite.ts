@@ -90,17 +90,27 @@ export const suiteConfig: SuiteConfig = {
       tags: ["Destacados", "Propios", "Tecnología emergente"],
       sidebarSections: [
         {
-          sectionTitle: "Data Vaults",
+          sectionTitle: "Archive",
           items: [
             { label: "Overview", iconName: "house", href: "/preserve" },
-            { label: "Historical Vaults", iconName: "folder", href: "/preserve/vaults" },
-            { label: "Retention Policies", iconName: "shieldHalved", href: "/preserve/policies" },
+            { label: "Readiness", iconName: "sync", href: "/preserve/readiness" },
+            { label: "Historical vaults", iconName: "box", href: "/preserve/vaults" },
+            { label: "Source inventory", iconName: "search", href: "/preserve/sources" },
+            { label: "Extractions", iconName: "arrowDownToLine", href: "/preserve/extractions" },
+          ]
+        },
+        {
+          sectionTitle: "Query",
+          items: [
+            { label: "Query", iconName: "database", href: "/preserve/query" },
+            { label: "Validated questions", iconName: "check", href: "/preserve/questions" },
           ]
         },
         {
           sectionTitle: "Compliance",
           items: [
-            { label: "Audit Logs", iconName: "file", href: "/preserve/audit" },
+            { label: "Audit logs", iconName: "file", href: "/preserve/audit" },
+            { label: "Retention policies", iconName: "shieldHalved", href: "/preserve/policies" },
           ]
         }
       ]

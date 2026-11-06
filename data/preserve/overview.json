@@ -1,0 +1,40 @@
+{
+  "archives": {
+    "total": 2,
+    "queryable": 1,
+    "extracting": { "id": "ARC-ECC-PE-2024-12", "progress": 64 }
+  },
+  "questions": {
+    "validated": 11,
+    "pending": 5,
+    "needSap": 4
+  },
+  "latestExtraction": {
+    "ref": "EXT-030",
+    "matdoc": "2,140,118,412",
+    "status": "differences",
+    "sapRows": "2,140,118,409",
+    "missingRows": 3
+  },
+  "dumpChecks": {
+    "ref": "EXT-030",
+    "matdoc": "2,140,118,412",
+    "ok": 6,
+    "total": 7,
+    "warnings": 1,
+    "missingRows": 3
+  },
+  "readiness": {
+    "archives": ["ARQ-S4P-2025-03", "ARQ-S4P-2024-12"],
+    "selected": "ARQ-S4P-2025-03",
+    "currentPhase": 4,
+    "steps": [
+      { "id": "checks", "state": "done" },
+      { "id": "seed", "state": "done" },
+      { "id": "adjustment", "state": "done" },
+      { "id": "validation", "state": "active" },
+      { "id": "catalog", "state": "active" },
+      { "id": "agent", "state": "pending" }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "archives": ["ARC-S4P-2025-03", "ARC-S4P-2024-12"],
+  "selected": "ARC-S4P-2025-03",
+  "cutoffDate": "2025-03-01 00:00",
+  "source": {
+    "system": "SAP S/4HANA 2022",
+    "client": "300",
+    "size": "1.8 TB",
+    "tables": 214
+  },
+  "phases": [
+    { "id": "checks", "status": "complete", "action": "checks", "passed": 6, "total": 7, "missing": "TVBST and DD07L/DD07T" },
+    { "id": "seed", "status": "complete", "action": "questions", "n": 20 },
+    { "id": "adjustment", "status": "complete", "action": "questions", "n": 3 },
+    { "id": "validation", "status": "inProgress", "action": "questions", "validated": 11, "servable": 16 },
+    { "id": "catalog", "status": "inProgress", "action": "catalog", "n": 19 },
+    { "id": "agent", "status": "pending", "action": "catalog" }
+  ]
+}

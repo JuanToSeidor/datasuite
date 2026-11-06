@@ -1,0 +1,100 @@
+{
+  "checks": [
+    {
+      "id": 1,
+      "name": "MANDT exists and joins include it",
+      "failsSilently": true,
+      "before": "passed",
+      "destination": "passed",
+      "detail": "MANDT column present in 214 of 214 tables; validated queries include it in every join"
+    },
+    {
+      "id": 2,
+      "name": "MATDOC has a real date",
+      "failsSilently": false,
+      "before": "passed",
+      "destination": "passed",
+      "detail": "BUDAT is a date type (DATS); partitioned by year and month"
+    },
+    {
+      "id": 3,
+      "name": "Implicit decimals per field",
+      "failsSilently": true,
+      "before": "passed",
+      "destination": "passed",
+      "detail": "Scale read from the DDIC for 412 CURR/QUAN fields; NETPR and MENGE come ×100 in EKPO"
+    },
+    {
+      "id": 4,
+      "name": "ACDOCA or BSEG",
+      "failsSilently": false,
+      "before": "passed",
+      "destination": "passed",
+      "detail": "S/4HANA: ACDOCA present; BSEG is a view and is not in the dump"
+    },
+    {
+      "id": 5,
+      "name": "Code lists present",
+      "failsSilently": true,
+      "before": "warning",
+      "destination": "warning",
+      "detail": "T134 (MTART) present; TVBST and domain fixed values (DD07L/DD07T) are missing: GBSTK would show as A/B/C instead of its text",
+      "action": true
+    },
+    {
+      "id": 6,
+      "name": "Volume and row count",
+      "failsSilently": false,
+      "before": "passed",
+      "destination": "passed",
+      "detail": "1.8 TB · MATDOC 2,140 M rows: needs partitioning"
+    },
+    {
+      "id": 7,
+      "name": "Access dialect",
+      "failsSilently": false,
+      "before": "passed",
+      "destination": "passed",
+      "detail": "Fabric SQL analytics endpoint (T-SQL)"
+    }
+  ],
+  "catalog": {
+    "tablesEnabled": 19,
+    "rows": [
+      { "table": "ACDOCA", "questions": [12, 13, 14], "status": "inCatalog" },
+      { "table": "AFKO", "questions": [17, 18], "status": "inCatalog" },
+      { "table": "AFPO", "questions": [18], "status": "inCatalog" },
+      { "table": "AUFK", "questions": [17], "status": "outNeedsSap" },
+      { "table": "BSID", "questions": [14], "status": "waitingValidation" },
+      { "table": "CSKS", "questions": [13], "status": "waitingValidation" },
+      { "table": "EKBE", "questions": [4], "status": "inCatalog" },
+      { "table": "EKKO", "questions": [1, 3], "status": "inCatalog" },
+      { "table": "EKPO", "questions": [1, 2, 3, 4], "status": "inCatalog" },
+      { "table": "GLT03", "questions": [15], "status": "waitingValidation" }
+    ]
+  },
+  "extractions": [
+    {
+      "id": "EXT-030",
+      "by": "Marcela Rojas",
+      "archive": "ARC-S4P-2025-03",
+      "scope": "MATDOC re-extraction",
+      "status": "completeDifferences",
+      "missingRows": 3,
+      "progress": 100,
+      "started": "2026-10-18 22:00",
+      "duration": "5 h 12 min"
+    },
+    {
+      "id": "EXT-029",
+      "by": "Marcela Rojas",
+      "archive": "ARC-S4P-2025-03",
+      "scope": "214 tables",
+      "status": "completeMatches",
+      "missingRows": 0,
+      "progress": 100,
+      "started": "2026-10-10 21:30",
+      "duration": "11 h 40 min"
+    }
+  ]
+}
