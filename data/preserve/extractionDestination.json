@@ -1,0 +1,7 @@
+{
+  "defaultCutOff": "2026-10-31T23:59",
+  "defaultDestination": "ws-archive-prd/lh-austral-archive",
+  "destinations": [
+    { "id": "ws-archive-prd/lh-austral-archive", "label": "WS-Archive-PRD · LH_Austral_Archive", "brand": "Fabric" }
+  ]
+}

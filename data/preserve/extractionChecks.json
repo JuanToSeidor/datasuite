@@ -1,0 +1,11 @@
+{
+  "checks": [
+    { "id": "mandt", "status": "passed", "params": { "count": 14 } },
+    { "id": "matdoc", "status": "passed" },
+    { "id": "decimals", "status": "passed", "params": { "count": 412 } },
+    { "id": "acdoca", "status": "passed" },
+    { "id": "codeLists", "status": "warning", "params": { "tables": "TVBST, DD07L, DD07T" } },
+    { "id": "volume", "status": "toDecide", "params": { "table": "MATDOC", "records": 2140118412 } },
+    { "id": "dialect", "status": "passed" }
+  ]
+}

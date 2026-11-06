@@ -1,0 +1,13 @@
+{
+  "sapConnections": [
+    {
+      "id": "s4p_prd_300",
+      "name": "S4P_PRD_300",
+      "product": "S/4HANA 2022",
+      "environment": "production",
+      "client": "300",
+      "health": "healthy",
+      "verifiedAt": "09:55"
+    }
+  ]
+}

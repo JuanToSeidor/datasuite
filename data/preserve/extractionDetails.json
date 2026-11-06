@@ -1,0 +1,14 @@
+{
+  "EXT-030": {
+    "status": "extracting",
+    "route": { "source": "S4P · Production", "destination": "Microsoft Fabric · WS-Analítica-PRD" },
+    "progress": 80,
+    "remainingTables": 164,
+    "tables": [
+      { "table": "BKPF", "leftSap": 88102330, "arrived": 56385491, "progress": 63, "difference": null, "status": "extracting" },
+      { "table": "BSEG", "leftSap": 402118900, "arrived": 257356096, "progress": 64, "difference": null, "status": "extracting" },
+      { "table": "MSEG", "leftSap": 610300115, "arrived": 390592073, "progress": 63, "difference": null, "status": "extracting" },
+      { "table": "VBAK", "leftSap": 2044990, "arrived": 2044990, "progress": 100, "difference": 0, "status": "matches" }
+    ]
+  }
+}

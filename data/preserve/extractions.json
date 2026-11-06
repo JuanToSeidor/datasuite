@@ -1,0 +1,40 @@
+{
+  "extractions": [
+    {
+      "id": "EXT-031",
+      "owner": "Diego Fernández",
+      "archive": "ARC-ECC-PE-2024-12",
+      "scope": { "type": "tables", "count": 168 },
+      "status": "extracting",
+      "progress": 64,
+      "statusDetail": { "kind": "drift", "count": 0 },
+      "started": "2026-10-21 08:10",
+      "durationMinutes": 125,
+      "running": true
+    },
+    {
+      "id": "EXT-030",
+      "owner": "Marcela Rojas",
+      "archive": "ARC-S4P-2025-03",
+      "scope": { "type": "reextraction", "table": "MATDOC" },
+      "status": "withDifferences",
+      "progress": 100,
+      "statusDetail": { "kind": "missing", "count": 3 },
+      "started": "2026-10-18 22:00",
+      "durationMinutes": 312,
+      "running": false
+    },
+    {
+      "id": "EXT-029",
+      "owner": "Marcela Rojas",
+      "archive": "ARC-S4P-2025-03",
+      "scope": { "type": "tables", "count": 214 },
+      "status": "matches",
+      "progress": 100,
+      "statusDetail": { "kind": "matches" },
+      "started": "2026-10-10 21:30",
+      "durationMinutes": 700,
+      "running": false
+    }
+  ]
+}

@@ -176,6 +176,8 @@ export interface DataTableProps<T = any> {
   // Custom toolbar slots
   toolbarLeft?: React.ReactNode | ((props: { isMaximized: boolean }) => React.ReactNode);
   toolbarRight?: React.ReactNode | ((props: { isMaximized: boolean }) => React.ReactNode);
+  /** Contenido entre la barra de herramientas y la tabla (p.ej. una fila de filtros). */
+  belowToolbar?: React.ReactNode;
 }
 
 export function evaluateAgnosticTextFilter(value: any, operator: string, filterVal: string): boolean {
@@ -293,6 +295,7 @@ export function DataTable<T = any>({
   // Toolbar slots
   toolbarLeft,
   toolbarRight,
+  belowToolbar,
 }: DataTableProps<T>) {
   const { dict } = useLanguage();
   const isEmbedded = variant === 'embedded';
@@ -863,6 +866,8 @@ export function DataTable<T = any>({
             </Button>
           </div>
         )}
+
+        {belowToolbar && <div className="w-full px-4 pt-3">{belowToolbar}</div>}
 
         {/* Scrollable Table Area */}
         <div className={`w-full flex-1 overflow-auto ${isEmbedded ? 'rounded-xl border border-neutral-500 bg-container' : ''} ${tableContainerClassName}`}>

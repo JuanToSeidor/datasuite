@@ -1,0 +1,38 @@
+{
+  "scan": {
+    "connectionId": "s4p_prd_300",
+    "scannedAt": "2026-10-17T03:12:00",
+    "scannedBy": "Diego Fernández",
+    "detectedVersion": "SAP S/4HANA 2022",
+    "dictionaryObjects": 98412,
+    "transparentTables": 74980,
+    "tablesWithData": 31204,
+    "totalVolumeTb": 3.9
+  },
+  "tables": [
+    { "table": "EKKO", "description": "Purchasing document: header", "component": "MM-PUR", "type": "transparent", "deliveryClass": "A · Application", "dataClass": "APPL1 · Transactional", "fields": 132, "records": 4201334, "sizeGb": 3.1, "note": "viewNotExtracted", "selected": true },
+    { "table": "EKPO", "description": "Purchasing document: item", "component": "MM-PUR", "type": "transparent", "deliveryClass": "A · Application", "dataClass": "APPL1 · Transactional", "fields": 331, "records": 18904551, "sizeGb": 21, "note": "viewNotExtracted", "selected": true },
+    { "table": "EKBE", "description": "Purchasing document history", "component": "MM-PUR", "type": "transparent", "deliveryClass": "A · Application", "dataClass": "APPL1 · Transactional", "fields": 93, "records": 22118440, "sizeGb": 9.8, "note": "viewNotExtracted", "selected": false },
+    { "table": "LFA1", "description": "Vendor master", "component": "LO-MD-BP", "type": "transparent", "deliveryClass": "A · Application", "dataClass": "APPL0 · Master", "fields": 180, "records": 21904, "sizeGb": 0.1, "note": "viewNotExtracted", "selected": true },
+    { "table": "VBAK", "description": "Sales document: header", "component": "SD-SLS", "type": "transparent", "deliveryClass": "A · Application", "dataClass": "APPL1 · Transactional", "fields": 220, "records": 6102330, "sizeGb": 4.4, "note": "viewNotExtracted", "selected": true },
+    { "table": "VBRK", "description": "Billing document: header", "component": "SD-BIL", "type": "transparent", "deliveryClass": "A · Application", "dataClass": "APPL1 · Transactional", "fields": 160, "records": 5704118, "sizeGb": 3.9, "note": "viewNotExtracted", "selected": true },
+    { "table": "VBRP", "description": "Billing document: item", "component": "SD-BIL", "type": "transparent", "deliveryClass": "A · Application", "dataClass": "APPL1 · Transactional", "fields": 340, "records": 24310870, "sizeGb": 28, "note": "viewNotExtracted", "selected": false },
+    { "table": "MATDOC", "description": "Material document", "component": "MM-IM", "type": "transparent", "deliveryClass": "A · Application", "dataClass": "APPL1 · Transactional", "fields": 470, "records": 2140118412, "sizeGb": 610, "note": "viewNotExtracted", "selected": true },
+    { "table": "MSEG", "description": "Material document segment", "component": "MM-IM", "type": "view", "deliveryClass": "A · Application", "dataClass": "APPL1 · Transactional", "fields": 180, "records": null, "sizeGb": null, "note": "viewNotExtracted", "selected": true },
+    { "table": "ACDOCA", "description": "Universal Journal", "component": "FI-GL", "type": "transparent", "deliveryClass": "A · Application", "dataClass": "APPL1 · Transactional", "fields": 520, "records": 1380442106, "sizeGb": 540, "note": "viewNotExtracted", "selected": true },
+    { "table": "BSEG", "description": "Accounting document segment", "component": "FI-GL", "type": "view", "deliveryClass": "A · Application", "dataClass": "APPL1 · Transactional", "fields": 340, "records": null, "sizeGb": null, "note": "viewNotExtracted", "selected": false },
+    { "table": "MBEW", "description": "Material valuation", "component": "MM-IV", "type": "transparent", "deliveryClass": "A · Application", "dataClass": "APPL0 · Master", "fields": 160, "records": 401220, "sizeGb": 0.6, "note": "viewNotExtracted", "selected": true },
+    { "table": "MARA", "description": "Material master", "component": "LO-MD-MM", "type": "transparent", "deliveryClass": "A · Application", "dataClass": "APPL0 · Master", "fields": 250, "records": 302114, "sizeGb": 0.9, "note": "viewNotExtracted", "selected": true },
+    { "table": "T134", "description": "Material types", "component": "LO-MD-MM", "type": "transparent", "deliveryClass": "C · Customizing", "dataClass": "APPL2 · Customizing", "fields": 30, "records": 58, "sizeGb": 0.05, "note": "codeList", "selected": true },
+    { "table": "TVBST", "description": "Status texts", "component": "SD-BF", "type": "transparent", "deliveryClass": "C · Customizing", "dataClass": "APPL2 · Customizing", "fields": 6, "records": 412, "sizeGb": 0.05, "note": "codeList", "selected": true },
+    { "table": "TCURX", "description": "Currency decimal places", "component": "BC-SRV", "type": "transparent", "deliveryClass": "C · Customizing", "dataClass": "APPL2 · Customizing", "fields": 3, "records": 41, "sizeGb": 0.05, "note": "codeList", "selected": true },
+    { "table": "LIPS", "description": "Delivery: item", "component": "LE-SHP", "type": "transparent", "deliveryClass": "A · Application", "dataClass": "APPL1 · Transactional", "fields": 310, "records": 9801223, "sizeGb": 11, "note": "operational", "selected": false },
+    { "table": "RESB", "description": "Reservations", "component": "PP-MRP", "type": "transparent", "deliveryClass": "A · Application", "dataClass": "APPL1 · Transactional", "fields": 190, "records": 3102441, "sizeGb": 2.2, "note": "operational", "selected": true },
+    { "table": "MARD", "description": "Storage location stock", "component": "MM-IM", "type": "transparent", "deliveryClass": "A · Application", "dataClass": "APPL0 · Master", "fields": 120, "records": 880312, "sizeGb": 0.7, "note": "operational", "selected": true },
+    { "table": "DBTABLOG", "description": "Table change log", "component": "BC-CCM", "type": "transparent", "deliveryClass": "L · Temporary", "dataClass": "APPL1 · Transactional", "fields": 14, "records": 92440118, "sizeGb": 38, "note": "technical", "selected": true },
+    { "table": "VBDATA", "description": "Update request data", "component": "BC-CST", "type": "transparent", "deliveryClass": "L · Temporary", "dataClass": "APPL1 · Transactional", "fields": 9, "records": 1204, "sizeGb": 0.05, "note": "technical", "selected": true },
+    { "table": "ZMM_PRECIO_ESP", "description": "Special prices per customer", "component": "Z", "type": "transparent", "deliveryClass": "A · Application", "dataClass": "APPL1 · Transactional", "fields": 12, "records": 88120, "sizeGb": 0.05, "note": "clientZ", "selected": true },
+    { "table": "DD07L", "description": "Domain fixed values", "component": "BC-DWB-DIC", "type": "transparent", "deliveryClass": "W · System", "dataClass": "SDIC · Dictionary", "fields": 6, "records": 1104220, "sizeGb": 0.3, "note": "codeList", "selected": false },
+    { "table": "DD07T", "description": "Domain fixed value texts", "component": "BC-DWB-DIC", "type": "transparent", "deliveryClass": "W · System", "dataClass": "SDIC · Dictionary", "fields": 5, "records": 4870310, "sizeGb": 1.2, "note": "codeList", "selected": true }
+  ]
+}

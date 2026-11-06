@@ -1,0 +1,17 @@
+{
+  "scan": {
+    "date": "2026-10-17",
+    "system": "S/4HANA 2022 (S4CORE 107)"
+  },
+  "supportTables": ["TVBST", "DD07L", "DD07T"],
+  "volatileTables": ["LIPS", "RESB"],
+  "tables": [
+    { "component": "BC", "tables": ["TCURX"], "records": 41, "sizeGb": 0.05 },
+    { "component": "FI", "tables": ["ACDOCA"], "records": 1380442106, "sizeGb": 540 },
+    { "component": "LE", "tables": ["LIPS"], "records": 9801223, "sizeGb": 11 },
+    { "component": "LO", "tables": ["LFA1", "MARA", "T134"], "records": 324076, "sizeGb": 1 },
+    { "component": "MM", "tables": ["EKKO", "EKPO", "EKBE", "MATDOC", "MBEW"], "records": 2185743957, "sizeGb": 644.5 },
+    { "component": "PP", "tables": ["RESB"], "records": 3102441, "sizeGb": 2.2 },
+    { "component": "SD", "tables": ["VBAK", "VBRK", "VBRP"], "records": 36117318, "sizeGb": 36.3 }
+  ]
+}
