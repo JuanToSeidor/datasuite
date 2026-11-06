@@ -84,7 +84,7 @@ export const es = {
     noNotifications: "No tienes notificaciones nuevas.",
     seeMore: "Ver más",
     modulesLauncher: "Lanzador de Módulos",
-    analice: "Analice",
+    analyze: "Analyze",
     chatWithDaiana: "Hola, ¿en qué puedo ayudarle?",
     chatPlaceholder: "Enviar un mensaje a Daiana",
     promptSummarize: "Resumir los puntos principales de esta página.",

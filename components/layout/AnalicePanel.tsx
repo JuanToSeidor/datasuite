@@ -28,7 +28,7 @@ export function AnalicePanel({
 
   return (
     <aside
-      aria-label={dict.navbar.analice}
+      aria-label={dict.navbar.analyze}
       aria-hidden={!isOpen}
       className={`bg-container border-l border-neutral-200 shadow-xl flex flex-col overflow-hidden shrink h-full transition-all duration-300 ease-in-out ${widthClasses}`}
     >
@@ -36,7 +36,7 @@ export function AnalicePanel({
         <div className="bg-seidor-main flex items-center justify-between gap-3 px-5 h-[72px] shrink-0">
           <div className="flex items-center gap-3">
             <AnaliceIcon size={27} />
-            <h2 className="text-neutral-100 font-poppins font-bold text-xl">{dict.navbar.analice}</h2>
+            <h2 className="text-neutral-100 font-poppins font-bold text-xl">{dict.navbar.analyze}</h2>
           </div>
           <div className="flex items-center gap-2">
             <Button

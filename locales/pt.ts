@@ -86,7 +86,7 @@ export const pt: TranslationDictionary = {
     noNotifications: "Você não tem novas notificações.",
     seeMore: "Ver mais",
     modulesLauncher: "Iniciador de Módulos",
-    analice: "Analice",
+    analyze: "Analyze",
     chatWithDaiana: "Olá, como posso ajudar?",
     chatPlaceholder: "Enviar uma mensagem para Daiana",
     promptSummarize: "Resumir os pontos principais desta página.",

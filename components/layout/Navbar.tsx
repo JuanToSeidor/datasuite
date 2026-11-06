@@ -160,7 +160,7 @@ export function Navbar({
           >
             <span className="flex items-center gap-2 text-neutral-100">
               <AnaliceIcon size={24} />
-              Analyze
+              {dict.navbar.analyze}
             </span>
           </Button>
         )}

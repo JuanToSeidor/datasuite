@@ -86,7 +86,7 @@ export const en: TranslationDictionary = {
     noNotifications: "You have no new notifications.",
     seeMore: "See more",
     modulesLauncher: "Modules Launcher",
-    analice: "Analice",
+    analyze: "Analyze",
     chatWithDaiana: "Hello, how can I help you today?",
     chatPlaceholder: "Send a message to Daiana",
     promptSummarize: "Summarize the key points of this page.",
