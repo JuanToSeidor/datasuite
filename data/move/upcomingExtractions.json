@@ -1,0 +1,104 @@
+{
+  "jobs": [
+    {
+      "id": "job-accounting",
+      "name": "Respaldo: Contabilidad general",
+      "time": "02:00",
+      "monthDays": [13, 27],
+      "nodes": [
+        {
+          "id": "acc-1",
+          "name": "Customers",
+          "source": { "name": "SAP ECC PRD", "type": "SAP ECC", "brandName": "SAP" },
+          "destination": { "name": "Snowflake DW", "type": "Snowflake", "brandName": "Snowflake" }
+        },
+        {
+          "id": "acc-2",
+          "name": "General ledger",
+          "source": { "name": "SAP ECC PRD", "type": "SAP ECC", "brandName": "SAP" },
+          "destination": { "name": "Snowflake DW", "type": "Snowflake", "brandName": "Snowflake" }
+        },
+        {
+          "id": "acc-3",
+          "name": "Invoices",
+          "source": { "name": "Billing SQL", "type": "SQL Server", "brandName": "MSSQL" },
+          "destination": { "name": "Data Lake S3", "type": "Amazon S3", "brandName": "S3" }
+        }
+      ]
+    },
+    {
+      "id": "job-backup",
+      "name": "Backup data",
+      "time": "18:30",
+      "monthDays": [13],
+      "nodes": [
+        {
+          "id": "bkp-1",
+          "name": "Sales orders",
+          "source": { "name": "S/4HANA Cloud", "type": "SAP S/4HANA", "brandName": "SAPHanaC" },
+          "destination": { "name": "Fabric Lakehouse", "type": "Microsoft Fabric", "brandName": "Fabric" }
+        },
+        {
+          "id": "bkp-2",
+          "name": "Products",
+          "source": { "name": "CRM Postgres", "type": "PostgreSQL", "brandName": "PostgreSQL" },
+          "destination": { "name": "Analytics BQ", "type": "BigQuery", "brandName": "GoogleBigquery" }
+        }
+      ]
+    },
+    {
+      "id": "job-customers",
+      "name": "Sincronización de clientes",
+      "time": "22:00",
+      "monthDays": [23],
+      "nodes": [
+        {
+          "id": "cus-1",
+          "name": "Customers",
+          "source": { "name": "CRM Postgres", "type": "PostgreSQL", "brandName": "PostgreSQL" },
+          "destination": { "name": "Snowflake DW", "type": "Snowflake", "brandName": "Snowflake" }
+        },
+        {
+          "id": "cus-2",
+          "name": "Contacts",
+          "source": { "name": "CRM Postgres", "type": "PostgreSQL", "brandName": "PostgreSQL" },
+          "destination": { "name": "Fabric Lakehouse", "type": "Microsoft Fabric", "brandName": "Fabric" }
+        }
+      ]
+    },
+    {
+      "id": "job-inventory",
+      "name": "Inventario de productos",
+      "time": "14:15",
+      "monthDays": [27],
+      "nodes": [
+        {
+          "id": "inv-1",
+          "name": "Stock levels",
+          "source": { "name": "Oracle ERP", "type": "Oracle", "brandName": "Oracle" },
+          "destination": { "name": "Synapse DW", "type": "Azure Synapse", "brandName": "Synapse" }
+        }
+      ]
+    },
+    {
+      "id": "job-billing",
+      "name": "Cierre de facturación",
+      "time": "23:30",
+      "monthDays": [29],
+      "nodes": [
+        {
+          "id": "bil-1",
+          "name": "Invoices",
+          "source": { "name": "Billing SQL", "type": "SQL Server", "brandName": "MSSQL" },
+          "destination": { "name": "Data Lake S3", "type": "Amazon S3", "brandName": "S3" }
+        },
+        {
+          "id": "bil-2",
+          "name": "Payments",
+          "source": { "name": "Billing SQL", "type": "SQL Server", "brandName": "MSSQL" },
+          "destination": { "name": "Snowflake DW", "type": "Snowflake", "brandName": "Snowflake" }
+        }
+      ]
+    }
+  ]
+}

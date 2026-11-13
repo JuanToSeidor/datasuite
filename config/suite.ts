@@ -68,15 +68,14 @@ export const suiteConfig: SuiteConfig = {
           sectionTitle: "Pipelines & Data",
           items: [
             { label: "Overview", iconName: "house", href: "/move" },
-            { label: "Pipelines", iconName: "arrowRight", href: "/move/pipelines" },
-            { label: "Data Sources", iconName: "database", href: "/move/sources" },
-            { label: "Destinations", iconName: "cloud", href: "/move/destinations" },
+            { label: "Nodos", iconName: "cubeInCube", href: "/move/nodes" },
+            { label: "Jobs", iconName: "network", href: "/move/jobs" },
           ]
         },
         {
           sectionTitle: "Monitoring",
           items: [
-            { label: "Activity Logs", iconName: "screenChart", href: "/move/activity" },
+            { label: "Monitor", iconName: "screenChart", href: "/move/activity" },
           ]
         }
       ]

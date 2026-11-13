@@ -1,0 +1,21 @@
+{
+  "defaults": {
+    "isActive": true,
+    "limit": "1000",
+    "timeout": "10:00:00"
+  },
+  "createdBy": "Juan Torres",
+  "summary": {
+    "object": "Pedidos de venta",
+    "origin": { "name": "SAP S/4HANA", "type": "Bapi", "brandName": "SAP" },
+    "destination": { "name": "Snowflake", "type": "Stage", "brandName": "Snowflake" },
+    "extraction": "Tabla · Consulta SQL",
+    "tracking": "Incremental · AEDAT"
+  },
+  "relatedJobs": [
+    { "id": "job-exe-a-top", "name": "Job EXE A top", "status": "neutral" },
+    { "id": "job-eze-bottom", "name": "Job eze bottom", "status": "neutral" },
+    { "id": "job-example", "name": "Job example", "status": "neutral" },
+    { "id": "job-lunch", "name": "Job lunch", "status": "danger" }
+  ]
+}

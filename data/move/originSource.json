@@ -1,0 +1,55 @@
+{
+  "connections": [
+    { "id": "sap-prd-202", "name": "SAP_PRD_202", "client": "100" },
+    { "id": "sap-qas-110", "name": "SAP_QAS_110", "client": "110" },
+    { "id": "sap-dev-300", "name": "SAP_DEV_300", "client": "300" }
+  ],
+  "extractionTypes": ["BAPI", "Table", "Report", "ODP"],
+  "exportFormats": ["CSV", "XLSX", "JSON", "Parquet"],
+  "functions": [
+    { "name": "BAPI_SALESDOCU_CREATEFROMDATA", "description": "Create a distribution document" },
+    { "name": "BAPI_SALESORDER_GETLIST", "description": "List of sales orders for a customer" },
+    { "name": "BAPI_SALESORDER_GETSTATUS", "description": "Status information of a sales order" },
+    { "name": "BAPI_SALESORDER_CHANGE", "description": "Change a sales order" },
+    { "name": "BAPI_MATERIAL_GET_DETAIL", "description": "Read material master data" }
+  ],
+  "report": {
+    "headerLines": [
+      "Totals: Stock Removals, Putaways",
+      "Return transfer for each storage type",
+      "In Warehouse Number 001",
+      "Period 07.12.1994 - 21.11.2003"
+    ],
+    "columns": [
+      { "name": "Sales Order", "width": 11 },
+      { "name": "Customer", "width": 10 },
+      { "name": "Amount", "width": 8 },
+      { "name": "Currency", "width": 8 },
+      { "name": "Date", "width": 10 },
+      { "name": "Status", "width": 7 }
+    ],
+    "rows": [
+      ["100001", "ACME Inc.", "10,500", "USD", "2024-01-15", "Closed"],
+      ["100002", "Beta Ltd.", "7,250", "EUR", "2024-02-10", "Open"],
+      ["100003", "Gamma SA", "12,300", "USD", "2024-03-05", "Closed"],
+      ["100004", "Delta LLC", "5,800", "GBP", "2024-04-22", "Open"],
+      ["100005", "Epsilon", "9,100", "USD", "2024-05-30", "Pending"]
+    ]
+  },
+  "preview": {
+    "columns": ["MANDT", "MATNR", "ERSDA"],
+    "rows": [
+      ["100", "MCDT_PR1", "2021-11-22"],
+      ["100", "MCDT_PR2", "2021-11-22"],
+      ["100", "Z001", "2021-11-23"],
+      ["100", "00001B0001", "2013-04-03"],
+      ["100", "00001B000100000001", "2013-04-03"],
+      ["100", "00001B000100000002", "2013-04-03"],
+      ["100", "00001B000100000003", "2013-04-03"],
+      ["100", "D100", "2013-04-03"],
+      ["100", "D101", "2013-04-03"],
+      ["100", "D102", "2013-04-03"],
+      ["100", "D103", "2013-04-03"]
+    ]
+  }
+}

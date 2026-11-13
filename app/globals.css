@@ -32,6 +32,7 @@
   --color-success-hard: #13644a;
 
   /* Info */
+  --color-info-100: #eaf0ff;
   --color-info-light: #99d3ff;
   --color-info-main: #0191ff;
   --color-info-hard: #006abb;
@@ -84,6 +85,7 @@
   --color-success-main: var(--color-success-main);
   --color-success-hard: var(--color-success-hard);
 
+  --color-info-100: var(--color-info-100);
   --color-info-light: var(--color-info-light);
   --color-info-main: var(--color-info-main);
   --color-info-hard: var(--color-info-hard);
@@ -124,6 +126,9 @@
   /* Seidor (Primary) */
   --color-seidor-main: #263c7a;
   --color-seidor-main-text: #fafafa;
+
+  /* Info: tinte azul sutil sobre el contenedor oscuro */
+  --color-info-100: color-mix(in srgb, #0191ff 18%, #202938);
 }
 
 body {

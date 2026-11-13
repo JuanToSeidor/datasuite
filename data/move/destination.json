@@ -1,0 +1,11 @@
+{
+  "destinations": [
+    { "id": "fabric-prd", "name": "Fabric_PRD", "brandName": "Fabric" },
+    { "id": "snowflake-dw", "name": "Snowflake_DW", "brandName": "Snowflake" },
+    { "id": "s3-lake", "name": "S3_DataLake", "brandName": "S3" },
+    { "id": "bigquery-analytics", "name": "BigQuery_Analytics", "brandName": "GoogleBigquery" },
+    { "id": "databricks-lakehouse", "name": "Databricks_Lakehouse", "brandName": "Databricks" }
+  ],
+  "outputTypes": ["Stage", "Table", "View", "File"],
+  "exportFormats": ["CSV", "XLSX", "JSON", "Parquet"]
+}

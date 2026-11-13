@@ -3,4 +3,6 @@ export * from './Select';
 export * from './IconSelector';
 export * from './FormulaCell';
 export * from './DataTable';
+export * from './Spinner';
+export * from './TimelineRangeSlider';
 export { default as LoadingScreen } from './LoadingScreen';

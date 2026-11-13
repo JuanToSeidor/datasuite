@@ -1,18 +1,18 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
 import { Navbar } from './Navbar';
 import { Sidebar } from './Sidebar';
 import { AnalicePanel } from './AnalicePanel';
-import LoadingScreen from '@/components/ui/LoadingScreen';
-import { suiteConfig } from '@/config/suite';
 import { ThemeProvider } from '@/contexts/ThemeContext';
+import { AnaliceContext } from '@/contexts/AnaliceContext';
+import { SidePanelContext, type SidePanelOptions } from '@/contexts/SidePanelContext';
+import { SidePanel, DEFAULT_SIDE_PANEL_WIDTH } from './SidePanel';
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
   const [isWorkspacesView, setIsWorkspacesView] = useState(false);
-  const [isLoadingModule, setIsLoadingModule] = useState(false);
   const [isAnaliceOpen, setIsAnaliceOpen] = useState(false);
   const [isAnaliceExpanded, setIsAnaliceExpanded] = useState(false);
 
@@ -20,8 +20,39 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     setIsAnaliceOpen(false);
     setIsAnaliceExpanded(false);
   };
+  const toggleAnalice = () => {
+    if (isAnaliceOpen) {
+      closeAnalice();
+    } else {
+      setIsAnaliceOpen(true);
+    }
+  };
   const pathname = usePathname();
-  const prevBranchRef = useRef<string | null>(null);
+
+  // Panel lateral derecho controlado por las páginas (p. ej. resumen del nodo).
+  const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
+  const [sidePanelContent, setSidePanelContent] = useState<React.ReactNode>(null);
+  const [sidePanelWidth, setSidePanelWidth] = useState(DEFAULT_SIDE_PANEL_WIDTH);
+  const openSidePanel = useCallback((content: React.ReactNode, options?: SidePanelOptions) => {
+    setSidePanelContent(content);
+    setSidePanelWidth(options?.width ?? DEFAULT_SIDE_PANEL_WIDTH);
+    setIsSidePanelOpen(true);
+  }, []);
+  // El contenido se conserva al cerrar para que no desaparezca durante la animación.
+  // Al cerrar, el panel vuelve a su ancho normal para la próxima apertura.
+  const [isSidePanelExpanded, setIsSidePanelExpanded] = useState(false);
+  const closeSidePanel = useCallback(() => {
+    setIsSidePanelOpen(false);
+    setIsSidePanelExpanded(false);
+  }, []);
+  const toggleSidePanelExpand = useCallback(() => setIsSidePanelExpanded((prev) => !prev), []);
+
+  // Al cambiar de ruta el panel se cierra y se vacía: pertenece a la página anterior.
+  useEffect(() => {
+    setIsSidePanelOpen(false);
+    setIsSidePanelExpanded(false);
+    setSidePanelContent(null);
+  }, [pathname]);
 
   const handleToggleSidebar = () => {
     if (isWorkspacesView) {
@@ -38,36 +69,16 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     }
   };
 
-  useEffect(() => {
-    const branchSegment = pathname?.split('/')[1];
-    const isBranch = suiteConfig.branches.some((b) => b.id === branchSegment);
-
-    if (isBranch && branchSegment !== prevBranchRef.current) {
-      setIsLoadingModule(true);
-      const timer = setTimeout(() => {
-        setIsLoadingModule(false);
-      }, 2000);
-      prevBranchRef.current = branchSegment;
-      return () => clearTimeout(timer);
-    } else if (!isBranch) {
-      prevBranchRef.current = null;
-      setIsLoadingModule(false);
-    }
-  }, [pathname]);
-
   return (
+    <AnaliceContext.Provider value={{ isAnaliceOpen, toggleAnalice }}>
+    <SidePanelContext.Provider
+      value={{ isSidePanelOpen, isSidePanelExpanded, openSidePanel, closeSidePanel, toggleSidePanelExpand }}
+    >
     <div className="bg-[var(--color-neutral-full)] content-stretch flex flex-col items-stretch relative h-screen w-full overflow-hidden">
-      {isLoadingModule && <LoadingScreen fullScreen={true} />}
       <Navbar
         onToggleSidebar={handleToggleSidebar}
         isAnaliceOpen={isAnaliceOpen}
-        onToggleAnalice={() => {
-          if (isAnaliceOpen) {
-            closeAnalice();
-          } else {
-            setIsAnaliceOpen(true);
-          }
-        }}
+        onToggleAnalice={toggleAnalice}
       />
       <div className="content-stretch flex items-stretch relative shrink-0 w-full flex-1 min-h-0">
         {/* Contenedor que anima el ancho del sidebar y recorta su contenido:
@@ -75,7 +86,8 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         <div
           className="flex shrink-0 h-full overflow-hidden transition-[width] duration-300 ease-in-out"
           style={{
-            width: isAnaliceOpen && isAnaliceExpanded
+            // Se oculta con Analice expandido o con el panel lateral de la página abierto.
+            width: (isAnaliceOpen && isAnaliceExpanded) || isSidePanelOpen
               ? 0
               : isSidebarExpanded
                 ? (isWorkspacesView ? 480 : 240)
@@ -88,9 +100,10 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             setIsWorkspacesView={handleSetWorkspacesView}
           />
         </div>
-        <main className={`content-stretch flex flex-[1_0_0] flex-col gap-[30px] items-start min-w-px relative h-full transition-all duration-300 ease-in-out ${isAnaliceOpen && isAnaliceExpanded ? 'p-0 overflow-hidden' : 'p-[20px] overflow-y-auto'}`}>
+        <main className={`content-stretch flex flex-[1_0_0] flex-col gap-[30px] items-start min-w-px relative h-full transition-all duration-300 ease-in-out ${(isAnaliceOpen && isAnaliceExpanded) || (isSidePanelOpen && isSidePanelExpanded) ? 'p-0 overflow-hidden invisible' : 'p-[20px] overflow-y-auto'}`}>
           {children}
         </main>
+        <SidePanel isOpen={isSidePanelOpen} isExpanded={isSidePanelExpanded} width={sidePanelWidth}>{sidePanelContent}</SidePanel>
         <AnalicePanel
           isOpen={isAnaliceOpen}
           isExpanded={isAnaliceExpanded}
@@ -99,5 +112,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         />
       </div>
     </div>
+    </SidePanelContext.Provider>
+    </AnaliceContext.Provider>
   );
 }

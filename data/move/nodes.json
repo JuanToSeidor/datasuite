@@ -1,0 +1,157 @@
+[
+  {
+    "id": "node-sap-ventas-snowflake",
+    "name": "SAP Ventas a Snowflake",
+    "status": "enabled",
+    "origin": {
+      "name": "SAP ECC Producción",
+      "type": "SAP OData",
+      "brandName": "SAP",
+      "isProduction": true
+    },
+    "destination": {
+      "name": "Snowflake DW",
+      "type": "Snowflake",
+      "brandName": "Snowflake"
+    },
+    "createdBy": "Chris Lee",
+    "avatarText": "CL",
+    "createdAt": "2026-01-12",
+    "lastUsedAt": "2026-11-10"
+  },
+  {
+    "id": "node-postgres-s3",
+    "name": "CRM PostgreSQL a S3",
+    "status": "enabled",
+    "origin": {
+      "name": "CRM Postgres",
+      "type": "PostgreSQL",
+      "brandName": "PostgreSQL"
+    },
+    "destination": {
+      "name": "Data Lake S3",
+      "type": "Amazon S3",
+      "brandName": "S3"
+    },
+    "createdBy": "Anna Wu",
+    "avatarText": "AW",
+    "createdAt": "2026-02-14",
+    "lastUsedAt": "2026-11-09"
+  },
+  {
+    "id": "node-oracle-redshift",
+    "name": "Finanzas Oracle a Redshift",
+    "status": "drafted",
+    "origin": {
+      "name": "Oracle Finanzas",
+      "type": "Oracle",
+      "brandName": "Oracle",
+      "isProduction": true
+    },
+    "destination": {
+      "name": "Redshift BI",
+      "type": "Amazon Redshift",
+      "brandName": "Redshift"
+    },
+    "createdBy": "Mark Taylor",
+    "avatarText": "MT",
+    "createdAt": "2026-03-03",
+    "lastUsedAt": "2026-10-28"
+  },
+  {
+    "id": "node-mssql-azure",
+    "name": "Logística MSSQL a Azure",
+    "status": "enabled",
+    "origin": {
+      "name": "MSSQL Logística",
+      "type": "SQL Server",
+      "brandName": "MSSQL"
+    },
+    "destination": {
+      "name": "Azure SQL Analytics",
+      "type": "Azure SQL",
+      "brandName": "Azure"
+    },
+    "createdBy": "Juan Torres",
+    "avatarText": "JT",
+    "createdAt": "2026-03-21",
+    "lastUsedAt": "2026-11-11"
+  },
+  {
+    "id": "node-gcs-bigquery",
+    "name": "Marketing GCS a BigQuery",
+    "status": "drafted",
+    "origin": {
+      "name": "Google Cloud Storage",
+      "type": "GCS",
+      "brandName": "GoogleStorage"
+    },
+    "destination": {
+      "name": "BigQuery Marketing",
+      "type": "BigQuery",
+      "brandName": "GoogleBigquery"
+    },
+    "createdBy": "Sofia Ramírez",
+    "avatarText": "SR",
+    "createdAt": "2026-04-08",
+    "lastUsedAt": null
+  },
+  {
+    "id": "node-aws-databricks",
+    "name": "Telemetría AWS a Databricks",
+    "status": "stop",
+    "origin": {
+      "name": "AWS Telemetría",
+      "type": "Amazon S3",
+      "brandName": "AWS"
+    },
+    "destination": {
+      "name": "Databricks Lakehouse",
+      "type": "Databricks",
+      "brandName": "Databricks"
+    },
+    "createdBy": "Anna Wu",
+    "avatarText": "AW",
+    "createdAt": "2026-05-19",
+    "lastUsedAt": "2026-11-06"
+  },
+  {
+    "id": "node-sap-hana-snowflake",
+    "name": "SAP HANA Compras a Snowflake",
+    "status": "stop",
+    "origin": {
+      "name": "SAP HANA Compras",
+      "type": "SAP HANA",
+      "brandName": "SAPHanaC",
+      "isProduction": true
+    },
+    "destination": {
+      "name": "Snowflake Compras",
+      "type": "Snowflake",
+      "brandName": "Snowflake"
+    },
+    "createdBy": "Chris Lee",
+    "avatarText": "CL",
+    "createdAt": "2026-06-30",
+    "lastUsedAt": "2026-08-14"
+  },
+  {
+    "id": "node-google-sheets-gcs",
+    "name": "Presupuestos Google a GCS",
+    "status": "drafted",
+    "origin": {
+      "name": "Google Workspace",
+      "type": "Google Sheets",
+      "brandName": "Google"
+    },
+    "destination": {
+      "name": "GCS Presupuestos",
+      "type": "GCS",
+      "brandName": "GoogleStorage"
+    },
+    "createdBy": "Mark Taylor",
+    "avatarText": "MT",
+    "createdAt": "2026-09-02",
+    "lastUsedAt": null
+  }
+]

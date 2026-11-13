@@ -122,6 +122,10 @@ export interface DataTableProps<T = any> {
   keyExtractor?: (row: T, index: number) => string;
   /** Clases extra por fila (p.ej. resaltar filas con error). */
   rowClassName?: (row: T, index: number) => string | undefined;
+  /** Estilos en línea por fila (p.ej. un fondo de progreso calculado). */
+  rowStyle?: (row: T, index: number) => React.CSSProperties | undefined;
+  /** Hace la fila clicable (también con Enter/Espacio), p.ej. para abrir un detalle. */
+  onRowClick?: (row: T, index: number) => void;
   /**
    * Apariencia del contenedor:
    * - default: card con borde y toolbar separado por línea (Connections, Users...).
@@ -167,6 +171,8 @@ export interface DataTableProps<T = any> {
   className?: string;
   /** Clases extra del contenedor de la tabla (p.ej. color de borde en `variant="embedded"`). */
   tableContainerClassName?: string;
+  /** Clases extra de la barra de herramientas (p.ej. agruparla en una tarjeta `bg-container rounded-lg p-5`). */
+  toolbarClassName?: string;
 
   // Title & Header details in toolbar
   title?: React.ReactNode;
@@ -248,6 +254,8 @@ export function DataTable<T = any>({
   columns,
   keyExtractor,
   rowClassName,
+  rowStyle,
+  onRowClick,
   variant = 'default',
 
   // Search
@@ -286,6 +294,7 @@ export function DataTable<T = any>({
   labels,
   className = '',
   tableContainerClassName = '',
+  toolbarClassName = '',
 
   // Title & Subtitle in header
   title,
@@ -687,7 +696,7 @@ export function DataTable<T = any>({
         {hasToolbar && (
         <div
           className={`w-full ${stickyHeader ? 'sticky top-0 z-20' : ''
-            } ${isEmbedded ? '' : 'bg-container p-3.5 border-b border-neutral-500'} flex flex-wrap items-center justify-between gap-3 shrink-0`}
+            } ${isEmbedded ? '' : 'bg-container p-3.5 border-b border-neutral-500'} flex flex-wrap items-center justify-between gap-3 shrink-0 ${toolbarClassName}`}
         >
           {/* Left Toolbar Side */}
           <div className="flex items-center gap-3 flex-wrap">
@@ -993,7 +1002,20 @@ export function DataTable<T = any>({
                   return (
                     <tr
                       key={rowKey}
-                      className={`hover:bg-neutral-500/20 transition-colors border-b border-neutral-500 font-poppins ${rowClassName?.(row, rowIndex) || ''}`}
+                      className={`hover:bg-neutral-500/20 transition-colors border-b border-neutral-500 font-poppins ${
+                        onRowClick ? 'cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-info-main' : ''
+                      } ${rowClassName?.(row, rowIndex) || ''}`}
+                      style={rowStyle?.(row, rowIndex)}
+                      {...(onRowClick && {
+                        tabIndex: 0,
+                        onClick: () => onRowClick(row, rowIndex),
+                        onKeyDown: (e: React.KeyboardEvent<HTMLTableRowElement>) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            onRowClick(row, rowIndex);
+                          }
+                        },
+                      })}
                     >
                       {columns.map((col) => {
                         const value = getCellValue(row, col);

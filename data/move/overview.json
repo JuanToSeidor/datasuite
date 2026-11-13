@@ -1,0 +1,223 @@
+{
+  "runningJob": {
+    "id": "job-backup-general-ledger",
+    "name": "Respaldo: Contabilidad general",
+    "startedAt": "2024-01-10T10:01:00",
+    "records": 987856,
+    "errorNode": {
+      "id": "node-invoices",
+      "name": "Invoices"
+    },
+    "nodes": [
+      {
+        "id": "node-customers",
+        "name": "Customers",
+        "progress": 70,
+        "status": "running",
+        "source": {
+          "name": "SAP ECC PRD",
+          "type": "SAP OData",
+          "brandName": "SAP"
+        },
+        "destination": {
+          "name": "Snowflake DW",
+          "type": "Snowflake",
+          "brandName": "Snowflake"
+        },
+        "startedAt": "2024-03-15T10:20:00",
+        "elapsedSeconds": 25,
+        "records": 420315
+      },
+      {
+        "id": "node-sales-orders",
+        "name": "Sales orders",
+        "progress": 30,
+        "status": "running",
+        "source": {
+          "name": "S/4HANA Cloud",
+          "type": "SAP HANA",
+          "brandName": "SAPHanaC"
+        },
+        "destination": {
+          "name": "Fabric Lakehouse",
+          "type": "Microsoft Fabric",
+          "brandName": "Fabric"
+        },
+        "startedAt": "2024-03-15T10:20:00",
+        "elapsedSeconds": 25,
+        "records": 312870
+      },
+      {
+        "id": "node-products",
+        "name": "Products",
+        "progress": 100,
+        "status": "completed",
+        "source": {
+          "name": "CRM Postgres",
+          "type": "PostgreSQL",
+          "brandName": "PostgreSQL"
+        },
+        "destination": {
+          "name": "Analytics BQ",
+          "type": "Google BigQuery",
+          "brandName": "GoogleBigquery"
+        },
+        "startedAt": "2024-03-15T10:20:00",
+        "elapsedSeconds": 25,
+        "records": 254671
+      },
+      {
+        "id": "node-invoices",
+        "name": "Invoices",
+        "progress": 100,
+        "status": "warning",
+        "source": {
+          "name": "Billing SQL",
+          "type": "SQL Server",
+          "brandName": "MSSQL"
+        },
+        "destination": {
+          "name": "Data Lake S3",
+          "type": "Amazon S3",
+          "brandName": "S3"
+        },
+        "startedAt": "2024-03-15T10:20:00",
+        "elapsedSeconds": 25,
+        "issue": "noData",
+        "records": 0
+      }
+    ],
+    "elapsedSeconds": 601,
+    "nextRunAt": "2024-01-11T10:01:00"
+  },
+  "destinationPreview": {
+    "columns": [
+      "MANDT",
+      "KUNNR",
+      "LAND1",
+      "NAME1"
+    ],
+    "rows": [
+      [
+        "400",
+        "0033100001",
+        "AE",
+        "Domestic UAE Customer 1"
+      ],
+      [
+        "400",
+        "0033100002",
+        "CO",
+        "Cliente Bogotá 1"
+      ],
+      [
+        "400",
+        "0033100003",
+        "US",
+        "US Retail Customer 1"
+      ],
+      [
+        "400",
+        "0033100004",
+        "ES",
+        "Cliente Madrid 1"
+      ],
+      [
+        "400",
+        "0033100005",
+        "MX",
+        "Cliente Monterrey 1"
+      ],
+      [
+        "400",
+        "0033100006",
+        "AE",
+        "Domestic UAE Customer 2"
+      ],
+      [
+        "400",
+        "0033100007",
+        "CO",
+        "Cliente Bogotá 2"
+      ],
+      [
+        "400",
+        "0033100008",
+        "US",
+        "US Retail Customer 2"
+      ],
+      [
+        "400",
+        "0033100009",
+        "ES",
+        "Cliente Madrid 2"
+      ],
+      [
+        "400",
+        "0033100010",
+        "MX",
+        "Cliente Monterrey 2"
+      ],
+      [
+        "400",
+        "0033100011",
+        "AE",
+        "Domestic UAE Customer 3"
+      ],
+      [
+        "400",
+        "0033100012",
+        "CO",
+        "Cliente Bogotá 3"
+      ],
+      [
+        "400",
+        "0033100013",
+        "US",
+        "US Retail Customer 3"
+      ],
+      [
+        "400",
+        "0033100014",
+        "ES",
+        "Cliente Madrid 3"
+      ],
+      [
+        "400",
+        "0033100015",
+        "MX",
+        "Cliente Monterrey 3"
+      ],
+      [
+        "400",
+        "0033100016",
+        "AE",
+        "Domestic UAE Customer 4"
+      ],
+      [
+        "400",
+        "0033100017",
+        "CO",
+        "Cliente Bogotá 4"
+      ],
+      [
+        "400",
+        "0033100018",
+        "US",
+        "US Retail Customer 4"
+      ],
+      [
+        "400",
+        "0033100019",
+        "ES",
+        "Cliente Madrid 4"
+      ],
+      [
+        "400",
+        "0033100020",
+        "MX",
+        "Cliente Monterrey 4"
+      ]
+    ]
+  }
+}
