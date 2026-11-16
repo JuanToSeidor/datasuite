@@ -47,12 +47,15 @@ export function OriginStep({
   onChange,
   expanded = false,
   onExpandedChange,
+  limited = false,
 }: {
   value: OriginSelection;
   onChange: (next: OriginSelection) => void;
   /** Panel derecho a todo el ancho (oculta la conexión de origen). Lo controla el formulario para compactar el encabezado. */
   expanded?: boolean;
   onExpandedChange?: (expanded: boolean) => void;
+  /** Solo la tarjeta de conexión, centrada y angosta (sin panel derecho). */
+  limited?: boolean;
 }) {
   const { dict } = useLanguage();
   const t = dict.move.newNode.origin;
@@ -194,6 +197,117 @@ export function OriginStep({
   })();
   const safeTabIndex = Math.min(tabIndex, Math.max(rightTabs.length - 1, 0));
 
+  const connectionPanel = (
+    <>
+      <div className="flex flex-col gap-3">
+        <h3 className="text-xl font-semibold tracking-tight text-seidor-main-text">{t.connectionSection}</h3>
+        <div className="h-px w-full bg-neutral-500" />
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <Select
+          label={t.source}
+          options={sourceOptions}
+          value={sourceId || undefined}
+          onValueChange={(next) => onChange({ ...value, sourceId: String(next) })}
+        />
+        {source && (
+          <p className="flex items-center gap-1.5 text-xs font-medium text-success-main">
+            <CaralIcon name="check" size={14} />
+            {t.verified.replace("{client}", source.client)}
+          </p>
+        )}
+      </div>
+
+      <Select
+        label={t.extractionType}
+        options={extractionOptions}
+        value={extractionType || undefined}
+        onValueChange={(next) => setExtractionType(String(next))}
+      />
+
+      {isOriginReady && type === "Table" && (
+        <div className="flex items-end gap-1.5">
+          <div className="min-w-0 flex-1">
+            <Input
+              label={t.tableBase}
+              placeholder={t.tableBasePlaceholder}
+              value={tableInput}
+              error={tableError}
+              onChange={(e) => {
+                setTableInput(e.target.value);
+                setTableError(undefined);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") searchTable();
+              }}
+            />
+          </div>
+          <Button variant="info" className={tableError ? "mb-6" : ""} onClick={searchTable}>
+            {t.search}
+          </Button>
+        </div>
+      )}
+
+      {isOriginReady && type === "BAPI" && (
+        <>
+          <Select
+            label={t.exportFile}
+            options={exportOptions}
+            value={exportFormat}
+            onValueChange={(next) => setExportFormat(String(next))}
+          />
+          <div className="flex flex-col gap-2">
+            <div className="flex items-end gap-1.5">
+              <div className="min-w-0 flex-1">
+                <Input
+                  label={t.functionGroup}
+                  iconName="search"
+                  value={patternInput}
+                  onChange={(e) => setPatternInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") setAppliedPattern(patternInput);
+                  }}
+                />
+              </div>
+              <Button
+                variant="light"
+                hasBorder
+                isIconButton
+                iconName="xCircle"
+                title={t.clean}
+                onClick={() => {
+                  setPatternInput("*");
+                  setAppliedPattern("*");
+                }}
+              />
+              <Button variant="info" onClick={() => setAppliedPattern(patternInput)}>
+                {t.search}
+              </Button>
+            </div>
+            <p className="text-xs font-medium text-neutral-800">{t.wildcardHelp}</p>
+          </div>
+        </>
+      )}
+
+      <div className="h-px w-full bg-neutral-500" />
+
+      <Link href="/connections" className="flex w-fit items-center gap-2 pb-5 text-base text-info-main hover:underline">
+        <CaralIcon name="link" size={24} />
+        {t.registerLink}
+      </Link>
+    </>
+  );
+
+  // Ancho/margen del panel de conexión en sus tres estados. Los tres usan el mismo layout para que el
+  // navegador interpole ancho y margen: limitada (792px centrada, al crear un nodo antes de elegir el tipo),
+  // normal (columna izquierda) y plegada (0, panel derecho expandido).
+  const leftPanelState = isLeftCollapsed
+    ? "max-lg:hidden lg:ml-0 lg:mr-0 lg:w-0 lg:opacity-0"
+    : limited
+      ? "max-lg:mx-auto max-lg:w-full max-lg:max-w-[792px] lg:mr-0 lg:ml-[calc((100%_-_min(792px,100%))/2)] lg:w-[min(792px,100%)] lg:opacity-100"
+      : `lg:ml-0 lg:mr-3 lg:opacity-100 ${LEFT_PANEL_WIDTH}`;
+
   // `!`: el CSS de caralstable trae `.flex-col`/`.gap-3` sin capa y le gana a los utilitarios responsive de Tailwind v4.
   return (
     <div className="flex flex-col gap-3 lg:flex-row! lg:items-start lg:gap-0!">
@@ -201,115 +315,25 @@ export function OriginStep({
       <div
         inert={isLeftCollapsed}
         aria-hidden={isLeftCollapsed}
-        className={`overflow-hidden transition-[width,margin,opacity] duration-300 ease-in-out motion-reduce:transition-none lg:shrink-0 lg:self-stretch ${
-          isLeftCollapsed
-            ? "max-lg:hidden lg:mr-0 lg:w-0 lg:opacity-0"
-            : `lg:mr-3 lg:opacity-100 ${LEFT_PANEL_WIDTH}`
-        }`}
+        className={`overflow-hidden transition-[width,margin,opacity] duration-[400ms] ease-in-out motion-reduce:transition-none lg:shrink-0 lg:self-stretch ${leftPanelState}`}
       >
-        <section className={`flex h-full flex-col gap-5 rounded-[12px] bg-container p-5 ${LEFT_PANEL_WIDTH}`}>
-          <div className="flex flex-col gap-3">
-            <h3 className="text-xl font-semibold tracking-tight text-seidor-main-text">{t.connectionSection}</h3>
-            <div className="h-px w-full bg-neutral-500" />
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <Select
-              label={t.source}
-              options={sourceOptions}
-              value={sourceId || undefined}
-              onValueChange={(next) => onChange({ ...value, sourceId: String(next) })}
-            />
-            {source && (
-              <p className="flex items-center gap-1.5 text-xs font-medium text-success-main">
-                <CaralIcon name="check" size={14} />
-                {t.verified.replace("{client}", source.client)}
-              </p>
-            )}
-          </div>
-
-          <Select
-            label={t.extractionType}
-            options={extractionOptions}
-            value={extractionType || undefined}
-            onValueChange={(next) => setExtractionType(String(next))}
-          />
-
-          {isOriginReady && type === "Table" && (
-            <div className="flex items-end gap-1.5">
-              <div className="min-w-0 flex-1">
-                <Input
-                  label={t.tableBase}
-                  placeholder={t.tableBasePlaceholder}
-                  value={tableInput}
-                  error={tableError}
-                  onChange={(e) => {
-                    setTableInput(e.target.value);
-                    setTableError(undefined);
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") searchTable();
-                  }}
-                />
-              </div>
-              <Button variant="info" className={tableError ? "mb-6" : ""} onClick={searchTable}>
-                {t.search}
-              </Button>
-            </div>
-          )}
-
-          {isOriginReady && type === "BAPI" && (
-            <>
-              <Select
-                label={t.exportFile}
-                options={exportOptions}
-                value={exportFormat}
-                onValueChange={(next) => setExportFormat(String(next))}
-              />
-              <div className="flex flex-col gap-2">
-                <div className="flex items-end gap-1.5">
-                  <div className="min-w-0 flex-1">
-                    <Input
-                      label={t.functionGroup}
-                      iconName="search"
-                      value={patternInput}
-                      onChange={(e) => setPatternInput(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") setAppliedPattern(patternInput);
-                      }}
-                    />
-                  </div>
-                  <Button
-                    variant="light"
-                    hasBorder
-                    isIconButton
-                    iconName="xCircle"
-                    title={t.clean}
-                    onClick={() => {
-                      setPatternInput("*");
-                      setAppliedPattern("*");
-                    }}
-                  />
-                  <Button variant="info" onClick={() => setAppliedPattern(patternInput)}>
-                    {t.search}
-                  </Button>
-                </div>
-                <p className="text-xs font-medium text-neutral-800">{t.wildcardHelp}</p>
-              </div>
-            </>
-          )}
-
-          <div className="h-px w-full bg-neutral-500" />
-
-          <Link href="/connections" className="flex w-fit items-center gap-2 pb-5 text-base text-info-main hover:underline">
-            <CaralIcon name="link" size={24} />
-            {t.registerLink}
-          </Link>
+        {/* min-w: al plegarse a 0 el contenido no se reacomoda, solo se recorta */}
+        <section className="flex h-full w-full flex-col gap-5 rounded-[12px] bg-container p-5 lg:min-w-[clamp(320px,32vw,433px)]">
+          {connectionPanel}
         </section>
       </div>
 
-      {/* Configuración según el tipo de extracción */}
-      <section className="flex min-w-0 flex-1 flex-col gap-3 rounded-[12px] bg-container p-2.5">
+      {/* Configuración según el tipo de extracción: oculta mientras la conexión está limitada; entra con un fundido
+          que arranca cuando la tarjeta de conexión ya empezó a encogerse */}
+      <section
+        inert={limited}
+        aria-hidden={limited}
+        className={`flex min-w-0 flex-1 flex-col gap-3 rounded-[12px] bg-container transition-[opacity,translate] ease-out motion-reduce:transition-none ${
+          limited
+            ? "max-lg:hidden lg:h-0 lg:translate-x-6 lg:overflow-hidden lg:opacity-0"
+            : "translate-x-0 p-2.5 opacity-100 delay-150 duration-[400ms]"
+        }`}
+      >
         <div className="flex flex-wrap items-center justify-between gap-2">
           {isLeftCollapsed ? (
             <Button

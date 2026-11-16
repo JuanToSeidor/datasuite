@@ -22,9 +22,10 @@ export interface SapTableState {
   fields: SapField[];
 }
 
-const MIN_TABLE_HEIGHT = 160;
+// Cabecera 56.5px + filas de 53px + 2px de borde.
+const MIN_TABLE_HEIGHT = 112; // cabecera + 1 fila
 const MAX_TABLE_HEIGHT = 800;
-const DEFAULT_TABLE_HEIGHT = 372;
+const DEFAULT_TABLE_HEIGHT = 165; // cabecera + 2 filas; el resto se ve con scroll o arrastrando el borde
 const EXPANDED_TABLE_HEIGHT = 590;
 
 /** Extracción por tabla: tablas agregadas, selección de campos y ajustes de exportación. */

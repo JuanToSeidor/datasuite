@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Alert, Button, Chip, Tabs, Toggle } from "caralstable";
-import { CaralIcon } from "@/components/icons";
+import { Brand, CaralIcon, type CaralBrandName } from "@/components/icons";
 import { Input } from "@/components/ui";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSidePanel } from "@/contexts/SidePanelContext";
@@ -37,7 +37,6 @@ const LOCALE_BY_LANGUAGE: Record<string, string> = {
   pt: "pt-BR",
 };
 
-const STEP_COUNT = 3;
 
 const STATUS_CHIP_VARIANT: Record<MoveNodeStatus, "success" | "warning" | "danger"> = {
   enabled: "success",
@@ -138,6 +137,7 @@ function NodeFormContent({ mode, node }: { mode: NodeFormMode; node?: MoveNode }
     name.trim() !== "",
     origin.sourceId !== "" && origin.extractionType !== "",
     destination.destinationId !== "" && destination.outputType !== "",
+    true,
   ];
   // Al crear, cada paso se desbloquea cuando los anteriores están completos. Al editar, todos están libres.
   const isStepUnlocked = (index: number) => isEdit || stepComplete.slice(0, index).every(Boolean);
@@ -146,16 +146,16 @@ function NodeFormContent({ mode, node }: { mode: NodeFormMode; node?: MoveNode }
     if (isStepUnlocked(index)) setStepIndex(index);
   };
 
+  // Al editar: pestañas General/Origen/Destino. Al crear: asistente Nombre → Origen → Destino → Confirmación.
   const steps = useMemo(
-    () => [
-      { title: t.stepGeneral, desc: t.stepGeneralDesc },
-      { title: t.stepOrigin, desc: t.stepOriginDesc },
-      { title: t.stepDestination, desc: t.stepDestinationDesc },
-    ],
-    [t]
+    () =>
+      isEdit
+        ? [t.stepGeneral, t.stepOrigin, t.stepDestination]
+        : [t.stepName, t.stepOrigin, t.stepDestination, t.stepConfirmation],
+    [t, isEdit]
   );
-
-  const isLastStep = stepIndex === STEP_COUNT - 1;
+  const stepCount = steps.length;
+  const isLastStep = stepIndex === stepCount - 1;
   const formatDate = (value: Date) =>
     value.toLocaleDateString(locale, { day: "numeric", month: "long", year: "numeric" });
   const createdOn = node ? formatDate(new Date(`${node.createdAt}T00:00:00`)) : formatDate(new Date());
@@ -234,7 +234,7 @@ function NodeFormContent({ mode, node }: { mode: NodeFormMode; node?: MoveNode }
                 {isEdit && (
                   <Tabs
                     className="mt-1 w-fit"
-                    tabs={steps.map((step) => ({ label: step.title }))}
+                    tabs={steps.map((step) => ({ label: step }))}
                     activeIndex={stepIndex}
                     onChange={goToStep}
                   />
@@ -304,71 +304,16 @@ function NodeFormContent({ mode, node }: { mode: NodeFormMode; node?: MoveNode }
           />
         )}
 
-        <div className="flex sd:flex-col gap-3 md:flex-row md:items-start">
-          {/* Navegación de pasos (pestañas verticales): solo en el flujo de creación */}
-          {!isEdit && !isCompact && (
-          <nav
-            role="tablist"
-            aria-orientation="vertical"
-            className="flex sd:w-full shrink-0 flex-col gap-1 rounded-[20px] bg-container p-3 md:w-[300px]"
-          >
-            {steps.map((step, index) => {
-              const active = index === stepIndex;
-              const locked = !isStepUnlocked(index);
-              // El check de completado solo tiene sentido en el flujo de creación.
-              const completed = !isEdit && !active && stepComplete[index] && index < stepIndex;
-              return (
-                <div
-                  key={step.title}
-                  role="tab"
-                  tabIndex={locked ? -1 : 0}
-                  aria-selected={active}
-                  aria-disabled={locked}
-                  title={locked ? t.stepLocked : undefined}
-                  onClick={() => goToStep(index)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      goToStep(index);
-                    }
-                  }}
-                  className={`flex w-full flex-col items-start gap-0.5 rounded-lg px-4 py-3 text-left transition-colors ${
-                    locked
-                      ? "cursor-not-allowed opacity-50"
-                      : active
-                        ? "cursor-pointer bg-info-100"
-                        : "cursor-pointer hover:bg-neutral-500/30"
-                  }`}
-                >
-                  {completed ? (
-                    <span className="flex items-center gap-1.5 text-base font-semibold text-success-main">
-                      <span className="flex size-5 items-center justify-center rounded-full bg-success-light">
-                        <CaralIcon name="check" size={12} />
-                      </span>
-                      {step.title}
-                    </span>
-                  ) : (
-                    <span
-                      className={`flex w-full items-center justify-between gap-2 text-base font-semibold ${
-                        active ? "text-info-main" : "text-neutral-900"
-                      }`}
-                    >
-                      <span>{isEdit ? step.title : `${index + 1} ${step.title}`}</span>
-                      {locked && <CaralIcon name="lock" size={16} />}
-                    </span>
-                  )}
-                  <span className={`text-sm ${completed ? "text-success-main" : "text-neutral-800"}`}>{step.desc}</span>
-                </div>
-              );
-            })}
-          </nav>
-          )}
+        {/* Asistente de creación: pasos horizontales */}
+        {!isEdit && (
+          <CreateStepper steps={steps} current={stepIndex} isUnlocked={isStepUnlocked} onSelect={goToStep} />
+        )}
 
-          {/* Contenido del paso */}
-          <section className="flex min-w-0 flex-1 flex-col gap-3">
-            {stepIndex === 0 ? (
+        {/* Contenido del paso */}
+        <section className="flex min-w-0 flex-col gap-3">
+          {stepIndex === 0 ? (
+            isEdit ? (
               <GeneralStep
-                showDetails={isEdit}
                 name={name}
                 onNameChange={setName}
                 isActive={isActive}
@@ -381,53 +326,65 @@ function NodeFormContent({ mode, node }: { mode: NodeFormMode; node?: MoveNode }
                 avatarText={node?.avatarText}
                 createdOn={createdOn}
               />
-            ) : stepIndex === 1 ? (
-              <OriginStep
-                value={origin}
-                onChange={setOrigin}
-                expanded={isOriginExpanded}
-                onExpandedChange={handleOriginExpandedChange}
-              />
             ) : (
-              <DestinationStep value={destination} onChange={setDestination} />
-            )}
+              <NameStep name={name} onNameChange={setName} />
+            )
+          ) : stepIndex === 1 ? (
+            <OriginStep
+              value={origin}
+              onChange={setOrigin}
+              // Al crear, el origen arranca en una tarjeta angosta y se abre a dos paneles al elegir el tipo.
+              limited={!isEdit && origin.extractionType === ""}
+              expanded={isOriginExpanded}
+              onExpandedChange={handleOriginExpandedChange}
+            />
+          ) : stepIndex === 2 ? (
+            <DestinationStep value={destination} onChange={setDestination} />
+          ) : (
+            <ConfirmStep name={name} origin={origin} destination={destination} />
+          )}
 
-            {/* Pie con navegación entre pasos: solo en el flujo de creación */}
-            {!isEdit && (
-              <footer className="flex items-center justify-between gap-3 rounded-[20px] bg-container p-4">
+          {/* Pie con navegación entre pasos: solo en el flujo de creación */}
+          {!isEdit && (
+            <footer className="flex items-center justify-between gap-3">
+              {stepIndex === 0 ? (
                 <Link href="/move/nodes">
-                  <Button variant="light">{dict.common.cancel}</Button>
+                  <Button variant="light" hasBorder>
+                    {dict.common.cancel}
+                  </Button>
                 </Link>
-                <span className="text-sm text-neutral-800">
-                  {t.stepCounter.replace("{current}", String(stepIndex + 1)).replace("{total}", String(STEP_COUNT))}
-                </span>
-                {isLastStep ? (
-                  <Button variant="info" onClick={handleSave} disabled={!stepComplete[stepIndex]}>
-                    {dict.common.save}
-                  </Button>
-                ) : (
-                  <Button
-                    variant="info"
-                    iconName="arrowRight"
-                    disabled={!stepComplete[stepIndex]}
-                    title={stepComplete[stepIndex] ? undefined : t.stepLocked}
-                    onClick={() => goToStep(stepIndex + 1)}
-                  >
-                    {t.next}
-                  </Button>
-                )}
-              </footer>
-            )}
-          </section>
-        </div>
+              ) : (
+                <Button variant="light" onClick={() => setStepIndex(stepIndex - 1)}>
+                  {t.previous}
+                </Button>
+              )}
+              <span className="text-base text-neutral-800">
+                {t.stepCounter.replace("{current}", String(stepIndex + 1)).replace("{total}", String(stepCount))}
+              </span>
+              {isLastStep ? (
+                <Button variant="default" className="text-neutral-100!" onClick={handleSave}>
+                  {t.createNode}
+                </Button>
+              ) : (
+                <Button
+                  variant="default"
+                  className="text-neutral-100!"
+                  disabled={!stepComplete[stepIndex]}
+                  title={stepComplete[stepIndex] ? undefined : t.stepLocked}
+                  onClick={() => goToStep(stepIndex + 1)}
+                >
+                  {t.next}
+                </Button>
+              )}
+            </footer>
+          )}
+        </section>
       </div>
     </div>
   );
 }
 
 interface GeneralStepProps {
-  /** Información, trabajos relacionados y zona de peligro: solo al editar un nodo existente. */
-  showDetails: boolean;
   name: string;
   onNameChange: (value: string) => void;
   isActive: boolean;
@@ -441,8 +398,8 @@ interface GeneralStepProps {
   createdOn: string;
 }
 
+/** Paso General al editar: datos del nodo, información, trabajos relacionados y zona de peligro. */
 function GeneralStep({
-  showDetails,
   name,
   onNameChange,
   isActive,
@@ -511,8 +468,6 @@ function GeneralStep({
         </div>
       </div>
 
-      {showDetails && (
-        <>
           {/* Información y trabajos relacionados */}
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
             <div className="flex flex-col gap-5 rounded-[12px] bg-container p-5">
@@ -566,8 +521,147 @@ function GeneralStep({
               </Button>
             </div>
           </div>
-        </>
-      )}
     </>
+  );
+}
+
+/** Pasos horizontales del asistente de creación: completado (verde), actual (contorno) y pendiente (relleno gris). */
+function CreateStepper({
+  steps,
+  current,
+  isUnlocked,
+  onSelect,
+}: {
+  steps: string[];
+  current: number;
+  isUnlocked: (index: number) => boolean;
+  onSelect: (index: number) => void;
+}) {
+  const { dict } = useLanguage();
+  const t = dict.move.newNode;
+  return (
+    <nav aria-label={t.stepsLabel} className="rounded-[8px] bg-container p-2.5">
+      <ol className="flex items-center gap-2.5">
+        {steps.map((step, index) => {
+          const done = index < current;
+          const active = index === current;
+          const locked = !isUnlocked(index);
+          return (
+            <li key={step} className="flex min-w-0 flex-1 items-center gap-2.5 last:flex-none">
+              {/* Disparador transparente sobre el círculo y el nombre del paso: un Button de Caral impondría su fondo y alto */}
+              <button
+                type="button"
+                disabled={locked || active}
+                aria-current={active ? "step" : undefined}
+                title={locked ? t.stepLocked : undefined}
+                onClick={() => onSelect(index)}
+                className={`flex shrink-0 items-center gap-2.5 rounded-md text-sm font-medium ${
+                  locked ? "cursor-not-allowed" : active ? "cursor-default" : "cursor-pointer hover:underline"
+                }`}
+              >
+                <span
+                  className={`flex size-6 items-center justify-center rounded-full border text-sm ${
+                    done
+                      ? "border-success-hard bg-success-main text-neutral-100"
+                      : active
+                        ? "border-neutral-800 text-neutral-800"
+                        : "border-neutral-500 bg-neutral-800 text-neutral-400"
+                  }`}
+                >
+                  {index + 1}
+                </span>
+                <span
+                  className={`max-sm:sr-only ${done ? "text-success-main" : active ? "text-neutral-900" : "text-neutral-800"}`}
+                >
+                  {step}
+                </span>
+              </button>
+              {index < steps.length - 1 && <span aria-hidden className="h-px min-w-4 flex-1 bg-neutral-800" />}
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
+  );
+}
+
+/** Tarjeta centrada de ancho limitado que usan los pasos simples del asistente. */
+function WizardCard({
+  title,
+  description,
+  children,
+}: {
+  title: string;
+  description?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="mx-auto flex w-full max-w-[792px] flex-col gap-5 rounded-[12px] bg-container p-5">
+      <div className="flex flex-col gap-3">
+        <div className="flex flex-col">
+          <h2 className="text-xl font-semibold tracking-tight text-seidor-main-text">{title}</h2>
+          {description && <p className="text-base text-neutral-800">{description}</p>}
+        </div>
+        <div className="h-px w-full bg-neutral-500" />
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function NameStep({ name, onNameChange }: { name: string; onNameChange: (value: string) => void }) {
+  const { dict } = useLanguage();
+  const t = dict.move.newNode;
+  return (
+    <WizardCard title={t.nameTitle} description={t.nameDesc}>
+      <div className="py-10">
+        <Input
+          label={t.name}
+          placeholder={dict.move.nodes.nodeNamePlaceholder}
+          value={name}
+          autoFocus
+          onChange={(e) => onNameChange(e.target.value)}
+        />
+      </div>
+    </WizardCard>
+  );
+}
+
+function ConfirmStep({
+  name,
+  origin,
+  destination,
+}: {
+  name: string;
+  origin: OriginSelection;
+  destination: DestinationSelection;
+}) {
+  const { dict } = useLanguage();
+  const t = dict.move.newNode;
+  const source = originData.connections.find((c) => c.id === origin.sourceId);
+  const target = destinationData.destinations.find((d) => d.id === destination.destinationId);
+
+  const rows: { label: string; value: string; brand?: CaralBrandName }[] = [
+    { label: t.name, value: name },
+    { label: t.stepOrigin, value: source?.name ?? "—", brand: "SAP" },
+    { label: t.summaryExtraction, value: origin.extractionType },
+    { label: t.stepDestination, value: target?.name ?? "—", brand: target?.brandName as CaralBrandName | undefined },
+    { label: t.confirmOutput, value: destination.outputType },
+  ];
+
+  return (
+    <WizardCard title={t.confirmTitle} description={t.confirmDesc}>
+      <dl className="grid grid-cols-1 gap-x-5 gap-y-4 sm:grid-cols-2">
+        {rows.map((row) => (
+          <div key={row.label} className="flex flex-col gap-1">
+            <dt className="text-sm font-medium text-neutral-800">{row.label}</dt>
+            <dd className="flex items-center gap-2 text-base text-neutral-900">
+              {row.brand && <Brand name={row.brand} size={20} />}
+              {row.value}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </WizardCard>
   );
 }
