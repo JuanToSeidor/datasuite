@@ -6,3 +6,4 @@ export * from './DataTable';
 export * from './Spinner';
 export * from './TimelineRangeSlider';
 export { default as LoadingScreen } from './LoadingScreen';
+export * from './Checkbox';

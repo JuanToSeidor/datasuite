@@ -18,7 +18,8 @@ const previewData: PreviewRow[] = PREVIEW_ROWS.map((cells, rowIndex) => {
   return row;
 });
 
-export function OriginPreviewTab() {
+/** `embedded`: sin tarjeta propia, para ir dentro del panel derecho del paso Origen. */
+export function OriginPreviewTab({ embedded = false }: { embedded?: boolean } = {}) {
   const { dict } = useLanguage();
   const t = dict.move.newNode.origin;
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -48,7 +49,7 @@ export function OriginPreviewTab() {
   );
 
   return (
-    <section className="flex flex-col gap-3 rounded-[12px] bg-container p-5">
+    <section className={`flex flex-col gap-3 ${embedded ? "" : "rounded-[12px] bg-container p-5"}`}>
       <DataTable<PreviewRow>
         variant="embedded"
         title={t.previewTitle}

@@ -106,7 +106,7 @@ export const Select: React.FC<SelectProps> = ({
 
   const displayLabel = selectedOption
     ? selectedOption.label
-    : currentValue !== undefined
+    : currentValue !== undefined && currentValue !== ''
       ? String(currentValue)
       : selectPlaceholder;
 

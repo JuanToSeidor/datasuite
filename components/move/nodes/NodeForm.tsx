@@ -3,12 +3,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Alert, Button, Chip, Toggle } from "caralstable";
+import { Alert, Button, Chip, Tabs, Toggle } from "caralstable";
 import { CaralIcon } from "@/components/icons";
-import { AnaliceIcon } from "@/components/icons/AnaliceIcon";
 import { Input } from "@/components/ui";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useAnalice } from "@/contexts/AnaliceContext";
 import { useSidePanel } from "@/contexts/SidePanelContext";
 import newNodeData from "@/data/move/newNode.json";
 import nodesData from "@/data/move/nodes.json";
@@ -102,7 +100,6 @@ function NodeFormContent({ mode, node }: { mode: NodeFormMode; node?: MoveNode }
   const t = dict.move.newNode;
   const tNodes = dict.move.nodes;
   const router = useRouter();
-  const { toggleAnalice } = useAnalice();
   const { isSidePanelOpen, openSidePanel, closeSidePanel } = useSidePanel();
   const locale = LOCALE_BY_LANGUAGE[language] ?? "en-US";
 
@@ -129,6 +126,13 @@ function NodeFormContent({ mode, node }: { mode: NodeFormMode; node?: MoveNode }
   const [timeout, setTimeoutValue] = useState<string>(newNodeData.defaults.timeout);
   const [origin, setOrigin] = useState<OriginSelection>(() => initialOrigin(node));
   const [destination, setDestination] = useState<DestinationSelection>(() => initialDestination(node));
+  // Panel de Origen expandido: oculta la conexión y compacta el encabezado para dar espacio al mapeo.
+  const [isOriginExpanded, setIsOriginExpanded] = useState(false);
+  const isCompact = stepIndex === 1 && isOriginExpanded;
+  const handleOriginExpandedChange = (expanded: boolean) => {
+    setIsOriginExpanded(expanded);
+    if (expanded) closeSidePanel();
+  };
 
   const stepComplete = [
     name.trim() !== "",
@@ -216,16 +220,30 @@ function NodeFormContent({ mode, node }: { mode: NodeFormMode; node?: MoveNode }
                 <Chip variant="warning" label={t.draft} hasBorder />
               )}
             </div>
-            <p className="max-w-[635px] text-base text-neutral-900">{isEdit ? t.editSubtitle : t.subtitle}</p>
+            {/* Subtítulo y pestañas: se colapsan en alto cuando el panel de Origen está expandido */}
+            <div
+              inert={isCompact}
+              aria-hidden={isCompact}
+              className={`-mt-2 grid transition-[grid-template-rows,opacity] duration-300 ease-in-out motion-reduce:transition-none ${
+                isCompact ? "grid-rows-[0fr] opacity-0" : "grid-rows-[1fr] opacity-100"
+              }`}
+            >
+              <div className="flex min-h-0 flex-col gap-2 overflow-hidden pt-2">
+                <p className="max-w-[635px] text-base text-neutral-900">{isEdit ? t.editSubtitle : t.subtitle}</p>
+                {/* Al editar, los pasos se navegan con pestañas horizontales en el encabezado */}
+                {isEdit && (
+                  <Tabs
+                    className="mt-1 w-fit"
+                    tabs={steps.map((step) => ({ label: step.title }))}
+                    activeIndex={stepIndex}
+                    onChange={goToStep}
+                  />
+                )}
+              </div>
+            </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <Button variant="light" onClick={toggleAnalice}>
-              <span className="flex items-center gap-2">
-                <AnaliceIcon size={20} />
-                {t.askAnalice}
-              </span>
-            </Button>
             <Button
               variant={isSidePanelOpen ? "info" : "light"}
               isIconButton
@@ -287,7 +305,8 @@ function NodeFormContent({ mode, node }: { mode: NodeFormMode; node?: MoveNode }
         )}
 
         <div className="flex sd:flex-col gap-3 md:flex-row md:items-start">
-          {/* Navegación de pasos (pestañas verticales) */}
+          {/* Navegación de pasos (pestañas verticales): solo en el flujo de creación */}
+          {!isEdit && !isCompact && (
           <nav
             role="tablist"
             aria-orientation="vertical"
@@ -343,6 +362,7 @@ function NodeFormContent({ mode, node }: { mode: NodeFormMode; node?: MoveNode }
               );
             })}
           </nav>
+          )}
 
           {/* Contenido del paso */}
           <section className="flex min-w-0 flex-1 flex-col gap-3">
@@ -362,7 +382,12 @@ function NodeFormContent({ mode, node }: { mode: NodeFormMode; node?: MoveNode }
                 createdOn={createdOn}
               />
             ) : stepIndex === 1 ? (
-              <OriginStep value={origin} onChange={setOrigin} />
+              <OriginStep
+                value={origin}
+                onChange={setOrigin}
+                expanded={isOriginExpanded}
+                onExpandedChange={handleOriginExpandedChange}
+              />
             ) : (
               <DestinationStep value={destination} onChange={setDestination} />
             )}

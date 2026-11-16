@@ -56,7 +56,8 @@ function ReportLine({ number, text, muted }: { number: number; text: string; mut
   );
 }
 
-export function OriginReportTab() {
+/** `embedded`: sin tarjeta propia, para ir dentro del panel derecho del paso Origen. */
+export function OriginReportTab({ embedded = false }: { embedded?: boolean } = {}) {
   const { dict } = useLanguage();
   const t = dict.move.newNode.origin;
 
@@ -141,8 +142,12 @@ export function OriginReportTab() {
         <div className="fixed inset-0 z-[60] bg-neutral-900/40" onClick={() => setIsMaximized(false)} />
       )}
       <section
-        className={`flex flex-col gap-5 bg-container p-5 ${
-          isMaximized ? "fixed inset-2 z-[70] overflow-auto rounded-[16px] shadow-xl sm:inset-4" : "rounded-[12px]"
+        className={`flex flex-col gap-5 ${
+          isMaximized
+            ? "fixed inset-2 z-[70] overflow-auto rounded-[16px] bg-container p-5 shadow-xl sm:inset-4"
+            : embedded
+              ? ""
+              : "rounded-[12px] bg-container p-5"
         }`}
       >
         <div className="flex items-center justify-between gap-3">

@@ -1,17 +1,54 @@
 {
   "connections": [
-    { "id": "sap-prd-202", "name": "SAP_PRD_202", "client": "100" },
-    { "id": "sap-qas-110", "name": "SAP_QAS_110", "client": "110" },
-    { "id": "sap-dev-300", "name": "SAP_DEV_300", "client": "300" }
+    {
+      "id": "sap-prd-202",
+      "name": "SAP_PRD_202",
+      "client": "100"
+    },
+    {
+      "id": "sap-qas-110",
+      "name": "SAP_QAS_110",
+      "client": "110"
+    },
+    {
+      "id": "sap-dev-300",
+      "name": "SAP_DEV_300",
+      "client": "300"
+    }
   ],
-  "extractionTypes": ["BAPI", "Table", "Report", "ODP"],
-  "exportFormats": ["CSV", "XLSX", "JSON", "Parquet"],
+  "extractionTypes": [
+    "BAPI",
+    "Table",
+    "Report",
+    "ODP"
+  ],
+  "exportFormats": [
+    "CSV",
+    "XLSX",
+    "JSON",
+    "Parquet"
+  ],
   "functions": [
-    { "name": "BAPI_SALESDOCU_CREATEFROMDATA", "description": "Create a distribution document" },
-    { "name": "BAPI_SALESORDER_GETLIST", "description": "List of sales orders for a customer" },
-    { "name": "BAPI_SALESORDER_GETSTATUS", "description": "Status information of a sales order" },
-    { "name": "BAPI_SALESORDER_CHANGE", "description": "Change a sales order" },
-    { "name": "BAPI_MATERIAL_GET_DETAIL", "description": "Read material master data" }
+    {
+      "name": "BAPI_SALESDOCU_CREATEFROMDATA",
+      "description": "Create a distribution document"
+    },
+    {
+      "name": "BAPI_SALESORDER_GETLIST",
+      "description": "List of sales orders for a customer"
+    },
+    {
+      "name": "BAPI_SALESORDER_GETSTATUS",
+      "description": "Status information of a sales order"
+    },
+    {
+      "name": "BAPI_SALESORDER_CHANGE",
+      "description": "Change a sales order"
+    },
+    {
+      "name": "BAPI_MATERIAL_GET_DETAIL",
+      "description": "Read material master data"
+    }
   ],
   "report": {
     "headerLines": [
@@ -21,35 +58,425 @@
       "Period 07.12.1994 - 21.11.2003"
     ],
     "columns": [
-      { "name": "Sales Order", "width": 11 },
-      { "name": "Customer", "width": 10 },
-      { "name": "Amount", "width": 8 },
-      { "name": "Currency", "width": 8 },
-      { "name": "Date", "width": 10 },
-      { "name": "Status", "width": 7 }
+      {
+        "name": "Sales Order",
+        "width": 11
+      },
+      {
+        "name": "Customer",
+        "width": 10
+      },
+      {
+        "name": "Amount",
+        "width": 8
+      },
+      {
+        "name": "Currency",
+        "width": 8
+      },
+      {
+        "name": "Date",
+        "width": 10
+      },
+      {
+        "name": "Status",
+        "width": 7
+      }
     ],
     "rows": [
-      ["100001", "ACME Inc.", "10,500", "USD", "2024-01-15", "Closed"],
-      ["100002", "Beta Ltd.", "7,250", "EUR", "2024-02-10", "Open"],
-      ["100003", "Gamma SA", "12,300", "USD", "2024-03-05", "Closed"],
-      ["100004", "Delta LLC", "5,800", "GBP", "2024-04-22", "Open"],
-      ["100005", "Epsilon", "9,100", "USD", "2024-05-30", "Pending"]
+      [
+        "100001",
+        "ACME Inc.",
+        "10,500",
+        "USD",
+        "2024-01-15",
+        "Closed"
+      ],
+      [
+        "100002",
+        "Beta Ltd.",
+        "7,250",
+        "EUR",
+        "2024-02-10",
+        "Open"
+      ],
+      [
+        "100003",
+        "Gamma SA",
+        "12,300",
+        "USD",
+        "2024-03-05",
+        "Closed"
+      ],
+      [
+        "100004",
+        "Delta LLC",
+        "5,800",
+        "GBP",
+        "2024-04-22",
+        "Open"
+      ],
+      [
+        "100005",
+        "Epsilon",
+        "9,100",
+        "USD",
+        "2024-05-30",
+        "Pending"
+      ]
     ]
   },
   "preview": {
-    "columns": ["MANDT", "MATNR", "ERSDA"],
+    "columns": [
+      "MANDT",
+      "MATNR",
+      "ERSDA"
+    ],
     "rows": [
-      ["100", "MCDT_PR1", "2021-11-22"],
-      ["100", "MCDT_PR2", "2021-11-22"],
-      ["100", "Z001", "2021-11-23"],
-      ["100", "00001B0001", "2013-04-03"],
-      ["100", "00001B000100000001", "2013-04-03"],
-      ["100", "00001B000100000002", "2013-04-03"],
-      ["100", "00001B000100000003", "2013-04-03"],
-      ["100", "D100", "2013-04-03"],
-      ["100", "D101", "2013-04-03"],
-      ["100", "D102", "2013-04-03"],
-      ["100", "D103", "2013-04-03"]
+      [
+        "100",
+        "MCDT_PR1",
+        "2021-11-22"
+      ],
+      [
+        "100",
+        "MCDT_PR2",
+        "2021-11-22"
+      ],
+      [
+        "100",
+        "Z001",
+        "2021-11-23"
+      ],
+      [
+        "100",
+        "00001B0001",
+        "2013-04-03"
+      ],
+      [
+        "100",
+        "00001B000100000001",
+        "2013-04-03"
+      ],
+      [
+        "100",
+        "00001B000100000002",
+        "2013-04-03"
+      ],
+      [
+        "100",
+        "00001B000100000003",
+        "2013-04-03"
+      ],
+      [
+        "100",
+        "D100",
+        "2013-04-03"
+      ],
+      [
+        "100",
+        "D101",
+        "2013-04-03"
+      ],
+      [
+        "100",
+        "D102",
+        "2013-04-03"
+      ],
+      [
+        "100",
+        "D103",
+        "2013-04-03"
+      ]
+    ]
+  },
+  "tables": [
+    {
+      "name": "BSEG",
+      "description": "Accounting Document Segment",
+      "fields": [
+        {
+          "name": "MANDT",
+          "type": "CLNT",
+          "length": 3,
+          "description": "Client",
+          "selected": true,
+          "conversion": true
+        },
+        {
+          "name": "BUKRS",
+          "type": "CHAR",
+          "length": 4,
+          "description": "Company Code",
+          "selected": true,
+          "conversion": true
+        },
+        {
+          "name": "BELNR",
+          "type": "CHAR",
+          "length": 10,
+          "description": "Accounting Document Number",
+          "selected": true,
+          "conversion": false
+        },
+        {
+          "name": "GJAHR",
+          "type": "NUMC",
+          "length": 4,
+          "description": "Fiscal Year",
+          "selected": true,
+          "conversion": false
+        },
+        {
+          "name": "BUZEI",
+          "type": "NUMC",
+          "length": 3,
+          "description": "Number of Line Item Within Accounting Document",
+          "selected": true,
+          "conversion": true
+        },
+        {
+          "name": "BUZID",
+          "type": "CHAR",
+          "length": 1,
+          "description": "Identification of the Line Item",
+          "selected": true,
+          "conversion": true
+        },
+        {
+          "name": "KUNNR",
+          "type": "CHAR",
+          "length": 10,
+          "description": "Customer Number",
+          "selected": true,
+          "conversion": true
+        },
+        {
+          "name": "AUGDT",
+          "type": "DATS",
+          "length": 8,
+          "description": "Clearing Date",
+          "selected": true,
+          "conversion": true
+        },
+        {
+          "name": "AUGCP",
+          "type": "DATS",
+          "length": 8,
+          "description": "Clearing Entry Date",
+          "selected": true,
+          "conversion": true
+        },
+        {
+          "name": "AUGBL",
+          "type": "CHAR",
+          "length": 10,
+          "description": "Document Number of the Clearing Document",
+          "selected": false,
+          "conversion": false
+        },
+        {
+          "name": "DMBTR",
+          "type": "CURR",
+          "length": 13,
+          "description": "Amount in Local Currency",
+          "selected": false,
+          "conversion": false
+        },
+        {
+          "name": "WRBTR",
+          "type": "CURR",
+          "length": 13,
+          "description": "Amount in Document Currency",
+          "selected": false,
+          "conversion": false
+        }
+      ]
+    },
+    {
+      "name": "KNA1",
+      "description": "General Data in Customer Master",
+      "fields": [
+        {
+          "name": "MANDT",
+          "type": "CLNT",
+          "length": 3,
+          "description": "Client",
+          "selected": true,
+          "conversion": true
+        },
+        {
+          "name": "KUNNR",
+          "type": "CHAR",
+          "length": 10,
+          "description": "Customer Number",
+          "selected": true,
+          "conversion": false
+        },
+        {
+          "name": "LAND1",
+          "type": "CHAR",
+          "length": 3,
+          "description": "Country Key",
+          "selected": true,
+          "conversion": false
+        },
+        {
+          "name": "NAME1",
+          "type": "CHAR",
+          "length": 35,
+          "description": "Name 1",
+          "selected": true,
+          "conversion": false
+        },
+        {
+          "name": "ORT01",
+          "type": "CHAR",
+          "length": 35,
+          "description": "City",
+          "selected": true,
+          "conversion": false
+        },
+        {
+          "name": "PSTLZ",
+          "type": "CHAR",
+          "length": 10,
+          "description": "Postal Code",
+          "selected": true,
+          "conversion": false
+        },
+        {
+          "name": "ERDAT",
+          "type": "DATS",
+          "length": 8,
+          "description": "Date on Which the Record Was Created",
+          "selected": true,
+          "conversion": true
+        },
+        {
+          "name": "STCD1",
+          "type": "CHAR",
+          "length": 16,
+          "description": "Tax Number 1",
+          "selected": false,
+          "conversion": false
+        }
+      ]
+    },
+    {
+      "name": "MARA",
+      "description": "General Material Data",
+      "fields": [
+        {
+          "name": "MANDT",
+          "type": "CLNT",
+          "length": 3,
+          "description": "Client",
+          "selected": true,
+          "conversion": true
+        },
+        {
+          "name": "MATNR",
+          "type": "CHAR",
+          "length": 40,
+          "description": "Material Number",
+          "selected": true,
+          "conversion": false
+        },
+        {
+          "name": "ERSDA",
+          "type": "DATS",
+          "length": 8,
+          "description": "Created On",
+          "selected": true,
+          "conversion": true
+        },
+        {
+          "name": "MTART",
+          "type": "CHAR",
+          "length": 4,
+          "description": "Material Type",
+          "selected": true,
+          "conversion": false
+        },
+        {
+          "name": "MATKL",
+          "type": "CHAR",
+          "length": 9,
+          "description": "Material Group",
+          "selected": true,
+          "conversion": false
+        },
+        {
+          "name": "MEINS",
+          "type": "UNIT",
+          "length": 3,
+          "description": "Base Unit of Measure",
+          "selected": false,
+          "conversion": false
+        }
+      ]
+    }
+  ],
+  "defaultTables": [
+    "BSEG",
+    "KNA1"
+  ],
+  "joinTypes": [
+    "inner",
+    "left",
+    "right",
+    "full"
+  ],
+  "defaultJoins": [
+    {
+      "leftTable": "BSEG",
+      "rightTable": "KNA1",
+      "type": "inner",
+      "mappings": [
+        {
+          "left": "MANDT",
+          "right": "MANDT"
+        },
+        {
+          "left": "KUNNR",
+          "right": "KUNNR"
+        }
+      ]
+    }
+  ],
+  "defaultWhere": "BSEG~GJAHR >= @fiscal_year",
+  "defaultVariables": [
+    {
+      "name": "fiscal_year",
+      "type": "number",
+      "value": "2024"
+    }
+  ],
+  "variableTypes": [
+    "string",
+    "number",
+    "date"
+  ],
+  "batch": {
+    "types": [
+      "date",
+      "string"
+    ],
+    "dateModes": [
+      "standard",
+      "fiscal"
+    ],
+    "batchEvery": [
+      "day",
+      "week",
+      "month",
+      "quarter",
+      "year"
+    ],
+    "valuesSources": [
+      "manual",
+      "distinct"
     ]
   }
 }
