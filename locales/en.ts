@@ -984,6 +984,7 @@ export const en: TranslationDictionary = {
       statusRunning: "Running",
       switchToGrid: "Switch to card view",
       switchToList: "Switch to list view",
+      author: "Author",
       nextRun: "Next run",
       lastRun: "Last run",
       schedules: "Schedules"

@@ -984,6 +984,7 @@ export const pt: TranslationDictionary = {
       statusRunning: "Em execução",
       switchToGrid: "Mudar para visualização em cartões",
       switchToList: "Mudar para visualização em lista",
+      author: "Autor",
       nextRun: "Próxima execução",
       lastRun: "Última execução",
       schedules: "Agendamentos"

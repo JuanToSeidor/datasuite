@@ -982,6 +982,7 @@ export const es = {
       statusRunning: "En ejecución",
       switchToGrid: "Cambiar a vista de tarjetas",
       switchToList: "Cambiar a vista de lista",
+      author: "Autor",
       nextRun: "Próxima ejecución",
       lastRun: "Última ejecución",
       schedules: "Programaciones"

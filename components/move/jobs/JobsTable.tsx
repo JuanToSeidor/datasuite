@@ -1,9 +1,8 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef, type ReactNode } from "react";
 import Link from "next/link";
 import { Button, Chip } from "caralstable";
-import { CaralIcon } from "@/components/icons";
 import { DataTableColumn } from "@/components/ui";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { MoveListView } from "@/components/move/shared/MoveListView";
@@ -30,13 +29,13 @@ interface JobRow {
 const STATUS_DOT_CLASS: Record<JobListStatus, string> = {
   running: "bg-info-main",
   enabled: "bg-success-main",
-  disabled: "bg-warning-main",
+  disabled: "bg-danger-main",
 };
 
-const STATUS_CHIP: Record<JobListStatus, "info" | "success" | "warning"> = {
+const STATUS_CHIP: Record<JobListStatus, "info" | "success" | "danger"> = {
   running: "info",
   enabled: "success",
-  disabled: "warning",
+  disabled: "danger",
 };
 
 const LOCALE_BY_LANGUAGE: Record<string, string> = { es: "es-ES", en: "en-US", pt: "pt-BR" };
@@ -82,6 +81,134 @@ function EditJobButton({ jobId, title }: { jobId: string; title: string }) {
   );
 }
 
+/**
+ * Fila de nodos con desplazamiento horizontal estilo móvil: se arrastra con el mouse
+ * (con inercia al soltar), sin barra de scroll visible. La rueda vertical también la
+ * desplaza en horizontal. En pantallas táctiles se usa el scroll nativo.
+ */
+function NodesRow({ children }: { children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    let dragging = false;
+    let startX = 0;
+    let startScroll = 0;
+    let lastX = 0;
+    let lastT = 0;
+    let velocity = 0; // px/ms
+    let raf = 0;
+
+    const stopInertia = () => cancelAnimationFrame(raf);
+
+    const onPointerDown = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse" || e.button !== 0 || el.scrollWidth <= el.clientWidth) return;
+      stopInertia();
+      dragging = true;
+      startX = lastX = e.clientX;
+      startScroll = el.scrollLeft;
+      lastT = performance.now();
+      velocity = 0;
+      el.setPointerCapture(e.pointerId);
+      el.style.cursor = "grabbing";
+    };
+
+    const onPointerMove = (e: PointerEvent) => {
+      if (!dragging) return;
+      const now = performance.now();
+      const dt = now - lastT;
+      if (dt > 0) velocity = (lastX - e.clientX) / dt;
+      lastX = e.clientX;
+      lastT = now;
+      el.scrollLeft = startScroll - (e.clientX - startX);
+    };
+
+    const onPointerUp = (e: PointerEvent) => {
+      if (!dragging) return;
+      dragging = false;
+      el.releasePointerCapture(e.pointerId);
+      el.style.cursor = "";
+      // Inercia: sigue deslizando y frena gradualmente.
+      let v = performance.now() - lastT > 80 ? 0 : velocity;
+      let prev = performance.now();
+      const step = (now: number) => {
+        const dt = now - prev;
+        prev = now;
+        el.scrollLeft += v * dt;
+        v *= Math.pow(0.95, dt / 16);
+        if (Math.abs(v) > 0.02) raf = requestAnimationFrame(step);
+      };
+      raf = requestAnimationFrame(step);
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      if (el.scrollWidth <= el.clientWidth || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      const atStart = el.scrollLeft <= 0 && e.deltaY < 0;
+      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 1 && e.deltaY > 0;
+      if (atStart || atEnd) return; // en los extremos se deja scrollear la página
+      e.preventDefault();
+      stopInertia();
+      el.scrollLeft += e.deltaY;
+    };
+
+    el.addEventListener("pointerdown", onPointerDown);
+    el.addEventListener("pointermove", onPointerMove);
+    el.addEventListener("pointerup", onPointerUp);
+    el.addEventListener("pointercancel", onPointerUp);
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => {
+      stopInertia();
+      el.removeEventListener("pointerdown", onPointerDown);
+      el.removeEventListener("pointermove", onPointerMove);
+      el.removeEventListener("pointerup", onPointerUp);
+      el.removeEventListener("pointercancel", onPointerUp);
+      el.removeEventListener("wheel", onWheel);
+    };
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className="flex items-center gap-1.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden cursor-grab select-none border-b border-neutral-500 px-2.5 pt-5 pb-2.5"
+    >
+      {children}
+    </div>
+  );
+}
+
+/** Píldora de un nodo: logo origen + logo destino superpuestos; al hacer hover se expande con el nombre completo. */
+function NodePill({ node }: { node: TExtractionNode }) {
+  return (
+    <div
+      className="flex items-center gap-2.5 max-w-[197px] hover:max-w-[640px] transition-[max-width] duration-300 ease-out shrink-0 overflow-hidden rounded-full border border-neutral-500 hover:border-info-main px-4 py-0.5"
+      title={node.name}
+    >
+      <div className="flex items-center shrink-0">
+        <span className="-mr-3 flex items-center rounded-full bg-neutral-100 p-1.5">
+          <EndpointLogo brandName={node.origin.brandName} size={24} />
+        </span>
+        <span className="relative flex items-center rounded-full bg-neutral-100 p-1.5 drop-shadow-[0_0_1.65px_rgba(0,0,0,0.09)]">
+          <EndpointLogo brandName={node.destination.brandName} size={24} />
+        </span>
+      </div>
+      <span className="flex-1 min-w-0 truncate text-base text-neutral-900">{node.name}</span>
+    </div>
+  );
+}
+
+function JobCardField({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex flex-col min-w-0 px-2.5 py-1.5">
+      <span className="text-sm font-medium leading-3.5 text-neutral-800 whitespace-nowrap">{label}</span>
+      <span className="text-base text-neutral-900 truncate" title={value}>
+        {value}
+      </span>
+    </div>
+  );
+}
+
 function JobCard({
   row,
   statusLabel,
@@ -94,43 +221,36 @@ function JobCard({
   const { dict } = useLanguage();
   const t = dict.moveJobs.list;
   return (
-    <div className="flex flex-col gap-4 p-5 rounded-lg bg-container border border-neutral-500 h-full">
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex items-center gap-2.5 min-w-0">
-          <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-info-100 text-info-main">
-            <CaralIcon name="network" size={22} />
-          </span>
-          <div className="min-w-0">
-            <p className="font-poppins font-semibold text-base text-neutral-900 truncate" title={row.name}>
-              {row.name}
-            </p>
-            <p className="text-xs text-neutral-800 truncate">{t.createdBy.replace("{name}", row.createdBy)}</p>
-          </div>
-        </div>
+    <div className="flex flex-col self-start overflow-hidden rounded-lg bg-container font-poppins">
+      {/* Cabecera: nombre + estado */}
+      <div className="flex items-center gap-2.5 border-b border-neutral-500 px-2.5 pt-5 pb-2.5">
+        <p className="flex-1 min-w-0 truncate text-lg font-semibold text-neutral-900" title={row.name}>
+          {row.name}
+        </p>
         <Chip label={statusLabel(row.status)} variant={STATUS_CHIP[row.status]} hasBorder />
       </div>
 
-      {row.nodes.length > 0 ? (
-        <NodesSummary nodes={row.nodes} label={t.nodesLabel} />
-      ) : (
-        <p className="text-sm text-neutral-800">{t.noNodes}</p>
-      )}
+      {/* Nodos del job */}
+      <NodesRow>
+        {row.nodes.length > 0 ? (
+          row.nodes.map((node) => <NodePill key={node.extraction_node_id} node={node} />)
+        ) : (
+          <p className="text-sm text-neutral-800 py-1.5">{t.noNodes}</p>
+        )}
+      </NodesRow>
 
-      <dl className="grid grid-cols-2 gap-3 text-sm">
-        <div className="min-w-0">
-          <dt className="text-xs text-neutral-800">{t.nextRun}</dt>
-          <dd className="text-neutral-900 truncate">{row.nextRun ? formatDateTime(row.nextRun) : t.noSchedule}</dd>
-        </div>
-        <div className="min-w-0">
-          <dt className="text-xs text-neutral-800">{t.lastRun}</dt>
-          <dd className="text-neutral-900 truncate">{row.lastRun ? formatDateTime(row.lastRun) : t.notExecuted}</dd>
-        </div>
-      </dl>
+      {/* Datos */}
+      <div className="grid grid-cols-3 gap-x-2.5 gap-y-1.5 py-2.5">
+        <JobCardField label={t.author} value={row.createdBy} />
+        <JobCardField label={t.nextRun} value={row.nextRun ? formatDateTime(row.nextRun) : t.noSchedule} />
+        <JobCardField label={t.lastRun} value={row.lastRun ? formatDateTime(row.lastRun) : t.notExecuted} />
+      </div>
 
-      <div className="mt-auto flex justify-end">
+      {/* Acciones */}
+      <div className="flex justify-end border-t border-neutral-500 p-2.5">
         <Link href={getJobEditorHref(row.id)}>
-          <Button variant="ghost" hasBorder iconName="edit" className="border! border-neutral-800! text-neutral-900 cursor-pointer">
-            {t.editJob}
+          <Button variant="info" className="cursor-pointer">
+            {t.edit}
           </Button>
         </Link>
       </div>
