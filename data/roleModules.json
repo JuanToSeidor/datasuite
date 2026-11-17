@@ -1,0 +1,119 @@
+[
+  {
+    "id": "move",
+    "description": "Nodos, jobs y monitoreo",
+    "licensed": true,
+    "resources": [
+      {
+        "id": "nodes",
+        "label": "Nodos"
+      },
+      {
+        "id": "jobs",
+        "label": "Jobs"
+      },
+      {
+        "id": "monitoring",
+        "label": "Monitoreo"
+      }
+    ]
+  },
+  {
+    "id": "preserve",
+    "description": "Archivado de SAP",
+    "licensed": true,
+    "resources": [
+      {
+        "id": "vaults",
+        "label": "Bóvedas históricas"
+      },
+      {
+        "id": "extractions",
+        "label": "Extracciones"
+      },
+      {
+        "id": "query",
+        "label": "Consultas"
+      },
+      {
+        "id": "audit",
+        "label": "Auditoría"
+      }
+    ]
+  },
+  {
+    "id": "accelerate",
+    "description": "Modelos analíticos",
+    "licensed": true,
+    "resources": [
+      {
+        "id": "models",
+        "label": "Modelos"
+      },
+      {
+        "id": "deployments",
+        "label": "Despliegues"
+      }
+    ]
+  },
+  {
+    "id": "optimize",
+    "description": "Exploratorio para todos.",
+    "licensed": false,
+    "resources": [
+      {
+        "id": "accounts",
+        "label": "Cuentas"
+      },
+      {
+        "id": "drivers",
+        "label": "Drivers"
+      },
+      {
+        "id": "distributions",
+        "label": "Distribuciones"
+      }
+    ]
+  },
+  {
+    "id": "analyze",
+    "description": "Exploratorio para todos.",
+    "licensed": false,
+    "resources": [
+      {
+        "id": "chat",
+        "label": "Chat"
+      },
+      {
+        "id": "models",
+        "label": "Modelos"
+      }
+    ]
+  },
+  {
+    "id": "migrate",
+    "description": "Exploratorio para todos.",
+    "licensed": false,
+    "resources": [
+      {
+        "id": "projects",
+        "label": "Proyectos"
+      },
+      {
+        "id": "mappings",
+        "label": "Mapeos"
+      }
+    ]
+  },
+  {
+    "id": "profiler",
+    "description": "Exploratorio para todos.",
+    "licensed": false,
+    "resources": [
+      {
+        "id": "profiles",
+        "label": "Perfiles"
+      }
+    ]
+  }
+]

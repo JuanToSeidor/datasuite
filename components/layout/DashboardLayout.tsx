@@ -9,6 +9,7 @@ import { ThemeProvider } from '@/contexts/ThemeContext';
 import { AnaliceContext } from '@/contexts/AnaliceContext';
 import { SidePanelContext, type SidePanelOptions } from '@/contexts/SidePanelContext';
 import { SidePanel, DEFAULT_SIDE_PANEL_WIDTH } from './SidePanel';
+import { RolePreviewBanner } from './RolePreviewBanner';
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
@@ -80,6 +81,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         isAnaliceOpen={isAnaliceOpen}
         onToggleAnalice={toggleAnalice}
       />
+      <RolePreviewBanner />
       <div className="content-stretch flex items-stretch relative shrink-0 w-full flex-1 min-h-0">
         {/* Contenedor que anima el ancho del sidebar y recorta su contenido:
             al expandir el panel Analice el sidebar se colapsa a 0 sin dejar residuos. */}
