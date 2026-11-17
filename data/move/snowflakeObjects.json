@@ -1,0 +1,12 @@
+{
+  "stages": [
+    "CRESTONE_RAW_STAGE",
+    "SAP_LANDING_STAGE",
+    "FINANCE_EXPORT_STAGE"
+  ],
+  "tables": [
+    "SAP_CUSTOMERS",
+    "SAP_MATERIALS",
+    "SAP_COST_CENTERS"
+  ]
+}

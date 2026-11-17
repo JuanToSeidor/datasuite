@@ -45,7 +45,7 @@ export function Navbar({
   return (
     <div className={`bg-container shadow-md content-stretch flex items-center justify-between overflow-visible px-[10px] py-[20px] relative w-full h-[84px] shrink-0 z-50 ${className || ''}`}>
       <div className="content-stretch flex gap-[10px] items-center relative shrink-0">
-        <Button isIconButton iconName="menu" variant="ghost" hasBorder onClick={onToggleSidebar} />
+        {onToggleSidebar && <Button isIconButton iconName="menu" variant="ghost" hasBorder onClick={onToggleSidebar} />}
         <Link
           href='/'
           className="content-stretch"

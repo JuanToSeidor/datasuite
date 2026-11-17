@@ -1,0 +1,217 @@
+[
+  {
+    "job_id": "job-ventas-diarias",
+    "name": "Ventas diarias SAP",
+    "status": "enabled",
+    "last_execution_time": "2026-11-16T11:00:00.000Z",
+    "is_productive": true,
+    "is_deleted": false,
+    "workspace_id": "ws-default",
+    "created_by": "jdtorres",
+    "created_date": "2026-09-02T10:00:00.000Z",
+    "modified_by": null,
+    "modified_date": null,
+    "schedule_config": [
+      {
+        "id": "sch-ventas-1",
+        "status": "enabled",
+        "cron_expression": "0 6 * * 1,2,3,4,5",
+        "repeat": "once-day",
+        "time_zone_client": "America/Bogota"
+      }
+    ],
+    "workflow_detail": {
+      "orderedNodes": [],
+      "nodes": [
+        {
+          "id": "job-ventas-diarias-start",
+          "type": "startNodeFlow",
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "data": {}
+        },
+        {
+          "id": "job-ventas-diarias-n00",
+          "type": "extractorNodeFlow",
+          "position": {
+            "x": 320,
+            "y": -70
+          },
+          "data": {
+            "extractionNodeId": "node-sap-ventas-snowflake",
+            "label": "SAP Ventas a Snowflake",
+            "isValid": true,
+            "jobId": "job-ventas-diarias"
+          },
+          "executionConfig": {
+            "errorDependencies": "continue_execution"
+          }
+        },
+        {
+          "id": "job-ventas-diarias-n01",
+          "type": "extractorNodeFlow",
+          "position": {
+            "x": 320,
+            "y": 70
+          },
+          "data": {
+            "extractionNodeId": "node-postgres-s3",
+            "label": "CRM PostgreSQL a S3",
+            "isValid": true,
+            "jobId": "job-ventas-diarias"
+          },
+          "executionConfig": {
+            "errorDependencies": "continue_execution"
+          }
+        },
+        {
+          "id": "job-ventas-diarias-n10",
+          "type": "extractorNodeFlow",
+          "position": {
+            "x": 640,
+            "y": 0
+          },
+          "data": {
+            "extractionNodeId": "node-mssql-azure",
+            "label": "Logística MSSQL a Azure",
+            "isValid": true,
+            "jobId": "job-ventas-diarias"
+          },
+          "executionConfig": {
+            "errorDependencies": "continue_execution"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "id": "e-job-ventas-diarias-start-job-ventas-diarias-n00",
+          "source": "job-ventas-diarias-start",
+          "target": "job-ventas-diarias-n00",
+          "sourceHandle": "b",
+          "targetHandle": "a",
+          "markerEnd": {
+            "type": "arrowclosed",
+            "color": "#66b6ff",
+            "width": 20,
+            "height": 20
+          }
+        },
+        {
+          "id": "e-job-ventas-diarias-start-job-ventas-diarias-n01",
+          "source": "job-ventas-diarias-start",
+          "target": "job-ventas-diarias-n01",
+          "sourceHandle": "b",
+          "targetHandle": "a",
+          "markerEnd": {
+            "type": "arrowclosed",
+            "color": "#66b6ff",
+            "width": 20,
+            "height": 20
+          }
+        },
+        {
+          "id": "e-job-ventas-diarias-n00-job-ventas-diarias-n10",
+          "source": "job-ventas-diarias-n00",
+          "target": "job-ventas-diarias-n10",
+          "sourceHandle": "b",
+          "targetHandle": "a",
+          "markerEnd": {
+            "type": "arrowclosed",
+            "color": "#66b6ff",
+            "width": 20,
+            "height": 20
+          }
+        },
+        {
+          "id": "e-job-ventas-diarias-n01-job-ventas-diarias-n10",
+          "source": "job-ventas-diarias-n01",
+          "target": "job-ventas-diarias-n10",
+          "sourceHandle": "b",
+          "targetHandle": "a",
+          "markerEnd": {
+            "type": "arrowclosed",
+            "color": "#66b6ff",
+            "width": 20,
+            "height": 20
+          }
+        }
+      ],
+      "config": {
+        "stopOnError": false
+      }
+    }
+  },
+  {
+    "job_id": "job-cierre-financiero",
+    "name": "Cierre financiero mensual",
+    "status": "disabled",
+    "last_execution_time": null,
+    "is_productive": true,
+    "is_deleted": false,
+    "workspace_id": "ws-default",
+    "created_by": "jdtorres",
+    "created_date": "2026-09-02T10:00:00.000Z",
+    "modified_by": null,
+    "modified_date": null,
+    "schedule_config": [
+      {
+        "id": "sch-cierre-1",
+        "status": "disabled",
+        "cron_expression": "0 2 1 * *",
+        "repeat": "once-month",
+        "time_zone_client": "America/Bogota"
+      }
+    ],
+    "workflow_detail": {
+      "orderedNodes": [],
+      "nodes": [
+        {
+          "id": "job-cierre-financiero-start",
+          "type": "startNodeFlow",
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "data": {}
+        },
+        {
+          "id": "job-cierre-financiero-n00",
+          "type": "extractorNodeFlow",
+          "position": {
+            "x": 320,
+            "y": 0
+          },
+          "data": {
+            "extractionNodeId": "node-oracle-redshift",
+            "label": "Finanzas Oracle a Redshift",
+            "isValid": true,
+            "jobId": "job-cierre-financiero"
+          },
+          "executionConfig": {
+            "errorDependencies": "continue_execution"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "id": "e-job-cierre-financiero-start-job-cierre-financiero-n00",
+          "source": "job-cierre-financiero-start",
+          "target": "job-cierre-financiero-n00",
+          "sourceHandle": "b",
+          "targetHandle": "a",
+          "markerEnd": {
+            "type": "arrowclosed",
+            "color": "#66b6ff",
+            "width": 20,
+            "height": 20
+          }
+        }
+      ],
+      "config": {
+        "stopOnError": false
+      }
+    }
+  }
+]

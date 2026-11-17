@@ -11,6 +11,8 @@ import { SidePanelContext, type SidePanelOptions } from '@/contexts/SidePanelCon
 import { SidePanel, DEFAULT_SIDE_PANEL_WIDTH } from './SidePanel';
 import { RolePreviewBanner } from './RolePreviewBanner';
 
+const IMMERSIVE_ROUTES = ['/move/jobs/editor'];
+
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
   const [isWorkspacesView, setIsWorkspacesView] = useState(false);
@@ -29,6 +31,9 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     }
   };
   const pathname = usePathname();
+  // Vistas a pantalla completa (editor de jobs): sin sidebar general, sin hamburguesa y sin padding;
+  // la página trae su propio sidebar y barra de herramientas.
+  const isImmersive = IMMERSIVE_ROUTES.some((route) => pathname === route || pathname.startsWith(`${route}/`));
 
   // Panel lateral derecho controlado por las páginas (p. ej. resumen del nodo).
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
@@ -77,7 +82,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     >
     <div className="bg-[var(--color-neutral-full)] content-stretch flex flex-col items-stretch relative h-screen w-full overflow-hidden">
       <Navbar
-        onToggleSidebar={handleToggleSidebar}
+        onToggleSidebar={isImmersive ? undefined : handleToggleSidebar}
         isAnaliceOpen={isAnaliceOpen}
         onToggleAnalice={toggleAnalice}
       />
@@ -89,7 +94,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           className="flex shrink-0 h-full overflow-hidden transition-[width] duration-300 ease-in-out"
           style={{
             // Se oculta con Analice expandido o con el panel lateral de la página abierto.
-            width: (isAnaliceOpen && isAnaliceExpanded) || isSidePanelOpen
+            width: isImmersive || (isAnaliceOpen && isAnaliceExpanded) || isSidePanelOpen
               ? 0
               : isSidebarExpanded
                 ? (isWorkspacesView ? 480 : 240)
@@ -102,7 +107,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             setIsWorkspacesView={handleSetWorkspacesView}
           />
         </div>
-        <main className={`content-stretch flex flex-[1_0_0] flex-col gap-[30px] items-start min-w-px relative h-full transition-all duration-300 ease-in-out ${(isAnaliceOpen && isAnaliceExpanded) || (isSidePanelOpen && isSidePanelExpanded) ? 'p-0 overflow-hidden invisible' : 'p-[20px] overflow-y-auto'}`}>
+        <main className={`content-stretch flex flex-[1_0_0] flex-col gap-[30px] items-start min-w-px relative h-full transition-all duration-300 ease-in-out ${(isAnaliceOpen && isAnaliceExpanded) || (isSidePanelOpen && isSidePanelExpanded) ? 'p-0 overflow-hidden invisible' : isImmersive ? 'p-0 overflow-hidden' : 'p-[20px] overflow-y-auto'}`}>
           {children}
         </main>
         <SidePanel isOpen={isSidePanelOpen} isExpanded={isSidePanelExpanded} width={sidePanelWidth}>{sidePanelContent}</SidePanel>

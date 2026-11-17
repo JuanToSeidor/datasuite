@@ -15,6 +15,8 @@ const STATUS_CHIP: Record<MoveNodeStatus, { variant: "success" | "warning" | "da
 interface NodeCardProps {
   node: MoveNode;
   formatDate: (value: string) => string;
+  /** Vista previa (p. ej. resumen del asistente de jobs): sin botón de editar. */
+  readOnly?: boolean;
 }
 
 /** Paso del timeline origen → destino (Timeline de Caral) con logo + nombre/tipo. */
@@ -71,7 +73,7 @@ function MetaItem({ label, value }: { label: string; value: string }) {
   );
 }
 
-export function NodeCard({ node, formatDate }: NodeCardProps) {
+export function NodeCard({ node, formatDate, readOnly = false }: NodeCardProps) {
   const { dict } = useLanguage();
   const t = dict.move.nodes;
   const status = STATUS_CHIP[node.status];
@@ -108,13 +110,15 @@ export function NodeCard({ node, formatDate }: NodeCardProps) {
       </div>
 
       {/* Footer */}
-      <footer className="flex justify-end p-2.5 border-t border-neutral-500">
-        <Link href={`/move/nodes/${node.id}`}>
-          <Button variant="info" className="cursor-pointer" title={t.editNode}>
-            {dict.common.edit}
-          </Button>
-        </Link>
-      </footer>
+      {!readOnly && (
+        <footer className="flex justify-end p-2.5 border-t border-neutral-500">
+          <Link href={`/move/nodes/${node.id}`}>
+            <Button variant="info" className="cursor-pointer" title={t.editNode}>
+              {dict.common.edit}
+            </Button>
+          </Link>
+        </footer>
+      )}
     </article>
   );
 }

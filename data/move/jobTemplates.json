@@ -1,0 +1,1004 @@
+{
+  "packages": [
+    {
+      "type": "SAPABAP",
+      "mode": "extractor",
+      "label": "Packages for SAP",
+      "templates": [
+        "SD - Module",
+        "PS - Module",
+        "PP - Module",
+        "MM - Module",
+        "CO - Module"
+      ]
+    }
+  ],
+  "templates": {
+    "FI - Module": {
+      "name": "FI - Module",
+      "mode": "table",
+      "type": "SAP 4HANA",
+      "nodes": [
+        {
+          "templateNodeId": "1",
+          "source": {
+            "fields": [
+              "*"
+            ],
+            "join_clause": [],
+            "where_clause": "",
+            "table_name": "T001"
+          }
+        },
+        {
+          "templateNodeId": "2",
+          "source": {
+            "fields": [
+              "*"
+            ],
+            "join_clause": [],
+            "where_clause": "",
+            "table_name": "T003"
+          }
+        },
+        {
+          "templateNodeId": "3",
+          "source": {
+            "fields": [
+              "*"
+            ],
+            "join_clause": [],
+            "where_clause": "",
+            "table_name": "T003T"
+          }
+        },
+        {
+          "templateNodeId": "4",
+          "source": {
+            "fields": [
+              "*"
+            ],
+            "join_clause": [],
+            "where_clause": "",
+            "table_name": "T001K"
+          }
+        },
+        {
+          "templateNodeId": "5",
+          "source": {
+            "fields": [
+              "*"
+            ],
+            "join_clause": [],
+            "where_clause": "",
+            "table_name": "T001W"
+          }
+        },
+        {
+          "templateNodeId": "6",
+          "source": {
+            "fields": [
+              "*"
+            ],
+            "join_clause": [],
+            "where_clause": "",
+            "table_name": "T012"
+          }
+        },
+        {
+          "templateNodeId": "7",
+          "source": {
+            "fields": [
+              "*"
+            ],
+            "join_clause": [],
+            "where_clause": "",
+            "table_name": "TKA01"
+          }
+        },
+        {
+          "templateNodeId": "8",
+          "source": {
+            "fields": [
+              "*"
+            ],
+            "join_clause": [],
+            "where_clause": "",
+            "table_name": "CSKS"
+          }
+        },
+        {
+          "templateNodeId": "9",
+          "source": {
+            "fields": [
+              "*"
+            ],
+            "join_clause": [],
+            "where_clause": "",
+            "table_name": "CSKT"
+          }
+        },
+        {
+          "templateNodeId": "10",
+          "source": {
+            "fields": [
+              "*"
+            ],
+            "join_clause": [],
+            "where_clause": "",
+            "table_name": "CEPC"
+          }
+        },
+        {
+          "templateNodeId": "11",
+          "source": {
+            "fields": [
+              "*"
+            ],
+            "join_clause": [],
+            "where_clause": "",
+            "table_name": "CEPCT"
+          }
+        },
+        {
+          "templateNodeId": "12",
+          "source": {
+            "fields": [
+              "*"
+            ],
+            "join_clause": [],
+            "where_clause": "",
+            "table_name": "CSSL"
+          }
+        },
+        {
+          "templateNodeId": "13",
+          "source": {
+            "fields": [
+              "*"
+            ],
+            "join_clause": [],
+            "where_clause": "",
+            "table_name": "T004"
+          }
+        },
+        {
+          "templateNodeId": "14",
+          "source": {
+            "fields": [
+              "*"
+            ],
+            "join_clause": [],
+            "where_clause": "",
+            "table_name": "SKA1"
+          }
+        },
+        {
+          "templateNodeId": "15",
+          "source": {
+            "fields": [
+              "*"
+            ],
+            "join_clause": [],
+            "where_clause": "",
+            "table_name": "SKB1"
+          }
+        },
+        {
+          "templateNodeId": "16",
+          "source": {
+            "fields": [
+              "*"
+            ],
+            "join_clause": [],
+            "where_clause": "",
+            "table_name": "LFA1"
+          }
+        },
+        {
+          "templateNodeId": "17",
+          "source": {
+            "fields": [
+              "*"
+            ],
+            "join_clause": [],
+            "where_clause": "",
+            "table_name": "KNA1"
+          }
+        },
+        {
+          "templateNodeId": "18",
+          "source": {
+            "fields": [
+              "*"
+            ],
+            "join_clause": [],
+            "where_clause": "",
+            "table_name": "ACDOCA"
+          }
+        }
+      ],
+      "jobs": [
+        {
+          "workflow_detail": [
+            [
+              {
+                "templateNodeId": "1",
+                "dependencies": []
+              }
+            ],
+            [
+              {
+                "templateNodeId": "2",
+                "dependencies": [
+                  1
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "3",
+                "dependencies": [
+                  2
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "4",
+                "dependencies": [
+                  3
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "5",
+                "dependencies": [
+                  4
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "6",
+                "dependencies": [
+                  5
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "7",
+                "dependencies": [
+                  6
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "8",
+                "dependencies": [
+                  7
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "9",
+                "dependencies": [
+                  8
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "10",
+                "dependencies": [
+                  9
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "11",
+                "dependencies": [
+                  10
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "12",
+                "dependencies": [
+                  11
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "13",
+                "dependencies": [
+                  12
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "14",
+                "dependencies": [
+                  13
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "15",
+                "dependencies": [
+                  14
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "16",
+                "dependencies": [
+                  15
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "17",
+                "dependencies": [
+                  16
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "18",
+                "dependencies": [
+                  17
+                ]
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    "SD - Module": {
+      "name": "SD - Module",
+      "type": "SAPABAP",
+      "mode": "extractor",
+      "nodes": [
+        {
+          "templateNodeId": "1",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "0CUSTOMER_ATTR",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "2",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "0CUSTOMER_TEXT",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "3",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "0MATERIAL_ATTR",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "4",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "2LIS_11_VAITM",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "5",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "2LIS_11_VAHDR",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "6",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "2LIS_12_VCITM",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "7",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "2LIS_12_VCHDR",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "8",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "2LIS_13_VDGDR",
+            "mode": "F"
+          }
+        }
+      ],
+      "jobs": [
+        {
+          "workflow_detail": [
+            [
+              {
+                "templateNodeId": "1",
+                "workflowNodeId": "1",
+                "dependencies": []
+              },
+              {
+                "templateNodeId": "2",
+                "workflowNodeId": "2",
+                "dependencies": []
+              },
+              {
+                "templateNodeId": "3",
+                "workflowNodeId": "3",
+                "dependencies": []
+              }
+            ],
+            [
+              {
+                "templateNodeId": "4",
+                "workflowNodeId": "4",
+                "dependencies": [
+                  "1"
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "5",
+                "workflowNodeId": "5",
+                "dependencies": [
+                  "4"
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "6",
+                "workflowNodeId": "6",
+                "dependencies": [
+                  "5"
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "7",
+                "workflowNodeId": "7",
+                "dependencies": [
+                  "6"
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "8",
+                "workflowNodeId": "8",
+                "dependencies": [
+                  "7"
+                ]
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    "PS - Module": {
+      "name": "PS - Module",
+      "type": "SAPABAP",
+      "mode": "extractor",
+      "nodes": [
+        {
+          "templateNodeId": "1",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "0PROJECT_ATTR",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "2",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "0ACTIVITY_ATTR",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "3",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "0NETWORK_ATTR",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "4",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "2LIS_13_VDITM",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "5",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "0CO_OM_CCA_1",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "6",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "2LIS_13_VDHDR",
+            "mode": "F"
+          }
+        }
+      ],
+      "jobs": [
+        {
+          "workflow_detail": [
+            [
+              {
+                "templateNodeId": "1",
+                "workflowNodeId": "1",
+                "dependencies": []
+              },
+              {
+                "templateNodeId": "2",
+                "workflowNodeId": "2",
+                "dependencies": []
+              },
+              {
+                "templateNodeId": "3",
+                "workflowNodeId": "3",
+                "dependencies": []
+              }
+            ],
+            [
+              {
+                "templateNodeId": "4",
+                "workflowNodeId": "4",
+                "dependencies": [
+                  "1"
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "5",
+                "workflowNodeId": "5",
+                "dependencies": [
+                  "4"
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "6",
+                "workflowNodeId": "6",
+                "dependencies": [
+                  "5"
+                ]
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    "PP - Module": {
+      "name": "PP - Module",
+      "type": "SAPABAP",
+      "mode": "extractor",
+      "nodes": [
+        {
+          "templateNodeId": "1",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "0MATERIAL_ATTR",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "2",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "0PLANT_ATTR",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "3",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "0WORKCENTER_ATTR",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "4",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "2LIS_04_P_ARBPL",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "5",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "2LIS_04_P_COMP",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "6",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "2LIS_04_P_MATNR",
+            "mode": "F"
+          }
+        }
+      ],
+      "jobs": [
+        {
+          "workflow_detail": [
+            [
+              {
+                "templateNodeId": "1",
+                "workflowNodeId": "1",
+                "dependencies": []
+              },
+              {
+                "templateNodeId": "2",
+                "workflowNodeId": "2",
+                "dependencies": []
+              },
+              {
+                "templateNodeId": "3",
+                "workflowNodeId": "3",
+                "dependencies": []
+              }
+            ],
+            [
+              {
+                "templateNodeId": "4",
+                "workflowNodeId": "4",
+                "dependencies": [
+                  "1"
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "5",
+                "workflowNodeId": "5",
+                "dependencies": [
+                  "4"
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "6",
+                "workflowNodeId": "6",
+                "dependencies": [
+                  "5"
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "6",
+                "workflowNodeId": "7",
+                "dependencies": [
+                  "6"
+                ]
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    "CO - Module": {
+      "name": "CO - Module",
+      "type": "SAPABAP",
+      "mode": "extractor",
+      "nodes": [
+        {
+          "templateNodeId": "1",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "0COSTCENTER_ATTR",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "2",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "0PROFIT_CTR_ATTR",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "3",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "0PROFIT_CTR_TEXT",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "4",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "0COSTELMNT_ATTR",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "5",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "0COSTCENTER_TEXT",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "6",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "0CO_OM_OPA_6 ",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "7",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "0CO_OM_CCA_1 ",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "8",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "0CO_PC_ACT_01 ",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "9",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "0CO_OM_CCA_9 ",
+            "mode": "F"
+          }
+        }
+      ],
+      "jobs": [
+        {
+          "workflow_detail": [
+            [
+              {
+                "templateNodeId": "1",
+                "workflowNodeId": "1",
+                "dependencies": []
+              },
+              {
+                "templateNodeId": "2",
+                "workflowNodeId": "2",
+                "dependencies": []
+              },
+              {
+                "templateNodeId": "3",
+                "workflowNodeId": "3",
+                "dependencies": []
+              },
+              {
+                "templateNodeId": "4",
+                "workflowNodeId": "4",
+                "dependencies": []
+              },
+              {
+                "templateNodeId": "5",
+                "workflowNodeId": "5",
+                "dependencies": []
+              }
+            ],
+            [
+              {
+                "templateNodeId": "6",
+                "workflowNodeId": "6",
+                "dependencies": [
+                  "1"
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "7",
+                "workflowNodeId": "7",
+                "dependencies": [
+                  "6"
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "8",
+                "workflowNodeId": "8",
+                "dependencies": [
+                  "7"
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "9",
+                "workflowNodeId": "9",
+                "dependencies": [
+                  "8"
+                ]
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    "MM - Module": {
+      "name": "MM - Module",
+      "type": "SAPABAP",
+      "mode": "extractor",
+      "nodes": [
+        {
+          "templateNodeId": "1",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "0MATERIAL_ATTR",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "2",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "0MATERIAL_TEXT",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "3",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "0PLANT_ATTR",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "4",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "0VENDOR_ATTR",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "5",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "2LIS_02_ITM",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "6",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "2LIS_02_HDR ",
+            "mode": "F"
+          }
+        },
+        {
+          "templateNodeId": "7",
+          "source": {
+            "type": "extractor",
+            "name_extractor": "2LIS_03_BF",
+            "mode": "F"
+          }
+        }
+      ],
+      "jobs": [
+        {
+          "workflow_detail": [
+            [
+              {
+                "templateNodeId": "1",
+                "workflowNodeId": "1",
+                "dependencies": []
+              },
+              {
+                "templateNodeId": "2",
+                "workflowNodeId": "2",
+                "dependencies": []
+              },
+              {
+                "templateNodeId": "3",
+                "workflowNodeId": "3",
+                "dependencies": []
+              },
+              {
+                "templateNodeId": "4",
+                "workflowNodeId": "4",
+                "dependencies": []
+              }
+            ],
+            [
+              {
+                "templateNodeId": "5",
+                "workflowNodeId": "5",
+                "dependencies": [
+                  "1"
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "6",
+                "workflowNodeId": "6",
+                "dependencies": [
+                  "5"
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "6",
+                "workflowNodeId": "7",
+                "dependencies": [
+                  "6"
+                ]
+              }
+            ],
+            [
+              {
+                "templateNodeId": "7",
+                "workflowNodeId": "8",
+                "dependencies": [
+                  "7"
+                ]
+              }
+            ]
+          ]
+        }
+      ]
+    }
+  }
+}

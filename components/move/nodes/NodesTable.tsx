@@ -1,9 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import Link from "next/link";
 import { Button } from "caralstable";
-import { DataTable, DataTableColumn, Input } from "@/components/ui";
+import { DataTableColumn } from "@/components/ui";
+import { MoveListView } from "@/components/move/shared/MoveListView";
 import { useLanguage } from "@/contexts/LanguageContext";
 import nodesData from "@/data/move/nodes.json";
 import { NodeCard } from "./NodeCard";
@@ -20,10 +21,7 @@ const STATUS_DOT_CLASS: Record<MoveNodeStatus, string> = {
   stop: "bg-danger-main",
 };
 
-type NodesViewMode = "list" | "grid";
 
-/** Tarjeta que agrupa título, descripción y acciones (Figma: container, radio 8px, padding 20px). */
-const HEADER_CARD_CLASS = "bg-container rounded-lg p-5";
 
 function matchesNodeSearch(node: MoveNode, query: string) {
   const q = query.trim().toLowerCase();
@@ -59,8 +57,6 @@ export function NodesTable() {
   const t = dict.move.nodes;
   const formatDate = useMemo(() => makeNodeDateFormatter(language), [language]);
 
-  const [viewMode, setViewMode] = useState<NodesViewMode>("list");
-  const [searchQuery, setSearchQuery] = useState("");
 
   const statusLabel = (status: MoveNodeStatus) =>
     status === "enabled" ? t.statusEnabled : status === "drafted" ? t.statusDrafted : t.statusStop;
@@ -211,88 +207,19 @@ export function NodesTable() {
     </Link>
   );
 
-  if (viewMode === "list") {
-    return (
-      <DataTable<MoveNode>
-        variant="embedded"
-        toolbarClassName={HEADER_CARD_CLASS}
-        title={t.title}
-        description={t.description}
-        iconName="cube"
-        data={mockNodes}
-        columns={columns}
-        keyExtractor={(row) => row.id}
-        canSearch={true}
-        searchPlaceholder={t.searchPlaceholder}
-        searchQuery={searchQuery}
-        onSearchQueryChange={setSearchQuery}
-        customSearchFn={matchesNodeSearch}
-        canFilterColumns={true}
-        canFilterErrors={false}
-        canExport={false}
-        canExpand={true}
-        toolbarRight={({ isMaximized }) => (
-          <div className="flex items-center gap-2.5">
-            {!isMaximized && (
-              <Button
-                variant="ghost"
-                isIconButton
-                iconName="grid"
-                className="border border-neutral-500 cursor-pointer"
-                onClick={() => setViewMode("grid")}
-                title={t.switchToGrid}
-              />
-            )}
-            {addNodeButton}
-          </div>
-        )}
-      />
-    );
-  }
-
-  const visibleNodes = mockNodes.filter((node) => matchesNodeSearch(node, searchQuery));
-
   return (
-    <div className="w-full flex flex-col gap-3">
-      {/* Toolbar (mismo layout que la variante embedded de DataTable) */}
-      <div className={`w-full flex flex-wrap items-center justify-between gap-3 ${HEADER_CARD_CLASS}`}>
-        <div className="flex flex-col pr-1">
-          <h3 className="text-xl font-bold text-seidor-main-text font-poppins">{t.title}</h3>
-          <p className="text-sm text-neutral-800 font-normal font-poppins">{t.description}</p>
-        </div>
-        <div className="flex items-center gap-2.5 flex-wrap">
-          <div className="w-56 sm:w-64">
-            <Input
-              iconName="search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={t.searchPlaceholder}
-              className="w-full"
-            />
-          </div>
-          <Button
-            variant="ghost"
-            isIconButton
-            iconName="list"
-            className="border border-neutral-500 cursor-pointer"
-            onClick={() => setViewMode("list")}
-            title={t.switchToList}
-          />
-          {addNodeButton}
-        </div>
-      </div>
-
-      {visibleNodes.length > 0 ? (
-        <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-2.5">
-          {visibleNodes.map((node) => (
-            <NodeCard key={node.id} node={node} formatDate={formatDate} />
-          ))}
-        </div>
-      ) : (
-        <div className="w-full rounded-xl border border-neutral-500 bg-container p-10 text-center text-sm text-neutral-800">
-          {dict.common.noResults}
-        </div>
-      )}
-    </div>
+    <MoveListView<MoveNode>
+      title={t.title}
+      description={t.description}
+      iconName="cube"
+      data={mockNodes}
+      columns={columns}
+      keyExtractor={(row) => row.id}
+      searchPlaceholder={t.searchPlaceholder}
+      matchesSearch={matchesNodeSearch}
+      renderCard={(node) => <NodeCard node={node} formatDate={formatDate} />}
+      primaryAction={addNodeButton}
+      labels={{ switchToGrid: t.switchToGrid, switchToList: t.switchToList, noResults: dict.common.noResults }}
+    />
   );
 }
