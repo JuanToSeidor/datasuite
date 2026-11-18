@@ -48,6 +48,8 @@ export function JobPerformanceList({
       destinationPreview={destinationPreview}
       variant={variant}
       showFooterLink={false}
+      // El job en ejecución se muestra abierto; los ya ejecutados, plegados.
+      defaultOpen={variant === "live"}
       selectedNodeId={selection?.jobId === execution.id ? selection.nodeId : null}
       onSelectedNodeChange={selectionHandler(execution.id)}
     />

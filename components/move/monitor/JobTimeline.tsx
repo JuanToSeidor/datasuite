@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Chip } from "caralstable";
 import { CaralIcon } from "@/components/icons";
 import { Spinner } from "@/components/ui";
 import { EndpointLogo } from "@/components/move/nodes/nodeShared";
-import type { DestinationPreview, JobEndpoint } from "@/components/move/overview/types";
+import { nodeProgressStyle } from "@/components/move/overview/nodeProgressStyle";
+import type { DestinationPreview, JobEndpoint, JobNodeRun } from "@/components/move/overview/types";
 import { useJobNodePanel } from "@/components/move/overview/useJobNodePanel";
 import { formatClock, useRunningJob } from "@/components/move/overview/useRunningJob";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -23,6 +24,8 @@ interface TimelineNodeRow {
   destination: JobEndpoint;
   chip: { variant: ChipVariant; label: string };
   duration: string;
+  /** Nodo ya ejecutado o en curso (las ejecuciones programadas no tienen progreso). */
+  run?: Pick<JobNodeRun, "status" | "progress">;
 }
 
 /** Logos de origen y destino superpuestos (Figma: círculos de 36px, el segundo con sombra). */
@@ -96,6 +99,20 @@ function TimelineItem({
   // Las ejecuciones programadas aún no tienen datos que mostrar en el panel.
   const canOpenNode = !execution.scheduled;
 
+  // El fondo de carga de las filas arranca en 0 y se llena tras el primer pintado
+  // (igual que al abrir la tarjeta en la vista de lista). Doble rAF para que el 0% llegue a pintarse.
+  const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => {
+    let inner = 0;
+    const outer = requestAnimationFrame(() => {
+      inner = requestAnimationFrame(() => setIsVisible(true));
+    });
+    return () => {
+      cancelAnimationFrame(outer);
+      cancelAnimationFrame(inner);
+    };
+  }, []);
+
   const headerChip: Record<MonitorExecutionStatus, { variant: ChipVariant; label: string; icon?: "check" }> = {
     scheduled: { variant: "light", label: t.statusScheduled },
     running: { variant: "info", label: formatMessage(t.statusRunningProgress, { n: job.progress }) },
@@ -124,6 +141,7 @@ function TimelineItem({
               ? { variant: "warning", label: t.nodeWarning }
               : { variant: "success", label: t.nodeSuccess },
         duration: formatClock(node.elapsedSeconds),
+        run: node,
       }));
 
   const chip = headerChip[status];
@@ -172,6 +190,7 @@ function TimelineItem({
                   }
                 },
               })}
+              style={row.run && nodeProgressStyle(row.run, { isSelected, isVisible })}
               className={`flex items-center gap-2.5 border-b border-neutral-500 p-2.5 transition-colors last:border-b-0 ${
                 canOpenNode
                   ? "cursor-pointer outline-none hover:bg-info-100 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-info-main"
@@ -217,22 +236,40 @@ export function JobTimeline({
     []
   );
 
-  return (
-    <div className="flex flex-col items-center gap-2.5 p-2.5">
-      <Chip variant="light" label={t.today} />
+  // El job en curso sube a su propia sección ("Ejecutando ahora"), encima de la línea de "Hoy".
+  // Se clasifica por el estado inicial, como la vista de lista.
+  const { running, rest } = useMemo(() => {
+    const isRunning = (execution: MonitorExecution) =>
+      executionStatus(execution.scheduled, execution.job.nodes) === "running";
+    return {
+      running: executions.filter(isRunning),
+      rest: executions.filter((execution) => !isRunning(execution)),
+    };
+  }, [executions]);
+
+  const renderSection = (label: string, items: MonitorExecution[]) => (
+    <>
+      <Chip variant="light" label={label} />
       <ol className="flex w-full max-w-3xl flex-col">
-        {executions.map((execution, index) => (
+        {items.map((execution, index) => (
           <TimelineItem
             key={execution.id}
             execution={execution}
             isFirst={index === 0}
-            isLast={index === executions.length - 1}
+            isLast={index === items.length - 1}
             destinationPreview={destinationPreview}
             selectedNodeId={selection?.executionId === execution.id ? selection.nodeId : null}
             onSelectedNodeChange={selectionHandler(execution.id)}
           />
         ))}
       </ol>
+    </>
+  );
+
+  return (
+    <div className="flex flex-col items-center gap-2.5 p-2.5">
+      {running.length > 0 && renderSection(t.runningNow, running)}
+      {rest.length > 0 && renderSection(t.today, rest)}
     </div>
   );
 }

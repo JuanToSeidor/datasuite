@@ -1529,6 +1529,7 @@ export const es = {
       switchToCards: "Vista de tarjetas",
       switchToList: "Vista de lista",
       today: "Hoy",
+      runningNow: "Ejecutando ahora",
       statusScheduled: "Programado",
       statusRunning: "En ejecución",
       statusRunningProgress: "En ejecución · {n}%",

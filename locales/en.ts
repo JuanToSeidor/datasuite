@@ -1531,6 +1531,7 @@ export const en: TranslationDictionary = {
       switchToCards: "Card view",
       switchToList: "List view",
       today: "Today",
+      runningNow: "Running now",
       statusScheduled: "Scheduled",
       statusRunning: "Running",
       statusRunningProgress: "Running · {n}%",

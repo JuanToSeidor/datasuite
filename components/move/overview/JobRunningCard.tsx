@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Chip } from "caralstable";
 import { CaralIcon } from "@/components/icons";
@@ -9,16 +9,12 @@ import { EndpointLogo } from "@/components/move/nodes/nodeShared";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { formatMessage } from "@/lib/format";
 import { useDateTimeFormatter } from "./format";
+import { nodeProgressStyle } from "./nodeProgressStyle";
 import { useJobNodePanel } from "./useJobNodePanel";
 import { MoveCardFooterLink } from "./MoveCard";
 import type { DestinationPreview, JobEndpoint, JobNodeIssue, JobNodeRun, RunningJob } from "./types";
 import { formatClock, formatShortDuration, useRunningJob } from "./useRunningJob";
 
-/** Degradado de carga de la fila: de bg-full a bg-container (el fondo de todas las filas). */
-const PROGRESS_GRADIENT = "linear-gradient(90deg, var(--color-full) 0%, var(--color-container) 100%)";
-/** Mismo degradado para la fila seleccionada, en tonos info para fundirse con su fondo info-100. */
-const SELECTED_PROGRESS_GRADIENT =
-  "linear-gradient(90deg, color-mix(in srgb, var(--color-info-main) 18%, var(--color-info-100)) 0%, var(--color-info-100) 100%)";
 
 function NodeStatusIcon({ node }: { node: JobNodeRun }) {
   if (node.status === "completed") {
@@ -89,6 +85,7 @@ export function JobRunningCard({
   variant = "live",
   footerHref,
   showFooterLink = true,
+  defaultOpen = false,
   selectedNodeId: controlledSelectedNodeId,
   onSelectedNodeChange,
 }: {
@@ -98,6 +95,8 @@ export function JobRunningCard({
   /** Destino del enlace "Ver todo el rendimiento". */
   footerHref?: string;
   showFooterLink?: boolean;
+  /** Arranca abierta (p.ej. el job en ejecución en el Monitor). */
+  defaultOpen?: boolean;
   selectedNodeId?: string | null;
   onSelectedNodeChange?: (nodeId: string | null) => void;
 }) {
@@ -105,7 +104,20 @@ export function JobRunningCard({
   const t = dict.move.overview;
   const tm = dict.move.monitor;
   const formatDateTime = useDateTimeFormatter();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+  // Hasta el primer pintado el fondo de carga queda en 0: si arranca abierta, las filas
+  // se llenan desde 0 igual que al abrirla a mano. Doble rAF para que el 0% llegue a pintarse.
+  const [hasPainted, setHasPainted] = useState(false);
+  useEffect(() => {
+    let inner = 0;
+    const outer = requestAnimationFrame(() => {
+      inner = requestAnimationFrame(() => setHasPainted(true));
+    });
+    return () => {
+      cancelAnimationFrame(outer);
+      cancelAnimationFrame(inner);
+    };
+  }, []);
   const job = useRunningJob(initialJob);
   const { isFinished } = job;
   const hasWarnings = job.nodes.some((node) => node.status === "warning");
@@ -132,26 +144,9 @@ export function JobRunningCard({
     onSelectedNodeChange: setSelectedNodeId,
   });
 
-  /**
-   * Fondo de progreso por fila (mismo degradado de carga que AnimatedKpi).
-   * - En curso: el degradado cubre el % completado y crece con transición.
-   *   Al abrir la tarjeta se llena desde 0.
-   * - Al completarse: el degradado se ancla a la derecha y se vacía hacia ese lado.
-   * - Con aviso: sin degradado (mantiene su fondo warning).
-   */
-  const rowStyle = (row: JobNodeRun): React.CSSProperties | undefined => {
-    const isSelected = row.id === selectedNodeId;
-    if (row.status === "warning" && !isSelected) return undefined;
-    const isActive = row.status === "running";
-    const fill = isOpen && isActive ? row.progress : 0;
-    return {
-      backgroundImage: isSelected ? SELECTED_PROGRESS_GRADIENT : PROGRESS_GRADIENT,
-      backgroundRepeat: "no-repeat",
-      backgroundSize: `${fill}% 100%`,
-      backgroundPosition: isActive ? "left center" : "right center",
-      transition: "background-size 700ms cubic-bezier(0.22, 1, 0.36, 1)",
-    };
-  };
+  // Fondo de carga por fila; al abrir la tarjeta se llena desde 0.
+  const rowStyle = (row: JobNodeRun) =>
+    nodeProgressStyle(row, { isSelected: row.id === selectedNodeId, isVisible: isOpen && hasPainted });
 
   // Fila atenuada: hay un nodo abierto en el panel y no es este.
   const isDimmed = useCallback(
