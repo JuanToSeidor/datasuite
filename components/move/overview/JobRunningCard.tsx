@@ -1,15 +1,15 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
+import { Chip } from "caralstable";
 import { CaralIcon } from "@/components/icons";
 import { DataTable, Spinner, type DataTableColumn } from "@/components/ui";
 import { EndpointLogo } from "@/components/move/nodes/nodeShared";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useSidePanel } from "@/contexts/SidePanelContext";
 import { formatMessage } from "@/lib/format";
 import { useDateTimeFormatter } from "./format";
-import { JOB_NODE_PANEL_WIDTH, JobNodePanel } from "./JobNodePanel";
+import { useJobNodePanel } from "./useJobNodePanel";
 import { MoveCardFooterLink } from "./MoveCard";
 import type { DestinationPreview, JobEndpoint, JobNodeIssue, JobNodeRun, RunningJob } from "./types";
 import { formatClock, formatShortDuration, useRunningJob } from "./useRunningJob";
@@ -66,56 +66,71 @@ function JobStat({ value, label, emphasized }: { value: string; label: string; e
 }
 
 /**
+ * Variante de la cabecera:
+ * - `live`: etiqueta "Job en ejecución/Última ejecución", % + nombre y barra de progreso (Resumen y Monitor).
+ * - `summary`: fila compacta con nombre + chip de estado, sin barra (jobs ya ejecutados en el Monitor).
+ */
+export type JobRunningCardVariant = "live" | "summary";
+
+/**
  * Job en ejecución / última ejecución.
  * - Cerrado: porcentaje + nombre del job + barra de progreso.
  * - Abierto: además, el resumen ("75% Completed"), la tabla de nodos y comentarios.
  * - Al terminar todos los nodos cambia a "Última ejecución": datos en texto principal,
  *   columna de comentarios por nodo (sin la flecha) y resumen de errores si los hubo.
+ *
+ * La selección del nodo abierto en el panel lateral puede controlarse desde fuera
+ * (`selectedNodeId` + `onSelectedNodeChange`) cuando hay varias tarjetas en la página,
+ * para que solo una quede marcada.
  */
 export function JobRunningCard({
   job: initialJob,
   destinationPreview,
+  variant = "live",
+  footerHref,
+  showFooterLink = true,
+  selectedNodeId: controlledSelectedNodeId,
+  onSelectedNodeChange,
 }: {
   job: RunningJob;
   destinationPreview: DestinationPreview;
+  variant?: JobRunningCardVariant;
+  /** Destino del enlace "Ver todo el rendimiento". */
+  footerHref?: string;
+  showFooterLink?: boolean;
+  selectedNodeId?: string | null;
+  onSelectedNodeChange?: (nodeId: string | null) => void;
 }) {
   const { dict } = useLanguage();
   const t = dict.move.overview;
+  const tm = dict.move.monitor;
   const formatDateTime = useDateTimeFormatter();
   const [isOpen, setIsOpen] = useState(false);
   const job = useRunningJob(initialJob);
   const { isFinished } = job;
   const hasWarnings = job.nodes.some((node) => node.status === "warning");
+  const isSummary = variant === "summary";
 
   const toggle = () => setIsOpen((open) => !open);
 
   // Detalle del nodo en el panel lateral derecho (el layout oculta el sidebar mientras está abierto).
-  const { isSidePanelOpen, openSidePanel, closeSidePanel } = useSidePanel();
-  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
-  const selectedNode = job.nodes.find((node) => node.id === selectedNodeId) ?? null;
-
-  // Se vuelve a pasar el contenido en cada tick para que el panel muestre el avance en vivo.
-  // `key` por nodo: al cambiar de nodo el panel se reinicia (pestaña Detalles).
-  useEffect(() => {
-    if (!selectedNode) return;
-    openSidePanel(
-      <JobNodePanel
-        key={selectedNode.id}
-        node={selectedNode}
-        nextRunAt={job.nextRunAt}
-        preview={destinationPreview}
-        onClose={closeSidePanel}
-      />,
-      { width: JOB_NODE_PANEL_WIDTH }
-    );
-  }, [selectedNode, job.nextRunAt, destinationPreview, openSidePanel, closeSidePanel]);
-
-  // Si el panel se cierra (X, cambio de ruta...), se quita la selección de la fila.
-  const wasPanelOpen = useRef(false);
-  useEffect(() => {
-    if (wasPanelOpen.current && !isSidePanelOpen) setSelectedNodeId(null);
-    wasPanelOpen.current = isSidePanelOpen;
-  }, [isSidePanelOpen]);
+  const [internalSelectedNodeId, setInternalSelectedNodeId] = useState<string | null>(null);
+  const isControlled = controlledSelectedNodeId !== undefined;
+  const selectedNodeId = isControlled ? controlledSelectedNodeId : internalSelectedNodeId;
+  const setSelectedNodeId = useCallback(
+    (nodeId: string | null) => {
+      if (!isControlled) setInternalSelectedNodeId(nodeId);
+      onSelectedNodeChange?.(nodeId);
+    },
+    [isControlled, onSelectedNodeChange]
+  );
+  useJobNodePanel({
+    nodes: job.nodes,
+    nextRunAt: job.nextRunAt,
+    destinationPreview,
+    selectedNodeId,
+    onSelectedNodeChange: setSelectedNodeId,
+  });
 
   /**
    * Fondo de progreso por fila (mismo degradado de carga que AnimatedKpi).
@@ -246,8 +261,29 @@ export function JobRunningCard({
             toggle();
           }
         }}
-        className="flex cursor-pointer flex-col gap-2 p-4 outline-none focus-visible:ring-2 focus-visible:ring-info-main"
+        className={`flex cursor-pointer flex-col outline-none focus-visible:ring-2 focus-visible:ring-info-main ${
+          isSummary ? "px-4 py-3" : "gap-2 p-4"
+        }`}
       >
+        {isSummary ? (
+          <div className="flex items-center gap-3">
+            <h2 className="min-w-0 truncate text-xl font-bold text-neutral-900">{job.name}</h2>
+            <Chip
+              variant={!isFinished ? "info" : hasWarnings ? "warning" : "success"}
+              status={!isFinished ? "waiting" : hasWarnings ? "warning" : "success"}
+              label={!isFinished ? tm.statusRunning : hasWarnings ? tm.statusWarning : tm.statusSuccess}
+              hasBorder
+            />
+            <span className="ml-auto shrink-0 text-sm text-neutral-800">{formatDateTime(job.startedAt)}</span>
+            <span
+              className="shrink-0 text-neutral-900 transition-transform duration-300 ease-in-out"
+              style={{ transform: `rotate(${isOpen ? 180 : 0}deg)` }}
+            >
+              <CaralIcon name="chevronDown" size={24} color="currentColor" />
+            </span>
+          </div>
+        ) : (
+        <>
         <p className="text-sm text-info-main">{isFinished ? t.lastJobRunTitle : t.jobRunningTitle}</p>
         <div className="flex items-center">
           {/* El porcentaje se pliega (ancho + opacidad) al abrir, porque pasa al detalle. */}
@@ -269,9 +305,14 @@ export function JobRunningCard({
             <CaralIcon name="chevronDown" size={24} color="currentColor" />
           </span>
         </div>
+        </>
+        )}
       </div>
 
-      {/* Barra de progreso a todo el ancho */}
+      {/* Barra de progreso a todo el ancho (en la variante compacta, solo una línea divisoria al abrir) */}
+      {isSummary ? (
+        <div className={`h-px w-full transition-colors duration-300 ${isOpen ? "bg-neutral-300" : "bg-transparent"}`} />
+      ) : (
       <div
         className="h-2.5 w-full bg-success-light"
         role="progressbar"
@@ -281,6 +322,7 @@ export function JobRunningCard({
       >
         <div className="h-full bg-success-main transition-[width] duration-500" style={{ width: `${job.progress}%` }} />
       </div>
+      )}
 
       {/* Detalle: siempre montado para poder animar la altura (grid-rows 0fr -> 1fr) y el fundido.
           `inert` evita que el contenido oculto reciba foco o clics. */}
@@ -363,8 +405,12 @@ export function JobRunningCard({
             </div>
           )}
 
-          <div className="h-px w-full bg-neutral-300" />
-          <MoveCardFooterLink label={t.viewPerformance} />
+          {showFooterLink && (
+            <>
+              <div className="h-px w-full bg-neutral-300" />
+              <MoveCardFooterLink label={t.viewPerformance} href={footerHref} />
+            </>
+          )}
         </div>
         </div>
       </div>

@@ -1,0 +1,36 @@
+{
+  "sources": {
+    "ui": {
+      "totalLines": 1000,
+      "lines": [
+        "[2026-11-18T12:00:46.485Z] [INFO] ▲ Next.js 16.4.5",
+        "[2026-11-18T12:00:46.485Z] [INFO] - Local:         http://localhost:3000",
+        "[2026-11-18T12:00:46.485Z] [INFO] - Network:       http://0.0.0.0:3000",
+        "[2026-11-18T12:00:46.503Z] [INFO] ✓ Ready in 0ms",
+        "[2026-11-18T12:00:46.525Z] [INFO] ✓ Running next.config took 17ms",
+        "[2026-11-18T13:31:41.688Z] [INFO] ⚠ The requested resource \"/img/Load2.gif\" is an animated image so it will not be optimized. Consider adding the \"unoptimized\" property to the <Image>."
+      ]
+    },
+    "engine": {
+      "totalLines": 4820,
+      "lines": [
+        "[2026-11-18T06:00:00.012Z] [INFO] Scheduler: job \"Ventas diarias\" started (4 nodes)",
+        "[2026-11-18T06:00:00.348Z] [INFO] Node \"Pedidos SAP a Redshift\": extraction started, 8 parallel RFCs",
+        "[2026-11-18T06:03:42.117Z] [INFO] Node \"Pedidos SAP a Redshift\": 612.480 records loaded",
+        "[2026-11-18T06:07:26.904Z] [INFO] Job \"Ventas diarias\" finished in 7m 26s",
+        "[2026-11-18T09:00:00.021Z] [INFO] Scheduler: job \"Cierre diario\" started (3 nodes)",
+        "[2026-11-18T09:02:15.660Z] [WARN] Node \"Ajustes contables\": source returned no data for the selected period"
+      ]
+    },
+    "sap": {
+      "totalLines": 2310,
+      "lines": [
+        "[2026-11-18T06:00:00.402Z] [INFO] RFC connection to SAP ECC PRD (client 300) opened",
+        "[2026-11-18T06:00:00.455Z] [INFO] RFC_READ_TABLE VBAK: packet size 50.000, 8 workers",
+        "[2026-11-18T06:01:12.880Z] [INFO] RFC_READ_TABLE VBAP: 255.120 rows read",
+        "[2026-11-18T06:03:41.990Z] [INFO] RFC connection to SAP ECC PRD closed",
+        "[2026-11-18T09:02:15.611Z] [WARN] BKPF: selection returned 0 rows (BUDAT = 20261118)"
+      ]
+    }
+  }
+}

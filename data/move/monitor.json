@@ -1,0 +1,257 @@
+{
+  "executions": [
+    {
+      "id": "exec-ventas-diarias",
+      "name": "Ventas diarias",
+      "time": "06:00",
+      "frequency": "daily",
+      "elapsedSeconds": 446,
+      "records": 1284530,
+      "nodes": [
+        {
+          "id": "vd-pedidos",
+          "name": "Pedidos SAP a Redshift",
+          "progress": 100,
+          "status": "completed",
+          "source": { "name": "SAP ECC PRD", "type": "SAP OData", "brandName": "SAP" },
+          "destination": { "name": "Redshift DW", "type": "Amazon Redshift", "brandName": "Redshift" },
+          "startOffsetSeconds": 0,
+          "elapsedSeconds": 222,
+          "records": 612480
+        },
+        {
+          "id": "vd-facturas",
+          "name": "Facturas SAP a Redshift",
+          "progress": 100,
+          "status": "completed",
+          "source": { "name": "SAP ECC PRD", "type": "SAP OData", "brandName": "SAP" },
+          "destination": { "name": "Redshift DW", "type": "Amazon Redshift", "brandName": "Redshift" },
+          "startOffsetSeconds": 0,
+          "elapsedSeconds": 138,
+          "records": 455210
+        },
+        {
+          "id": "vd-clientes",
+          "name": "Clientes SAP a Snowflake",
+          "progress": 100,
+          "status": "completed",
+          "source": { "name": "SAP ECC PRD", "type": "SAP OData", "brandName": "SAP" },
+          "destination": { "name": "Snowflake DW", "type": "Snowflake", "brandName": "Snowflake" },
+          "startOffsetSeconds": 222,
+          "elapsedSeconds": 86,
+          "records": 216840
+        }
+      ]
+    },
+    {
+      "id": "exec-stock-diario",
+      "name": "Stock diario",
+      "time": "08:00",
+      "frequency": "daily",
+      "elapsedSeconds": 595,
+      "records": 2047315,
+      "nodes": [
+        {
+          "id": "sd-stock",
+          "name": "Stock SAP a BigQuery",
+          "progress": 100,
+          "status": "completed",
+          "source": { "name": "S/4HANA Cloud", "type": "SAP HANA", "brandName": "SAPHanaC" },
+          "destination": { "name": "Analytics BQ", "type": "Google BigQuery", "brandName": "GoogleBigquery" },
+          "startOffsetSeconds": 0,
+          "elapsedSeconds": 252,
+          "records": 1120400
+        },
+        {
+          "id": "sd-materiales",
+          "name": "Materiales SAP a BigQuery",
+          "progress": 100,
+          "status": "completed",
+          "source": { "name": "S/4HANA Cloud", "type": "SAP HANA", "brandName": "SAPHanaC" },
+          "destination": { "name": "Analytics BQ", "type": "Google BigQuery", "brandName": "GoogleBigquery" },
+          "startOffsetSeconds": 0,
+          "elapsedSeconds": 155,
+          "records": 704615
+        },
+        {
+          "id": "sd-almacenes",
+          "name": "Almacenes SAP a Snowflake",
+          "progress": 100,
+          "status": "completed",
+          "source": { "name": "SAP ECC PRD", "type": "SAP OData", "brandName": "SAP" },
+          "destination": { "name": "Snowflake DW", "type": "Snowflake", "brandName": "Snowflake" },
+          "startOffsetSeconds": 252,
+          "elapsedSeconds": 68,
+          "records": 222300
+        }
+      ]
+    },
+    {
+      "id": "exec-cierre-diario",
+      "name": "Cierre diario",
+      "time": "09:00",
+      "frequency": "daily",
+      "elapsedSeconds": 687,
+      "records": 893120,
+      "errorNode": { "id": "cd-cobros", "name": "Cobros SAP a Fabric" },
+      "nodes": [
+        {
+          "id": "cd-asientos",
+          "name": "Asientos SAP a Fabric",
+          "progress": 100,
+          "status": "completed",
+          "source": { "name": "SAP ECC PRD", "type": "SAP OData", "brandName": "SAP" },
+          "destination": { "name": "Fabric Lakehouse", "type": "Microsoft Fabric", "brandName": "Fabric" },
+          "startOffsetSeconds": 0,
+          "elapsedSeconds": 324,
+          "records": 640210
+        },
+        {
+          "id": "cd-cobros",
+          "name": "Cobros SAP a Fabric",
+          "progress": 100,
+          "status": "warning",
+          "issue": "noData",
+          "source": { "name": "SAP ECC PRD", "type": "SAP OData", "brandName": "SAP" },
+          "destination": { "name": "Fabric Lakehouse", "type": "Microsoft Fabric", "brandName": "Fabric" },
+          "startOffsetSeconds": 0,
+          "elapsedSeconds": 166,
+          "records": 0
+        },
+        {
+          "id": "cd-pagos",
+          "name": "Pagos SAP a Snowflake",
+          "progress": 100,
+          "status": "completed",
+          "source": { "name": "SAP ECC PRD", "type": "SAP OData", "brandName": "SAP" },
+          "destination": { "name": "Snowflake DW", "type": "Snowflake", "brandName": "Snowflake" },
+          "startOffsetSeconds": 324,
+          "elapsedSeconds": 197,
+          "records": 252910
+        }
+      ]
+    },
+    {
+      "id": "exec-respaldo-contabilidad",
+      "name": "Respaldo: Contabilidad general",
+      "time": "10:00",
+      "frequency": "weekly",
+      "elapsedSeconds": 601,
+      "records": 987856,
+      "errorNode": { "id": "rc-invoices", "name": "Invoices" },
+      "nodes": [
+        {
+          "id": "rc-customers",
+          "name": "Customers",
+          "progress": 70,
+          "status": "running",
+          "source": { "name": "SAP ECC PRD", "type": "SAP OData", "brandName": "SAP" },
+          "destination": { "name": "Snowflake DW", "type": "Snowflake", "brandName": "Snowflake" },
+          "startOffsetSeconds": 576,
+          "elapsedSeconds": 25,
+          "records": 420315
+        },
+        {
+          "id": "rc-sales-orders",
+          "name": "Sales orders",
+          "progress": 30,
+          "status": "running",
+          "source": { "name": "S/4HANA Cloud", "type": "SAP HANA", "brandName": "SAPHanaC" },
+          "destination": { "name": "Fabric Lakehouse", "type": "Microsoft Fabric", "brandName": "Fabric" },
+          "startOffsetSeconds": 576,
+          "elapsedSeconds": 25,
+          "records": 312870
+        },
+        {
+          "id": "rc-products",
+          "name": "Products",
+          "progress": 100,
+          "status": "completed",
+          "source": { "name": "CRM Postgres", "type": "PostgreSQL", "brandName": "PostgreSQL" },
+          "destination": { "name": "Analytics BQ", "type": "Google BigQuery", "brandName": "GoogleBigquery" },
+          "startOffsetSeconds": 0,
+          "elapsedSeconds": 312,
+          "records": 254671
+        },
+        {
+          "id": "rc-invoices",
+          "name": "Invoices",
+          "progress": 100,
+          "status": "warning",
+          "issue": "noData",
+          "source": { "name": "Billing SQL", "type": "SQL Server", "brandName": "MSSQL" },
+          "destination": { "name": "Data Lake S3", "type": "Amazon S3", "brandName": "S3" },
+          "startOffsetSeconds": 312,
+          "elapsedSeconds": 264,
+          "records": 0
+        }
+      ]
+    },
+    {
+      "id": "exec-inventario-semanal",
+      "name": "Inventario semanal",
+      "time": "14:00",
+      "frequency": "weekly",
+      "scheduled": true,
+      "elapsedSeconds": 0,
+      "records": 0,
+      "nodes": [
+        {
+          "id": "is-inventario",
+          "name": "Inventario SAP a Snowflake",
+          "progress": 0,
+          "status": "pending",
+          "source": { "name": "S/4HANA Cloud", "type": "SAP HANA", "brandName": "SAPHanaC" },
+          "destination": { "name": "Snowflake DW", "type": "Snowflake", "brandName": "Snowflake" },
+          "startOffsetSeconds": 0,
+          "elapsedSeconds": 0,
+          "records": 0
+        },
+        {
+          "id": "is-movimientos",
+          "name": "Movimientos SAP a Databricks",
+          "progress": 0,
+          "status": "pending",
+          "source": { "name": "SAP ECC PRD", "type": "SAP OData", "brandName": "SAP" },
+          "destination": { "name": "Lakehouse DBX", "type": "Databricks", "brandName": "Databricks" },
+          "startOffsetSeconds": 0,
+          "elapsedSeconds": 0,
+          "records": 0
+        }
+      ]
+    },
+    {
+      "id": "exec-backup-mensual",
+      "name": "Backup data",
+      "time": "18:30",
+      "frequency": "monthly",
+      "scheduled": true,
+      "elapsedSeconds": 0,
+      "records": 0,
+      "nodes": [
+        {
+          "id": "bm-sales",
+          "name": "Sales orders",
+          "progress": 0,
+          "status": "pending",
+          "source": { "name": "S/4HANA Cloud", "type": "SAP HANA", "brandName": "SAPHanaC" },
+          "destination": { "name": "Fabric Lakehouse", "type": "Microsoft Fabric", "brandName": "Fabric" },
+          "startOffsetSeconds": 0,
+          "elapsedSeconds": 0,
+          "records": 0
+        },
+        {
+          "id": "bm-customers",
+          "name": "Customers",
+          "progress": 0,
+          "status": "pending",
+          "source": { "name": "CRM Postgres", "type": "PostgreSQL", "brandName": "PostgreSQL" },
+          "destination": { "name": "Data Lake S3", "type": "Amazon S3", "brandName": "S3" },
+          "startOffsetSeconds": 0,
+          "elapsedSeconds": 0,
+          "records": 0
+        }
+      ]
+    }
+  ]
+}

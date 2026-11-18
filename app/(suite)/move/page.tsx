@@ -47,7 +47,7 @@ export default function MoveOverviewPage() {
 
       {/* Información */}
       <SectionLabel>{t.information}</SectionLabel>
-      <JobRunningCard job={data.runningJob} destinationPreview={data.destinationPreview} />
+      <JobRunningCard job={data.runningJob} destinationPreview={data.destinationPreview} footerHref="/move/activity" />
 
       <section className="grid grid-cols-1 gap-3 lg:grid-cols-3">
         <ExtractionVolumeCard className="lg:col-span-2" />

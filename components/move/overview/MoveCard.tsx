@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { Button } from "caralstable";
 import { CaralIcon } from "@/components/icons";
 
@@ -41,18 +42,17 @@ export function MoveCard({
   );
 }
 
-/** Enlace de pie de card (texto + chevron), sin acción todavía. */
-export function MoveCardFooterLink({ label }: { label: string }) {
-  return (
-    <div className="flex justify-end">
-      <Button variant="ghost" size="sm">
-        <span className="flex items-center gap-1 font-normal text-info-main">
-          {label}
-          <CaralIcon name="chevronRigth" size={18} color="currentColor" />
-        </span>
-      </Button>
-    </div>
+/** Enlace de pie de card (texto + chevron). Sin `href` no navega todavía. */
+export function MoveCardFooterLink({ label, href }: { label: string; href?: string }) {
+  const button = (
+    <Button variant="ghost" size="sm">
+      <span className="flex items-center gap-1 font-normal text-info-main">
+        {label}
+        <CaralIcon name="chevronRigth" size={18} color="currentColor" />
+      </span>
+    </Button>
   );
+  return <div className="flex justify-end">{href ? <Link href={href}>{button}</Link> : button}</div>;
 }
 
 /** Etiqueta de sección ("Quick access link", "Information"). */
