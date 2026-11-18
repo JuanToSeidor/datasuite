@@ -1,8 +1,8 @@
 [
   {
-    "id": "actin-sd-prd",
-    "catalogId": "actin-sd",
-    "name": "ACT-IN SD · Producción",
+    "id": "accelerate-sd-prd",
+    "catalogId": "accelerate-sd",
+    "name": "Accelerate SD · Producción",
     "companies": ["1000", "3000"],
     "version": "v2.3.1",
     "status": "active",
@@ -13,9 +13,9 @@
     "dashboards": 4
   },
   {
-    "id": "actin-sd-qas",
-    "catalogId": "actin-sd",
-    "name": "ACT-IN SD · Calidad",
+    "id": "accelerate-sd-qas",
+    "catalogId": "accelerate-sd",
+    "name": "Accelerate SD · Calidad",
     "companies": ["1000"],
     "version": "v2.3.1",
     "status": "deploying",
@@ -26,9 +26,9 @@
     "dashboards": 0
   },
   {
-    "id": "actin-sd-pe",
-    "catalogId": "actin-sd",
-    "name": "ACT-IN SD · Producción",
+    "id": "accelerate-sd-pe",
+    "catalogId": "accelerate-sd",
+    "name": "Accelerate SD · Producción",
     "companies": ["1000", "3000"],
     "version": "v2.3.1",
     "status": "error",
@@ -39,9 +39,9 @@
     "dashboards": 2
   },
   {
-    "id": "actin-sd-cl",
-    "catalogId": "actin-sd",
-    "name": "ACT-IN SD · Chile",
+    "id": "accelerate-sd-cl",
+    "catalogId": "accelerate-sd",
+    "name": "Accelerate SD · Chile",
     "companies": ["2000"],
     "version": "v2.3.1",
     "status": "active",
@@ -52,9 +52,9 @@
     "dashboards": 4
   },
   {
-    "id": "actin-sd-ar",
-    "catalogId": "actin-sd",
-    "name": "ACT-IN SD · Argentina",
+    "id": "accelerate-sd-ar",
+    "catalogId": "accelerate-sd",
+    "name": "Accelerate SD · Argentina",
     "companies": ["4000"],
     "version": "v2.3.1",
     "status": "active",
@@ -65,9 +65,9 @@
     "dashboards": 4
   },
   {
-    "id": "actin-sd-co",
-    "catalogId": "actin-sd",
-    "name": "ACT-IN SD · Colombia",
+    "id": "accelerate-sd-co",
+    "catalogId": "accelerate-sd",
+    "name": "Accelerate SD · Colombia",
     "companies": ["5000"],
     "version": "v2.3.0",
     "status": "active",
@@ -78,9 +78,9 @@
     "dashboards": 3
   },
   {
-    "id": "actin-sd-mx",
-    "catalogId": "actin-sd",
-    "name": "ACT-IN SD · México",
+    "id": "accelerate-sd-mx",
+    "catalogId": "accelerate-sd",
+    "name": "Accelerate SD · México",
     "companies": ["6000", "6100"],
     "version": "v2.3.1",
     "status": "active",

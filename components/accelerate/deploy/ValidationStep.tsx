@@ -57,7 +57,7 @@ interface ValidationStepProps {
   onRestart: () => void;
 }
 
-/** Paso 3: verifica contra la metadata del Core que Move tenga extraídas las tablas del ACT-IN. */
+/** Paso 3: verifica contra la metadata del Core que Move tenga extraídas las tablas del modelo. */
 export function ValidationStep({
   modelName,
   system,

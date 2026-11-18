@@ -35,7 +35,7 @@ export function ArchiveTablesTable({ rows, className }: { rows: ArchiveTable[]; 
         header: t.colTable,
         accessorKey: "table",
         width: 120,
-        filterable: false,
+        filterType: "text",
         cell: ({ value }) => <span className="text-base font-bold text-neutral-900">{value}</span>,
       },
       {
@@ -43,7 +43,7 @@ export function ArchiveTablesTable({ rows, className }: { rows: ArchiveTable[]; 
         header: t.colDescription,
         accessorKey: "description",
         width: 260,
-        filterable: false,
+        filterType: "text",
         cell: ({ value }) => <span className="text-neutral-900">{value}</span>,
       },
       {
@@ -51,14 +51,15 @@ export function ArchiveTablesTable({ rows, className }: { rows: ArchiveTable[]; 
         header: t.colComponent,
         accessorKey: "component",
         width: 140,
-        filterable: false,
+        filterType: "select",
         cell: ({ value }) => <span className="text-neutral-900">{value}</span>,
       },
       {
         id: "dataClass",
         header: t.colDataClass,
+        accessorKey: "dataClass",
         width: 190,
-        filterable: false,
+        filterType: "select",
         cell: ({ row }) => (
           <div className="flex flex-col">
             <span className="text-neutral-900">{row.dataClass}</span>
@@ -72,7 +73,7 @@ export function ArchiveTablesTable({ rows, className }: { rows: ArchiveTable[]; 
         accessorKey: "records",
         width: 140,
         align: "right",
-        filterable: false,
+        filterType: "number",
         cell: ({ value }) => (
           <span className="text-neutral-900">{value === null ? "—" : Number(value).toLocaleString(numberFormat)}</span>
         ),
@@ -80,8 +81,9 @@ export function ArchiveTablesTable({ rows, className }: { rows: ArchiveTable[]; 
       {
         id: "inArchive",
         header: t.colInArchive,
+        accessorFn: (row) => availabilityLabel[row.availability],
         width: 380,
-        filterable: false,
+        filterType: "select",
         cell: ({ row }) => {
           const noteKey =
             row.availability === "servableAsOf"
@@ -102,8 +104,14 @@ export function ArchiveTablesTable({ rows, className }: { rows: ArchiveTable[]; 
       {
         id: "reconciliation",
         header: t.colReconciliation,
+        accessorFn: (row) =>
+          row.reconciliation.type === "matches"
+            ? t.reconMatches
+            : row.reconciliation.type === "missing"
+              ? t.reconMissingLabel
+              : t.reconNotInDump,
         width: 200,
-        filterable: false,
+        filterType: "select",
         cell: ({ row }) => {
           const r = row.reconciliation;
           if (r.type === "matches") return <Chip variant="success" label={t.reconMatches} hasBorder />;
@@ -120,15 +128,16 @@ export function ArchiveTablesTable({ rows, className }: { rows: ArchiveTable[]; 
   return (
     <DataTable<ArchiveTable>
       variant="embedded"
+      tableContainerClassName="border! border-container!"
       className={className}
       data={rows}
       columns={columns}
       keyExtractor={(row) => row.table}
       canSearch={false}
-      canFilterColumns={false}
+      canFilterColumns
       canExport={false}
       canExpand={false}
-      canReadjust={false}
+      canReadjust
     />
   );
 }

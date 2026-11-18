@@ -1,7 +1,7 @@
 [
   {
     "id": "sd-sales-margin",
-    "catalogId": "actin-sd",
+    "catalogId": "accelerate-sd",
     "title": "Evolución de ventas y margen",
     "description": "Ingresos, costes y margen por producto frente al año anterior",
     "owner": "Marta López",
@@ -14,7 +14,7 @@
   },
   {
     "id": "sd-profitability",
-    "catalogId": "actin-sd",
+    "catalogId": "accelerate-sd",
     "title": "Rentabilidad por región y canal",
     "description": "Margen neto y EBITDA por región y canal de venta",
     "owner": "Laura Sánchez",
@@ -27,7 +27,7 @@
   },
   {
     "id": "sd-demand-forecast",
-    "catalogId": "actin-sd",
+    "catalogId": "accelerate-sd",
     "title": "Forecast de demanda y cobertura de stock",
     "description": "Proyección de demanda semanal y nivel de inventario por SKU y almacén",
     "owner": "Carlos Romero",
@@ -40,7 +40,7 @@
   },
   {
     "id": "sd-logistics-kpis",
-    "catalogId": "actin-sd",
+    "catalogId": "accelerate-sd",
     "title": "KPIs de operaciones logísticas",
     "description": "Tasa de entrega a tiempo, costo por envío y eficiencia de rutas por operador",
     "owner": "Ana Torres",
@@ -53,7 +53,7 @@
   },
   {
     "id": "sd-marketing-campaigns",
-    "catalogId": "actin-sd",
+    "catalogId": "accelerate-sd",
     "title": "Rendimiento de campañas de marketing",
     "description": "ROI, tasa de conversión y coste por lead por canal y segmento de audiencia",
     "owner": "Pedro Vega",

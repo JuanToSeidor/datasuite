@@ -1,12 +1,12 @@
 {
-  "actin-sd": {
+  "accelerate-sd": {
     "destinationVersions": [
       {
         "brand": "Fabric",
         "version": "Microsoft Fabric"
       }
     ],
-    "functionalDescription": "ACT-IN SD convierte los documentos de ventas, entregas y facturas de SAP SD en un modelo dimensional listo para Power BI. Unifica las sociedades y organizaciones de ventas, convierte a moneda de reporte y calcula los indicadores comerciales que el área de ventas usa todos los meses.",
+    "functionalDescription": "Accelerate SD convierte los documentos de ventas, entregas y facturas de SAP SD en un modelo dimensional listo para Power BI. Unifica las sociedades y organizaciones de ventas, convierte a moneda de reporte y calcula los indicadores comerciales que el área de ventas usa todos los meses.",
     "features": [
       {
         "title": "Ventas facturadas",
@@ -236,7 +236,7 @@
           "content": "Pedidos abiertos sin entregar o sin facturar"
         },
         {
-          "name": "SM_ACTIN_SD",
+          "name": "SM_ACCELERATE_SD",
           "type": "semanticModel",
           "builtFrom": "Lakehouse",
           "content": "Direct Lake con 42 medidas comerciales"
@@ -244,14 +244,14 @@
       ]
     }
   },
-  "actin-mm": {
+  "accelerate-mm": {
     "destinationVersions": [
       {
         "brand": "Fabric",
         "version": "V 1.4.0"
       }
     ],
-    "functionalDescription": "ACT-IN MM transforma compras, inventario y movimientos de materiales de SAP MM en un modelo dimensional para Power BI, con valorización de stock por centro y almacén y seguimiento del cumplimiento de proveedores.",
+    "functionalDescription": "Accelerate MM transforma compras, inventario y movimientos de materiales de SAP MM en un modelo dimensional para Power BI, con valorización de stock por centro y almacén y seguimiento del cumplimiento de proveedores.",
     "features": [
       {
         "title": "Órdenes de compra abiertas",
@@ -363,7 +363,7 @@
           "content": "Stock valorizado por centro y almacén"
         },
         {
-          "name": "SM_ACTIN_MM",
+          "name": "SM_ACCELERATE_MM",
           "type": "semanticModel",
           "builtFrom": "Lakehouse",
           "content": "Direct Lake con 28 medidas de abastecimiento"
@@ -371,9 +371,9 @@
       ]
     }
   },
-  "actin-fi": {
+  "accelerate-fi": {
     "destinationVersions": [],
-    "functionalDescription": "ACT-IN FI llevará el Universal Journal de S/4HANA a un modelo financiero listo para Power BI: resultados por sociedad y centro de beneficio, cuentas por cobrar y por pagar con antigüedad de saldos.",
+    "functionalDescription": "Accelerate FI llevará el Universal Journal de S/4HANA a un modelo financiero listo para Power BI: resultados por sociedad y centro de beneficio, cuentas por cobrar y por pagar con antigüedad de saldos.",
     "features": [
       {
         "title": "Estado de resultados",

@@ -17,7 +17,7 @@
     "id": "act-3",
     "type": "deployStarted",
     "user": "Marcela Rojas",
-    "model": "ACT-IN SD · Calidad",
+    "model": "Accelerate SD · Calidad",
     "date": "2026-10-16T08:41"
   },
   {
@@ -37,14 +37,14 @@
   {
     "id": "act-6",
     "type": "deployCompleted",
-    "model": "ACT-IN SD · México",
+    "model": "Accelerate SD · México",
     "date": "2026-10-16T07:52"
   },
   {
     "id": "act-7",
     "type": "deployStarted",
     "user": "Juan Torres",
-    "model": "ACT-IN SD · México",
+    "model": "Accelerate SD · México",
     "date": "2026-10-16T07:31"
   },
   {
@@ -71,14 +71,14 @@
   {
     "id": "act-11",
     "type": "deployCompleted",
-    "model": "ACT-IN SD · Colombia",
+    "model": "Accelerate SD · Colombia",
     "date": "2026-10-15T14:25"
   },
   {
     "id": "act-12",
     "type": "deployStarted",
     "user": "Carlos Romero",
-    "model": "ACT-IN SD · Colombia",
+    "model": "Accelerate SD · Colombia",
     "date": "2026-10-15T14:04"
   },
   {
@@ -98,14 +98,14 @@
   {
     "id": "act-15",
     "type": "deployFailed",
-    "model": "ACT-IN SD · Perú",
+    "model": "Accelerate SD · Perú",
     "date": "2026-10-15T07:12"
   },
   {
     "id": "act-16",
     "type": "deployStarted",
     "user": "Marcela Rojas",
-    "model": "ACT-IN SD · Perú",
+    "model": "Accelerate SD · Perú",
     "date": "2026-10-15T06:58"
   },
   {
@@ -125,14 +125,14 @@
   {
     "id": "act-19",
     "type": "deployCompleted",
-    "model": "ACT-IN SD · Argentina",
+    "model": "Accelerate SD · Argentina",
     "date": "2026-10-14T12:40"
   },
   {
     "id": "act-20",
     "type": "deployStarted",
     "user": "Pedro Vega",
-    "model": "ACT-IN SD · Argentina",
+    "model": "Accelerate SD · Argentina",
     "date": "2026-10-14T12:16"
   },
   {
@@ -159,14 +159,14 @@
   {
     "id": "act-24",
     "type": "deployCompleted",
-    "model": "ACT-IN SD · Chile",
+    "model": "Accelerate SD · Chile",
     "date": "2026-10-13T11:02"
   },
   {
     "id": "act-25",
     "type": "deployStarted",
     "user": "Juan Torres",
-    "model": "ACT-IN SD · Chile",
+    "model": "Accelerate SD · Chile",
     "date": "2026-10-13T10:38"
   },
   {
@@ -179,14 +179,14 @@
   {
     "id": "act-27",
     "type": "deployCompleted",
-    "model": "ACT-IN SD · Producción",
+    "model": "Accelerate SD · Producción",
     "date": "2026-10-13T08:15"
   },
   {
     "id": "act-28",
     "type": "deployStarted",
     "user": "Marcela Rojas",
-    "model": "ACT-IN SD · Producción",
+    "model": "Accelerate SD · Producción",
     "date": "2026-10-13T07:50"
   }
 ]

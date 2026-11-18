@@ -11,28 +11,29 @@ export function ChecksTable({ rows, className }: { rows: ArchiveCheck[]; classNa
   const { dict } = useLanguage();
   const t = dict.preserve.vaults;
 
-  const stateChip = (state: CheckState) =>
-    state === "passed" ? (
-      <Chip variant="success" label={t.statusPassed} hasBorder />
-    ) : (
-      <Chip variant="warning" label={t.statusWarning} hasBorder />
-    );
+  const stateLabel = (state: CheckState) => (state === "passed" ? t.statusPassed : t.statusWarning);
+
+  const stateChip = (state: CheckState) => (
+    <Chip variant={state === "passed" ? "success" : "warning"} label={stateLabel(state)} hasBorder />
+  );
 
   const columns = useMemo<DataTableColumn<ArchiveCheck>[]>(
     () => [
       {
         id: "number",
         header: t.checksColNumber,
-        width: 60,
-        filterable: false,
+        accessorKey: "id",
+        width: 80,
+        filterType: "number",
         resizable: false,
         cell: ({ row }) => <span className="text-neutral-900">{row.id}</span>,
       },
       {
         id: "check",
         header: t.checksColCheck,
+        accessorKey: "name",
         width: 300,
-        filterable: false,
+        filterType: "text",
         cell: ({ row }) => (
           <div className="flex flex-col items-start gap-1">
             <span className="font-bold text-neutral-900">{row.name}</span>
@@ -43,22 +44,25 @@ export function ChecksTable({ rows, className }: { rows: ArchiveCheck[]; classNa
       {
         id: "before",
         header: t.checksColBefore,
+        accessorFn: (row) => stateLabel(row.before),
         width: 200,
-        filterable: false,
+        filterType: "select",
         cell: ({ row }) => stateChip(row.before),
       },
       {
         id: "destination",
         header: t.checksColDestination,
+        accessorFn: (row) => stateLabel(row.destination),
         width: 200,
-        filterable: false,
+        filterType: "select",
         cell: ({ row }) => stateChip(row.destination),
       },
       {
         id: "detail",
         header: t.checksColDetail,
+        accessorKey: "detail",
         width: 640,
-        filterable: false,
+        filterType: "text",
         cell: ({ row }) => (
           <div className="flex flex-col items-start gap-2 whitespace-normal">
             <span className="text-neutral-900">{row.detail}</span>
@@ -79,15 +83,16 @@ export function ChecksTable({ rows, className }: { rows: ArchiveCheck[]; classNa
       <p className="text-sm text-neutral-900">{t.checksIntro}</p>
       <DataTable<ArchiveCheck>
         variant="embedded"
+        tableContainerClassName="border! border-container!"
         className={className}
         data={rows}
         columns={columns}
         keyExtractor={(row) => String(row.id)}
         canSearch={false}
-        canFilterColumns={false}
+        canFilterColumns
         canExport={false}
         canExpand={false}
-        canReadjust={false}
+        canReadjust
       />
     </div>
   );

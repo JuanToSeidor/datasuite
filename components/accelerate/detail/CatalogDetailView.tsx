@@ -16,7 +16,7 @@ import { DestinationObjectsSection } from "./DestinationObjectsSection";
 const catalog = catalogData as AccelerateCatalogItem[];
 const catalogDetails = catalogDetailsData as Record<string, AccelerateCatalogDetail>;
 
-/** Pantalla "Ver detalle" de un ACT-IN del catálogo. */
+/** Pantalla "Ver detalle" de un modelo del catálogo. */
 export function CatalogDetailView({ catalogId }: { catalogId: string }) {
   const router = useRouter();
   const { dict } = useLanguage();

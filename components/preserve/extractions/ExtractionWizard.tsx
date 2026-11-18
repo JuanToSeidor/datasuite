@@ -89,6 +89,7 @@ export function ExtractionWizard() {
       )}
       {step === CONFIRMATION_STEP && (
         <ConfirmationStep
+          sourceName={sourceName}
           cutOff={cutOff}
           destinationId={destinationId}
           onBackToCutOff={() => setStep(1)}

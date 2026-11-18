@@ -30,9 +30,8 @@ export default function PreserveVaultsPage() {
         </Button>
       </header>
 
-      <section className="rounded-2xl bg-container p-4">
-        <VaultsTable vaults={data.vaults} onOpen={openVault} />
-      </section>
+      {/* La tabla embedded ya trae su propio borde/fondo: sin card ni padding alrededor. */}
+      <VaultsTable vaults={data.vaults} onOpen={openVault} />
     </div>
   );
 }

@@ -41,14 +41,15 @@ export function CatalogTable({
         header: t.catalogColTable,
         accessorKey: "table",
         width: 200,
-        filterable: false,
+        filterType: "text",
         cell: ({ value }) => <span className="font-bold text-neutral-900">{value}</span>,
       },
       {
         id: "questions",
         header: t.catalogColQuestions,
+        accessorFn: (row) => row.questions.map((q) => `#${q}`).join(", "),
         width: 400,
-        filterable: false,
+        filterType: "text",
         cell: ({ row }) => (
           <span className="text-info-main">{row.questions.map((q) => `#${q}`).join(", ")}</span>
         ),
@@ -56,8 +57,9 @@ export function CatalogTable({
       {
         id: "status",
         header: t.catalogColStatus,
+        accessorFn: (row) => statusLabel[row.status],
         width: 260,
-        filterable: false,
+        filterType: "select",
         cell: ({ row }) => {
           const variant =
             STATUS_CHIP[row.status] === "inCatalog"
@@ -79,15 +81,16 @@ export function CatalogTable({
       </p>
       <DataTable<CatalogRow>
         variant="embedded"
+        tableContainerClassName="border! border-container!"
         className={className}
         data={rows}
         columns={columns}
         keyExtractor={(row) => row.table}
         canSearch={false}
-        canFilterColumns={false}
+        canFilterColumns
         canExport={false}
         canExpand={false}
-        canReadjust={false}
+        canReadjust
       />
     </div>
   );

@@ -54,7 +54,7 @@ function tablesToValidate(
 
 const STEP_COUNT = 5;
 
-/** Asistente "Desplegar ACT-IN": origen SAP → destino → validación → confirmación → despliegue. */
+/** Asistente "Desplegar modelo": origen SAP → destino → validación → confirmación → despliegue. */
 export function DeployWizard({ catalogId }: { catalogId: string }) {
   const router = useRouter();
   const { dict, language } = useLanguage();

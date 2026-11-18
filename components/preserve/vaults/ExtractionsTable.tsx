@@ -17,8 +17,9 @@ export function ExtractionsTable({ rows, className }: { rows: ArchiveExtraction[
       {
         id: "extraction",
         header: t.extractionsColExtraction,
+        accessorFn: (row) => `${row.id} ${row.by}`,
         width: 180,
-        filterable: false,
+        filterType: "text",
         cell: ({ row }) => (
           <div className="flex flex-col">
             <span className="font-mono font-bold text-neutral-900">{row.id}</span>
@@ -31,7 +32,7 @@ export function ExtractionsTable({ rows, className }: { rows: ArchiveExtraction[
         header: t.colArchive,
         accessorKey: "archive",
         width: 200,
-        filterable: false,
+        filterType: "select",
         cell: ({ value }) => <span className="text-neutral-900">{value}</span>,
       },
       {
@@ -39,14 +40,16 @@ export function ExtractionsTable({ rows, className }: { rows: ArchiveExtraction[
         header: t.extractionsColScope,
         accessorKey: "scope",
         width: 240,
-        filterable: false,
+        filterType: "text",
         cell: ({ value }) => <span className="text-neutral-900">{value}</span>,
       },
       {
         id: "status",
         header: t.colStatus,
+        accessorFn: (row) =>
+          row.status === "completeDifferences" ? t.statusCompleteDifferences : t.statusCompleteMatches,
         width: 300,
-        filterable: false,
+        filterType: "select",
         cell: ({ row }) => {
           const isDiff = row.status === "completeDifferences";
           const label: Record<ExtractionStatus, string> = {
@@ -66,8 +69,9 @@ export function ExtractionsTable({ rows, className }: { rows: ArchiveExtraction[
       {
         id: "progress",
         header: t.extractionsColProgress,
+        accessorKey: "progress",
         width: 200,
-        filterable: false,
+        filterType: "number",
         cell: ({ row }) => (
           <div className="flex w-full flex-col gap-1">
             <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-300">
@@ -85,7 +89,7 @@ export function ExtractionsTable({ rows, className }: { rows: ArchiveExtraction[
         header: t.extractionsColStarted,
         accessorKey: "started",
         width: 190,
-        filterable: false,
+        filterType: "text",
         cell: ({ value }) => <span className="text-neutral-900">{value}</span>,
       },
       {
@@ -93,7 +97,7 @@ export function ExtractionsTable({ rows, className }: { rows: ArchiveExtraction[
         header: t.extractionsColDuration,
         accessorKey: "duration",
         width: 160,
-        filterable: false,
+        filterType: "text",
         cell: ({ value }) => <span className="text-neutral-900">{value}</span>,
       },
     ],
@@ -103,15 +107,16 @@ export function ExtractionsTable({ rows, className }: { rows: ArchiveExtraction[
   return (
     <DataTable<ArchiveExtraction>
       variant="embedded"
+      tableContainerClassName="border! border-container!"
       className={className}
       data={rows}
       columns={columns}
       keyExtractor={(row) => row.id}
       canSearch={false}
-      canFilterColumns={false}
+      canFilterColumns
       canExport={false}
       canExpand={false}
-      canReadjust={false}
+      canReadjust
     />
   );
 }

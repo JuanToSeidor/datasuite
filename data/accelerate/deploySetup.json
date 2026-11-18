@@ -127,8 +127,8 @@
     "masterDataDailyAt": "06:00",
     "defaultEstimatedMinutes": 15,
     "estimatedMinutes": {
-      "actin-sd": 15,
-      "actin-mm": 10
+      "accelerate-sd": 15,
+      "accelerate-mm": 10
     }
   }
 }

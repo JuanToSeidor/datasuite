@@ -1,0 +1,7 @@
+{
+  "laneOptions": [1, 2, 4, 8],
+  "recommendedLanes": 8,
+  "maxLanes": 8,
+  "rowsPerSecondPerLane": 250000,
+  "smallTableRecords": 10000
+}

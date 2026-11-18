@@ -1,7 +1,7 @@
 import { CatalogDetailView } from "@/components/accelerate/detail/CatalogDetailView";
 import catalog from "@/data/accelerate/catalog.json";
 
-/** Export estático (GitHub Pages): una página por ACT-IN del catálogo. */
+/** Export estático (GitHub Pages): una página por Modelo del catálogo. */
 export function generateStaticParams() {
   return catalog.map((item) => ({ catalogId: item.id }));
 }

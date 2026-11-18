@@ -19,14 +19,16 @@ export function VaultsTable({ vaults, onOpen }: { vaults: Vault[]; onOpen: (vaul
         header: t.colArchive,
         accessorKey: "archive",
         width: 200,
-        filterable: false,
+        filterType: "text",
         cell: ({ value }) => <span className="text-neutral-900">{value}</span>,
       },
       {
         id: "source",
         header: t.colSource,
+        accessorFn: (row) =>
+          `${row.source.system} · ${formatMessage(t.sourceDetail, { product: row.source.product, client: row.source.client })}`,
         width: 260,
-        filterable: false,
+        filterType: "text",
         cell: ({ row }) => (
           <div className="flex flex-col">
             <span className="text-neutral-900">{row.source.system}</span>
@@ -41,14 +43,15 @@ export function VaultsTable({ vaults, onOpen }: { vaults: Vault[]; onOpen: (vaul
         header: t.colCutOff,
         accessorKey: "cutOffDate",
         width: 190,
-        filterable: false,
+        filterType: "text",
         cell: ({ value }) => <span className="text-neutral-900">{value}</span>,
       },
       {
         id: "destination",
         header: t.colDestination,
+        accessorFn: (row) => `${row.destination.platform} · ${row.destination.schema}`,
         width: 260,
-        filterable: false,
+        filterType: "text",
         cell: ({ row }) => (
           <div className="flex flex-col">
             <span className="text-neutral-900">{row.destination.platform}</span>
@@ -59,8 +62,9 @@ export function VaultsTable({ vaults, onOpen }: { vaults: Vault[]; onOpen: (vaul
       {
         id: "volume",
         header: t.colVolume,
+        accessorFn: (row) => row.volume.size,
         width: 220,
-        filterable: false,
+        filterType: "text",
         cell: ({ row }) => (
           <div className="flex flex-col">
             <span className="text-neutral-900">{row.volume.size}</span>
@@ -73,8 +77,9 @@ export function VaultsTable({ vaults, onOpen }: { vaults: Vault[]; onOpen: (vaul
       {
         id: "status",
         header: t.colStatus,
+        accessorFn: (row) => (row.status === "queryable" ? t.statusQueryable : t.statusExtractingLabel),
         width: 200,
-        filterable: false,
+        filterType: "select",
         cell: ({ row }) =>
           row.status === "queryable" ? (
             <Chip variant="success" label={t.statusQueryable} hasBorder />
@@ -104,14 +109,15 @@ export function VaultsTable({ vaults, onOpen }: { vaults: Vault[]; onOpen: (vaul
   return (
     <DataTable<Vault>
       variant="embedded"
+      tableContainerClassName="border! border-container!"
       data={vaults}
       columns={columns}
       keyExtractor={(row) => row.id}
       canSearch={false}
-      canFilterColumns={false}
+      canFilterColumns
       canExport={false}
       canExpand={false}
-      canReadjust={false}
+      canReadjust
     />
   );
 }

@@ -81,7 +81,7 @@ export default function AccelerateOverviewPage() {
           <Button variant="light" hasBorder onClick={() => router.push("/accelerate/dashboards")}>
             {t.viewDashboards}
           </Button>
-          {/* El asistente arranca desde un ACT-IN concreto: primero se elige en el catálogo. */}
+          {/* El asistente arranca desde un modelo concreto: primero se elige en el catálogo. */}
           <Button variant="warning" iconName="plus" onClick={() => router.push("/accelerate/models?tab=catalog")}>
             {t.deployModel}
           </Button>

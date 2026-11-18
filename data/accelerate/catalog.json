@@ -1,8 +1,8 @@
 [
   {
-    "id": "actin-sd",
+    "id": "accelerate-sd",
     "code": "SD",
-    "name": "ACT-IN SD",
+    "name": "Accelerate SD",
     "area": "Ventas y Distribución",
     "description": "Pedidos, entregas y facturación de SAP SD listos para analizar: ventas por cliente, material y organización de ventas, backlog de pedidos abiertos, cumplimiento de entregas (OTIF) y margen bruto facturado.",
     "availability": "available",
@@ -52,9 +52,9 @@
     ]
   },
   {
-    "id": "actin-mm",
+    "id": "accelerate-mm",
     "code": "MM",
-    "name": "ACT-IN MM",
+    "name": "Accelerate MM",
     "area": "Gestión de Materiales",
     "description": "Compras, inventario y movimientos de materiales de SAP MM: órdenes de compra abiertas, cumplimiento de proveedores, rotación de stock y valorización de inventario por centro y almacén.",
     "availability": "available",
@@ -91,9 +91,9 @@
     ]
   },
   {
-    "id": "actin-fi",
+    "id": "accelerate-fi",
     "code": "FI",
-    "name": "ACT-IN FI",
+    "name": "Accelerate FI",
     "area": "Finanzas",
     "description": "Libro mayor, cuentas por cobrar y por pagar sobre el Universal Journal de S/4HANA: resultados por sociedad y centro de beneficio, antigüedad de saldos y días de cobro.",
     "availability": "comingSoon",

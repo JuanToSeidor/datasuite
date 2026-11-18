@@ -69,9 +69,9 @@ export function VaultDetailView({ vaultId }: { vaultId: string }) {
         )}
       </header>
 
-      <section className="flex flex-col gap-3 rounded-2xl bg-container p-4">
-        {/* Pestañas + resumen del archivo */}
-        <div className="flex flex-wrap items-center justify-between gap-4">
+      <section className="flex flex-col gap-3">
+        {/* Pestañas + resumen del archivo (card propia; la tabla va debajo sin padding alrededor) */}
+        <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-container px-4 py-3">
           <Tabs
             tabs={[{ label: t.tabTables }, { label: t.tabChecks }, { label: t.tabCatalog }, { label: t.tabExtractions }]}
             activeIndex={tabIndex}
@@ -96,18 +96,18 @@ export function VaultDetailView({ vaultId }: { vaultId: string }) {
           </div>
         </div>
 
-        {/* Altura: 100vh menos encabezado, pestañas y márgenes (320px; 360px cuando hay texto introductorio). */}
-        {tabIndex === 0 && <ArchiveTablesTable rows={data.tables} className="max-h-[calc(100vh-348px)]!" />}
-        {tabIndex === 1 && <ChecksTable rows={details.checks} className="max-h-[calc(100vh-388px)]!" />}
+        {/* Altura: 100vh menos encabezado, pestañas y márgenes (324px; 364px cuando hay texto introductorio). */}
+        {tabIndex === 0 && <ArchiveTablesTable rows={data.tables} className="max-h-[calc(100vh-324px)]!" />}
+        {tabIndex === 1 && <ChecksTable rows={details.checks} className="max-h-[calc(100vh-364px)]!" />}
         {tabIndex === 2 && (
           <CatalogTable
             rows={details.catalog.rows}
             tablesEnabled={details.catalog.tablesEnabled}
             totalTables={vault.volume.tables}
-            className="max-h-[calc(100vh-388px)]!"
+            className="max-h-[calc(100vh-364px)]!"
           />
         )}
-        {tabIndex === 3 && <ExtractionsTable rows={details.extractions} className="max-h-[calc(100vh-388px)]!" />}
+        {tabIndex === 3 && <ExtractionsTable rows={details.extractions} className="max-h-[calc(100vh-364px)]!" />}
       </section>
     </div>
   );

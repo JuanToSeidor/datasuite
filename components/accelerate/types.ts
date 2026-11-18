@@ -4,7 +4,7 @@ export type AccelerateModelStatus = "active" | "deploying" | "error";
 
 export interface AccelerateModel {
   id: string;
-  /** ACT-IN del catálogo del que proviene este despliegue. */
+  /** Modelo del catálogo del que proviene este despliegue. */
   catalogId: string;
   name: string;
   companies: string[];
@@ -33,7 +33,7 @@ export interface AccelerateModel {
   dashboards: number;
 }
 
-/** ACT-IN disponible (o próximo) en el catálogo para desplegar. */
+/** Modelo disponible (o próximo) en el catálogo para desplegar. */
 export interface AccelerateCatalogItem {
   id: string;
   /** Sigla del módulo SAP, p.ej. "SD". */
@@ -74,7 +74,7 @@ export interface DestinationObject {
   content: string;
 }
 
-/** Detalle extendido de un ACT-IN del catálogo (pantalla "Ver detalle"). */
+/** Detalle extendido de un modelo del catálogo (pantalla "Ver detalle"). */
 export interface AccelerateCatalogDetail {
   destinationVersions: { brand: CaralBrandName; version: string }[];
   functionalDescription: string;
@@ -180,7 +180,7 @@ export interface AccelerateDeploySetup {
 
 export type AccelerateDashboardStatus = "active" | "refreshing" | "error";
 
-/** Tablero entregado por un modelo ACT-IN desplegado. */
+/** Tablero entregado por un modelo desplegado. */
 export interface AccelerateDashboard {
   id: string;
   /** Modelo del catálogo que lo entrega (agrupa los tableros por pestaña). */

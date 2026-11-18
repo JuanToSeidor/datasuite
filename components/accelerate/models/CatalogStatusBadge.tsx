@@ -23,7 +23,7 @@ interface CatalogStatusBadgeProps {
 }
 
 /**
- * Sello de estado del ACT-IN en el catálogo:
+ * Sello de estado del modelo en el catálogo:
  * - contracted: estrella verde con check
  * - unavailable: estrella roja con X
  * - comingSoon: círculo gris con reloj

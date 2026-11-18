@@ -144,6 +144,8 @@ export interface DataTableProps<T = any> {
 
   // Column filtering & Drawer
   canFilterColumns?: boolean;
+  /** Oculta la barra superior (buscador, botones); los filtros siguen disponibles desde los encabezados. */
+  hideToolbar?: boolean;
   columnFilters?: Record<string, ColumnFilterState>;
   onColumnFiltersChange?: (filters: Record<string, ColumnFilterState>) => void;
   isFilterDrawerOpen?: boolean;
@@ -268,6 +270,7 @@ export function DataTable<T = any>({
 
   // Column Filters
   canFilterColumns = true,
+  hideToolbar = false,
   columnFilters: externalColumnFilters,
   onColumnFiltersChange,
   isFilterDrawerOpen: externalIsDrawerOpen,
@@ -342,7 +345,7 @@ export function DataTable<T = any>({
     });
   }, [columns]);
 
-  const hasToolbar = Boolean(
+  const hasToolbar = !hideToolbar && Boolean(
     title ||
       description ||
       toolbarLeft ||
