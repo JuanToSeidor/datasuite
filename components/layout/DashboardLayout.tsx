@@ -85,6 +85,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         onToggleSidebar={isImmersive ? undefined : handleToggleSidebar}
         isAnaliceOpen={isAnaliceOpen}
         onToggleAnalice={toggleAnalice}
+        showBranchNav={!isImmersive}
       />
       <RolePreviewBanner />
       <div className="content-stretch flex items-stretch relative shrink-0 w-full flex-1 min-h-0">

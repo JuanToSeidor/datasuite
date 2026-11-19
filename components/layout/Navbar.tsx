@@ -10,15 +10,18 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { UserMenu } from './UserMenu';
 import { LanguageSelector } from './LanguageSelector';
+import { BranchNav } from './BranchNav';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export function Navbar({
   className,
   onToggleSidebar,
   onToggleAnalice,
-  isAnaliceOpen = false
+  isAnaliceOpen = false,
+  showBranchNav = true
 }: {
   className?: string;
+  showBranchNav?: boolean;
   onToggleSidebar?: () => void;
   onToggleAnalice?: () => void;
   isAnaliceOpen?: boolean;
@@ -38,6 +41,9 @@ export function Navbar({
       pathname.startsWith(`/${b.id}/`)
   );
 
+  // Dentro de un módulo, el logo y el título llevan a su overview/home; en la suite, al hub.
+  const homeHref = currentBranch ? (currentBranch.href || `/${currentBranch.id}`) : '/';
+
   const logoAccentColor = currentBranch?.color || "var(--color-info-main, #0191FF)";
 
   const NOTIF_TABS = [{ label: dict.navbar.notifications }, { label: dict.navbar.version }];
@@ -47,7 +53,7 @@ export function Navbar({
       <div className="content-stretch flex gap-[10px] items-center relative shrink-0">
         {onToggleSidebar && <Button isIconButton iconName="menu" variant="ghost" hasBorder onClick={onToggleSidebar} />}
         <Link
-          href='/'
+          href={homeHref}
           className="content-stretch"
           title={currentBranch ? `Crestone ${currentBranch.title}` : suiteConfig.name}
         >
@@ -55,7 +61,7 @@ export function Navbar({
         </Link>
         <div className="flex items-center gap-2">
           <Link
-            href='/'
+            href={homeHref}
             className="font-semibold text-seidor-main-text dark:text-white text-xl tracking-tight whitespace-nowrap hover:opacity-90 flex items-center gap-1.5"
           >
             <span>{suiteConfig.name}</span>
@@ -68,6 +74,12 @@ export function Navbar({
             </span>
           </Link>
         </div>
+        {/* Menú del módulo activo: a la derecha del logo, en la misma línea */}
+        {showBranchNav && currentBranch?.sidebarSections?.length ? (
+          <div className="ml-4 pl-4 border-l border-neutral-200">
+            <BranchNav branch={currentBranch} />
+          </div>
+        ) : null}
       </div>
       <div className="content-stretch flex gap-[14px] sm:gap-[20px] items-center relative shrink-0">
         <div className="relative">

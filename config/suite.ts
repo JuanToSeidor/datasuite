@@ -65,16 +65,11 @@ export const suiteConfig: SuiteConfig = {
       tags: ["Destacados", "Propios"],
       sidebarSections: [
         {
-          sectionTitle: "Pipelines & Data",
+          sectionTitle: "Move",
           items: [
             { label: "Overview", iconName: "house", href: "/move" },
             { label: "Nodos", iconName: "cubeInCube", href: "/move/nodes" },
             { label: "Jobs", iconName: "network", href: "/move/jobs" },
-          ]
-        },
-        {
-          sectionTitle: "Monitoring",
-          items: [
             { label: "Monitor", iconName: "screenChart", href: "/move/activity" },
           ]
         }

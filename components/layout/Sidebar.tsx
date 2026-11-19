@@ -34,14 +34,6 @@ export function Sidebar({
   const selectedWorkspace =
     workspacesList.find((w) => w.id === selectedWorkspaceId) || workspacesList[0];
 
-  // Encontrar si la ruta actual pertenece a uno de los hijos (branches)
-  const currentBranch = suiteConfig.branches.find(
-    (b) =>
-      (b.href && (pathname === b.href || pathname.startsWith(`${b.href}/`))) ||
-      pathname === `/${b.id}` ||
-      pathname.startsWith(`/${b.id}/`)
-  );
-
   // Helper to translate default sidebar labels dynamically
   const getSectionTitle = (title?: string) => {
     if (!title) return "";
@@ -69,11 +61,9 @@ export function Sidebar({
     }
   };
 
-  // Seleccionar las secciones correspondientes: las del hijo activo o las globales por defecto
-  const sectionsToRender: SidebarSection[] =
-    currentBranch?.sidebarSections && currentBranch.sidebarSections.length > 0
-      ? currentBranch.sidebarSections
-      : suiteConfig.defaultSidebarSections;
+  // El sidebar siempre muestra las secciones globales de la suite; el menú de cada hijo
+  // vive en la barra superior (BranchNav), bajo el logo de Crestone.
+  const sectionsToRender: SidebarSection[] = suiteConfig.defaultSidebarSections;
 
   return (
     <div
@@ -165,28 +155,6 @@ export function Sidebar({
       ) : (
         <>
           <div className="w-full flex-1 overflow-y-auto  pr-1 custom-scrollbar">
-            {/* Header especial si estamos dentro de un hijo / branch */}
-            {currentBranch && (
-              <div className="mb-4 pb-3 border-b border-neutral-500">
-                <Link href="/" className="w-full block mb-2">
-                  <Button
-                    isIconButton={!isExpanded}
-                    iconName="house"
-                    variant="ghost"
-                    className={
-                      isExpanded
-                        ? "w-full !justify-start gap-2 px-2 text-xs font-medium text-neutral-800 hover:text-info-main"
-                        : "w-full"
-                    }
-                  >
-                    {isExpanded && <>{suiteConfig.name}</>}
-                  </Button>
-                </Link>
-
-
-              </div>
-            )}
-
             {/* Renderizado de secciones dinámicas */}
             {sectionsToRender.map((section, sectionIdx) => (
               <div
@@ -244,21 +212,9 @@ export function Sidebar({
                       <Button
                         isIconButton={!isExpanded}
                         iconName={item.iconName}
-                        variant={isActive && !currentBranch ? "default" : "ghost"}
-                        style={
-                          isActive && currentBranch?.color
-                            ? {
-                              background: `${currentBranch.color}`,
-                              color: '#ffffff',
-                            }
-                            : undefined
-                        }
+                        variant={isActive ? "default" : "ghost"}
                         className={
-                          isExpanded
-                            ? `w-full !justify-start gap-3 px-4 ${isActive ? 'text-white!' : ''}`
-                            : isActive
-                              ? 'text-white!'
-                              : ''
+                          isExpanded ? "w-full !justify-start gap-3 px-4" : "w-full"
                         }
                       >
                         {isExpanded && label}
