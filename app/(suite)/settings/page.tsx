@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense, useMemo } from "react";
+import React, { Suspense, useMemo, useState } from "react";
 import { Button, Tabs } from "caralstable";
 import { GeneralTab } from "./tabs/general";
 import { UsersTab } from "./tabs/users";
@@ -18,6 +18,9 @@ function SettingsContent() {
   const searchParams = useSearchParams();
   const { dict } = useLanguage();
   const currentTabId = searchParams.get("tab") || "general";
+  // Contenedor bajo la tarjeta de Settings para vistas que necesitan bloques propios
+  // sobre el fondo de la página (p. ej. el detalle de una cuota de licencia).
+  const [afterCard, setAfterCard] = useState<HTMLDivElement | null>(null);
 
   const tabs = useMemo(() => [
     { id: "general", label: dict.settings.tabGeneral, description: "Parallel extraction engine, SMTP delivery, and regional preferences" },
@@ -50,7 +53,7 @@ function SettingsContent() {
   };
 
   return (
-    <div className="w-full flex flex-col gap-6 pb-12 font-poppins">
+    <div className="w-full flex flex-col gap-2.5 pb-12 font-poppins">
       {/* ========================================================= */}
       {/* CONTROLS ROW: TABS & ACCIONES SUPERIORES                 */}
       {/* ========================================================= */}
@@ -104,8 +107,10 @@ function SettingsContent() {
         {/* ========================================================= */}
         {/* TAB 5: LICENSE & SUBSCRIPTION                             */}
         {/* ========================================================= */}
-        {activeTabIndex === 5 && <LicenseTab />}
+        {activeTabIndex === 5 && <LicenseTab afterCard={afterCard} />}
       </div>
+
+      <div ref={setAfterCard} className="w-full flex flex-col gap-2.5 empty:hidden" />
     </div>
   );
 }

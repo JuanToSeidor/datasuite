@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "caralstable";
 import {
   ArchivesCard,
@@ -16,7 +17,12 @@ import overviewData from "@/data/preserve/overview.json";
 
 const data = overviewData as PreserveOverviewData;
 
+/**
+ * Resumen de Preserve para el admin con el archivo ya desplegado. En primer despliegue y para el
+ * usuario final el layout de Preserve redirige a su pantalla de entrada (sources / transactions).
+ */
 export default function PreserveOverviewPage() {
+  const router = useRouter();
   const { dict } = useLanguage();
   const t = dict.preserve.overview;
 
@@ -30,14 +36,9 @@ export default function PreserveOverviewPage() {
           <h1 className="text-2xl font-bold text-neutral-900">{t.title}</h1>
           <p className="text-sm text-neutral-800">{t.subtitle}</p>
         </div>
-        <div className="flex items-center gap-3">
-          <Button variant="light" hasBorder iconName="chats">
-            {t.askAnalyze}
-          </Button>
-          <Button variant="success" iconName="plus">
-            {t.newExtraction}
-          </Button>
-        </div>
+        <Button variant="success" iconName="plus" onClick={() => router.push("/preserve/extractions/new")}>
+          {t.newExtraction}
+        </Button>
       </header>
 
       {/* Cuerpo: columna principal + columna de preparación */}

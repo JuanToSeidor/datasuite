@@ -20,8 +20,8 @@ const PREVIEW_COLUMN_WIDTHS: Record<string, number> = { MANDT: 100, KUNNR: 140, 
 
 type PreviewRow = Record<string, string> & { __id: string };
 
-/** Paso del recorrido origen → destino: punto de estado + logo + nombre. */
-function EndpointStep({ endpoint, done, isLast }: { endpoint: JobEndpoint; done: boolean; isLast?: boolean }) {
+/** Paso del recorrido origen → destino: punto de estado + logo + nombre (también lo usa Preserve). */
+export function EndpointStep({ endpoint, done, isLast }: { endpoint: JobEndpoint; done: boolean; isLast?: boolean }) {
   return (
     <div className="relative flex items-start gap-3">
       {/* Conector vertical hacia el siguiente paso */}
@@ -41,7 +41,7 @@ function EndpointStep({ endpoint, done, isLast }: { endpoint: JobEndpoint; done:
   );
 }
 
-function StatCell({ value, label }: { value: string; label: string }) {
+export function StatCell({ value, label }: { value: string; label: string }) {
   return (
     <div className="flex flex-col p-2.5">
       <span className="text-lg font-semibold text-neutral-800">{value}</span>
@@ -119,7 +119,11 @@ function DetailsTab({ node, nextRunAt }: { node: JobNodeRun; nextRunAt: string }
   );
 }
 
-function PreviewTab({ node, preview }: { node: JobNodeRun; preview: DestinationPreview }) {
+/**
+ * Pestaña "Preview": primeras filas de la tabla de destino (también la usa Preserve).
+ * `loadedRecords`: filas cargadas por esta ejecución, para el resumen.
+ */
+export function PreviewTab({ loadedRecords, preview }: { loadedRecords: number; preview: DestinationPreview }) {
   const { dict } = useLanguage();
   const t = dict.move.overview.nodePanel;
   const locale = useLocaleTag();
@@ -166,7 +170,6 @@ function PreviewTab({ node, preview }: { node: JobNodeRun; preview: DestinationP
     [preview]
   );
 
-  const loadedRecords = Math.round((node.records * node.progress) / 100);
   const [noticeBefore, noticeAfter = ""] = t.previewNotice.split("{current}");
   const queriedTime = queriedAt.toLocaleTimeString(locale, { hour12: false });
 
@@ -261,7 +264,7 @@ export function JobNodePanel({
         {tab === 0 ? (
           <DetailsTab node={node} nextRunAt={nextRunAt} />
         ) : (
-          <PreviewTab node={node} preview={preview} />
+          <PreviewTab loadedRecords={Math.round((node.records * node.progress) / 100)} preview={preview} />
         )}
       </div>
     </div>

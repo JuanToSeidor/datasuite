@@ -9,7 +9,7 @@ import { usePathname } from 'next/navigation';
 import { suiteConfig, SidebarSection } from '@/config/suite';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useLanguage } from '@/contexts/LanguageContext';
-import workspacesData from '@/data/workspaces.json';
+import { useWorkspace } from '@/contexts/WorkspaceContext';
 
 export function Sidebar({
   className,
@@ -27,12 +27,7 @@ export function Sidebar({
   const [isGearMenuOpen, setIsGearMenuOpen] = useState(false);
   const pathname = usePathname();
 
-  const workspacesList = workspacesData.workspaces;
-  const [selectedWorkspaceId, setSelectedWorkspaceId] = useState<string>(
-    workspacesList[0]?.id || 'default'
-  );
-  const selectedWorkspace =
-    workspacesList.find((w) => w.id === selectedWorkspaceId) || workspacesList[0];
+  const { workspaces: workspacesList, selectedWorkspace, setSelectedWorkspaceId } = useWorkspace();
 
   // Helper to translate default sidebar labels dynamically
   const getSectionTitle = (title?: string) => {

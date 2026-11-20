@@ -5,14 +5,19 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button, Steps } from "caralstable";
 import { CaralIcon } from "@/components/icons";
+import { PRESERVE_ADMIN_FIRST_DEPLOY } from "@/config/suite";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useBranchScenario } from "@/contexts/WorkspaceContext";
 import { formatMessage } from "@/lib/format";
 import { SourceStep, sapConnections } from "./SourceStep";
 import { CutOffStep, extractionDestinations } from "./CutOffStep";
 import { ConfirmationStep } from "./ConfirmationStep";
+import { LIVE_EXTRACTION_ID, startLiveExtraction } from "./extractionRun";
 
 const STEP_COUNT = 3;
 const CONFIRMATION_STEP = STEP_COUNT - 1;
+/** Extracción mock ya avanzada a la que lleva "Iniciar extracción" fuera del primer despliegue. */
+const DEMO_RUNNING_EXTRACTION_ID = "EXT-030";
 
 /** Asistente "Nueva extracción" de Preserve: origen → corte y destino → confirmación. */
 export function ExtractionWizard() {
@@ -25,6 +30,18 @@ export function ExtractionWizard() {
   const [cutOff, setCutOff] = useState(extractionDestinations.defaultCutOff);
   const [destinationId, setDestinationId] = useState(extractionDestinations.defaultDestination);
   const isConfirmStep = step === CONFIRMATION_STEP;
+  const isFirstDeploy = useBranchScenario("preserve") === PRESERVE_ADMIN_FIRST_DEPLOY;
+
+  // Primer despliegue: arranca una extracción nueva que se simula en vivo desde 0.
+  // Resto de escenarios: abre una extracción de demo ya avanzada.
+  const startExtraction = () => {
+    if (isFirstDeploy) {
+      startLiveExtraction();
+      router.push(`/preserve/extractions/${LIVE_EXTRACTION_ID}`);
+    } else {
+      router.push(`/preserve/extractions/${DEMO_RUNNING_EXTRACTION_ID}`);
+    }
+  };
 
   const sourceName = sapConnections.find((c) => c.id === sourceId)?.name ?? "";
   const stepLabels = [t.stepSource, t.stepCutOff, t.stepConfirmation];
@@ -114,8 +131,12 @@ export function ExtractionWizard() {
         </span>
         <div className="flex justify-end">
           {isConfirmStep ? (
-            // TODO: inicio de la extracción pendiente de diseño.
-            <Button variant="success" iconName="arrowDownToLine" disabled>
+            // Se puede iniciar aunque haya advertencias (quedan registradas en los chequeos del archivo).
+            <Button
+              variant="success"
+              iconName="arrowDownToLine"
+              onClick={startExtraction}
+            >
               {t.start}
             </Button>
           ) : (

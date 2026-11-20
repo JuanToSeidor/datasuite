@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  // Integra <ViewTransition> de React con las navegaciones del App Router
+  // (p. ej. el KPI de licencia que se expande al abrir el detalle de la cuota).
+  experimental: {
+    viewTransition: true,
+  },
   // iconcaral2 reconstruye todo su catálogo de SVG en cada render; este alias lo reemplaza
   // (también dentro de caralstable) por una versión que cachea cada icono. Ver lib/iconcaral2-cached.tsx.
   turbopack: {

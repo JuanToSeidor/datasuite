@@ -16,9 +16,12 @@
       "name": "Default Workspace",
       "type": "system",
       "typeLabel": "Predeterminado",
-      "description": "Espacio de trabajo principal y predeterminado para todos los módulos de la suite.",
+      "description": "Admin · Desplegado — Espacio de trabajo principal y predeterminado para todos los módulos de la suite.",
       "iconName": "grid",
       "color": "#0191FF",
+      "scenarios": {
+        "preserve": "adminDeployed"
+      },
       "members": [
         { "id": "1", "name": "juan", "email": "jdtorres@seidoranalytics.com", "role": "SuperAdmin", "avatarBg": "#0191FF" },
         { "id": "2", "name": "ana.martinez", "email": "amartinez@seidoranalytics.com", "role": "Admin", "avatarBg": "#8B5CF6" },
@@ -32,9 +35,12 @@
       "name": "Analytics & AI Core",
       "type": "custom",
       "typeLabel": "Personalizado",
-      "description": "Entorno dedicado para modelos predictivos, pipelines de datos y optimización cloud.",
+      "description": "Admin · Desplegado — Entorno dedicado para modelos predictivos, pipelines de datos y optimización cloud.",
       "iconName": "robot",
       "color": "#8B5CF6",
+      "scenarios": {
+        "preserve": "adminDeployed"
+      },
       "members": [
         { "id": "1", "name": "juan", "email": "jdtorres@seidoranalytics.com", "role": "SuperAdmin", "avatarBg": "#0191FF" },
         { "id": "3", "name": "carlos.gomez", "email": "cgomez@seidoranalytics.com", "role": "Data Engineer", "avatarBg": "#F88A00" },
@@ -47,9 +53,12 @@
       "name": "Finance & Operations",
       "type": "custom",
       "typeLabel": "Personalizado",
-      "description": "Espacio para reporting financiero, centros de costo y facturación SAP.",
+      "description": "Usuario final · Consultas SAP — Espacio para reporting financiero, centros de costo y facturación SAP.",
       "iconName": "chartSimple",
       "color": "#F88A00",
+      "scenarios": {
+        "preserve": "endUser"
+      },
       "members": [
         { "id": "2", "name": "ana.martinez", "email": "amartinez@seidoranalytics.com", "role": "Admin", "avatarBg": "#8B5CF6" },
         { "id": "4", "name": "lucia.fernandez", "email": "lfernandez@seidoranalytics.com", "role": "Billing Manager", "avatarBg": "#10B981" },
@@ -61,9 +70,12 @@
       "name": "Staging Environment",
       "type": "custom",
       "typeLabel": "Personalizado",
-      "description": "Ambiente de pruebas y validación antes de despliegue a producción.",
+      "description": "Admin · Primer despliegue — Ambiente de pruebas y validación antes de despliegue a producción.",
       "iconName": "cloud",
       "color": "#10B981",
+      "scenarios": {
+        "preserve": "adminFirstDeploy"
+      },
       "members": [
         { "id": "1", "name": "juan", "email": "jdtorres@seidoranalytics.com", "role": "SuperAdmin", "avatarBg": "#0191FF" },
         { "id": "5", "name": "martin.silva", "email": "msilva@seidoranalytics.com", "role": "DevOps Lead", "avatarBg": "#3C096C" },

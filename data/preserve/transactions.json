@@ -1,0 +1,69 @@
+{
+  "archives": [
+    {
+      "id": "ARQ-ERP-ECC-0-0-2026-11-17",
+      "sapRelease": "SAP ECC 6.0 (SAP_APPL 616 SP 0013)",
+      "database": "Sybase",
+      "databaseBrand": "Sybase",
+      "size": "0.6 GB",
+      "tables": 4,
+      "status": "queryable",
+      "cutOff": "2026-11-10 17:45",
+      "recent": ["TaxToAirport", "Transaction 3409 Bogota"]
+    },
+    {
+      "id": "ARC-S4P-2026-11",
+      "sapRelease": "SAP S/4HANA 2022 (S4CORE 107 SP 0002)",
+      "database": "SAP HANA",
+      "databaseBrand": "SAPHanaC",
+      "size": "1.8 TB",
+      "tables": 168,
+      "status": "queryable",
+      "cutOff": "2026-11-01 00:00",
+      "recent": ["FBL3N 2025 Closing", "ME2N Open orders Lima"]
+    },
+    {
+      "id": "ARC-S4P-2025-03",
+      "sapRelease": "SAP S/4HANA 2022 (S4CORE 107 SP 0002)",
+      "database": "SAP HANA",
+      "databaseBrand": "SAPHanaC",
+      "size": "1.2 TB",
+      "tables": 214,
+      "status": "extracting",
+      "cutOff": "2025-03-01 00:00",
+      "recent": []
+    }
+  ],
+  "transactions": [
+    { "code": "FB03", "module": "FI", "description": "Display Document" },
+    { "code": "FBL1N", "module": "FI", "description": "Vendor Line Items" },
+    { "code": "FBL3N", "module": "FI", "description": "G/L Account Line Items" },
+    { "code": "FBL5N", "module": "FI", "description": "Customer Line Items" },
+    { "code": "FS10N", "module": "FI", "description": "G/L Account Balance Display" },
+    { "code": "FK10N", "module": "FI", "description": "Vendor Balance Display" },
+    { "code": "FD10N", "module": "FI", "description": "Customer Balance Display" },
+    { "code": "FAGLL03", "module": "FI", "description": "G/L Account Line Items (New G/L)" },
+    { "code": "F.01", "module": "FI", "description": "Financial Statements" },
+    { "code": "S_ALR_87012284", "module": "FI", "description": "Balance Sheet / P&L Statement" },
+    { "code": "ME23N", "module": "MM", "description": "Display Purchase Order" },
+    { "code": "ME2L", "module": "MM", "description": "Purchase Orders by Vendor" },
+    { "code": "ME2M", "module": "MM", "description": "Purchase Orders by Material" },
+    { "code": "ME2N", "module": "MM", "description": "Purchase Orders by PO Number" },
+    { "code": "ME53N", "module": "MM", "description": "Display Purchase Requisition" },
+    { "code": "ME5A", "module": "MM", "description": "List Display of Purchase Requisitions" },
+    { "code": "ME33K", "module": "MM", "description": "Display Contract" },
+    { "code": "ME3M", "module": "MM", "description": "Contracts by Material" },
+    { "code": "ME1M", "module": "MM", "description": "Info Records by Material" },
+    { "code": "ME80FN", "module": "MM", "description": "General Analyses of Purchasing Documents" },
+    { "code": "MB03", "module": "MM", "description": "Display Material Document" },
+    { "code": "MB51", "module": "MM", "description": "Material Document List" },
+    { "code": "MB52", "module": "MM", "description": "List of Warehouse Stocks on Hand" },
+    { "code": "MB5B", "module": "MM", "description": "Stocks for Posting Date" },
+    { "code": "MB5S", "module": "MM", "description": "Display List of GR/IR Balances" },
+    { "code": "MMBE", "module": "MM", "description": "Stock Overview" },
+    { "code": "MM03", "module": "MM", "description": "Display Material" },
+    { "code": "MIR4", "module": "MM", "description": "Display Invoice Document" },
+    { "code": "MC.9", "module": "MM", "description": "Material Analysis: Stock" },
+    { "code": "MB58", "module": "MM", "description": "Consignment and Returnable Packaging Stock" }
+  ]
+}

@@ -10,6 +10,7 @@ import { AnaliceContext } from '@/contexts/AnaliceContext';
 import { SidePanelContext, type SidePanelOptions } from '@/contexts/SidePanelContext';
 import { SidePanel, DEFAULT_SIDE_PANEL_WIDTH } from './SidePanel';
 import { RolePreviewBanner } from './RolePreviewBanner';
+import { WorkspaceProvider } from '@/contexts/WorkspaceContext';
 
 const IMMERSIVE_ROUTES = ['/move/jobs/editor'];
 
@@ -76,6 +77,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   };
 
   return (
+    <WorkspaceProvider>
     <AnaliceContext.Provider value={{ isAnaliceOpen, toggleAnalice }}>
     <SidePanelContext.Provider
       value={{ isSidePanelOpen, isSidePanelExpanded, openSidePanel, closeSidePanel, toggleSidePanelExpand }}
@@ -122,5 +124,6 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     </div>
     </SidePanelContext.Provider>
     </AnaliceContext.Provider>
+    </WorkspaceProvider>
   );
 }

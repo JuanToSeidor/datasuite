@@ -5,12 +5,53 @@ export type SidebarItem = {
   iconName: Icons;
   href: string;
   external?: boolean;
+  /**
+   * Escenarios del workspace (`workspace.scenarios[branch.id]`) en los que el item es visible.
+   * Sin definir = visible siempre. Las rutas fuera de los items visibles se redirigen
+   * (ver `isBranchRouteAllowed`).
+   */
+  scenarios?: string[];
 };
 
 export type SidebarSection = {
   sectionTitle?: string;
   items: SidebarItem[];
 };
+
+/**
+ * Escenarios simulados de Preserve (rol + momento de uso), elegidos por el workspace activo
+ * en `data/workspaces.json` → `scenarios.preserve`.
+ */
+export const PRESERVE_ADMIN_FIRST_DEPLOY = "adminFirstDeploy";
+export const PRESERVE_ADMIN_DEPLOYED = "adminDeployed";
+export const PRESERVE_END_USER = "endUser";
+
+const isItemVisible = (item: SidebarItem, scenario?: string) =>
+  !item.scenarios || !scenario || item.scenarios.includes(scenario);
+
+/** Secciones del branch con solo los items visibles en el escenario (sin secciones vacías). */
+export function getVisibleSections(branch: Branch, scenario?: string): SidebarSection[] {
+  return (branch.sidebarSections ?? [])
+    .map((s) => ({ ...s, items: s.items.filter((item) => isItemVisible(item, scenario)) }))
+    .filter((s) => s.items.length > 0);
+}
+
+/**
+ * Si la ruta del branch es accesible en el escenario. Se busca el item más específico que la
+ * contiene (el home del branch solo por match exacto); rutas sin item asociado se permiten.
+ * Devuelve la ruta de destino si hay que redirigir, o null si la ruta es válida.
+ */
+export function getBranchRedirect(branch: Branch, scenario: string | undefined, rawPathname: string): string | null {
+  // `trailingSlash: true` puede dejar la barra final: "/preserve/" debe tratarse como "/preserve".
+  const pathname = rawPathname.length > 1 ? rawPathname.replace(/\/+$/, "") : rawPathname;
+  const items = (branch.sidebarSections ?? []).flatMap((s) => s.items).filter((i) => !i.external);
+  const owner = items
+    .filter((i) => pathname === i.href || (i.href !== branch.href && pathname.startsWith(i.href + "/")))
+    .sort((a, b) => b.href.length - a.href.length)[0];
+  if (!owner || isItemVisible(owner, scenario)) return null;
+  const fallback = items.find((i) => isItemVisible(i, scenario));
+  return fallback && fallback.href !== pathname ? fallback.href : null;
+}
 
 export type Branch = {
   id: string;
@@ -86,25 +127,31 @@ export const suiteConfig: SuiteConfig = {
         {
           sectionTitle: "Archive",
           items: [
-            { label: "Overview", iconName: "house", href: "/preserve" },
-            { label: "Readiness", iconName: "sync", href: "/preserve/readiness" },
-            { label: "Historical vaults", iconName: "box", href: "/preserve/vaults" },
-            { label: "Source inventory", iconName: "search", href: "/preserve/sources" },
-            { label: "Extractions", iconName: "arrowDownToLine", href: "/preserve/extractions" },
+            { label: "Overview", iconName: "house", href: "/preserve", scenarios: [PRESERVE_ADMIN_DEPLOYED] },
+            { label: "Readiness", iconName: "sync", href: "/preserve/readiness", scenarios: [PRESERVE_ADMIN_DEPLOYED] },
+            { label: "Historical vaults", iconName: "box", href: "/preserve/vaults", scenarios: [PRESERVE_ADMIN_DEPLOYED] },
+            { label: "Source inventory", iconName: "search", href: "/preserve/sources", scenarios: [PRESERVE_ADMIN_FIRST_DEPLOY, PRESERVE_ADMIN_DEPLOYED] },
+            { label: "Extractions", iconName: "arrowDownToLine", href: "/preserve/extractions", scenarios: [PRESERVE_ADMIN_FIRST_DEPLOY, PRESERVE_ADMIN_DEPLOYED] },
           ]
         },
         {
           sectionTitle: "Query",
           items: [
-            { label: "Query", iconName: "database", href: "/preserve/query" },
-            { label: "Validated questions", iconName: "check", href: "/preserve/questions" },
+            { label: "Query", iconName: "database", href: "/preserve/query", scenarios: [PRESERVE_ADMIN_DEPLOYED] },
+            { label: "Validated questions", iconName: "check", href: "/preserve/questions", scenarios: [PRESERVE_ADMIN_DEPLOYED] },
           ]
         },
         {
           sectionTitle: "Compliance",
           items: [
-            { label: "Audit logs", iconName: "file", href: "/preserve/audit" },
-            { label: "Retention policies", iconName: "shieldHalved", href: "/preserve/policies" },
+            { label: "Audit logs", iconName: "file", href: "/preserve/audit", scenarios: [PRESERVE_ADMIN_DEPLOYED] },
+            { label: "Retention policies", iconName: "shieldHalved", href: "/preserve/policies", scenarios: [PRESERVE_ADMIN_DEPLOYED] },
+          ]
+        },
+        {
+          sectionTitle: "SAP",
+          items: [
+            { label: "SAP transaction", iconName: "database", href: "/preserve/transactions", scenarios: [PRESERVE_END_USER] },
           ]
         }
       ]

@@ -33,8 +33,10 @@ export interface ExtractionRecord {
 
 const extractions = extractionsData.extractions as ExtractionRecord[];
 
-const STATUS_VARIANT: Record<ExtractionStatus, "light" | "danger" | "success"> = {
-  extracting: "light",
+// "Extrayendo" usa outlight (borde de 1px): con hasBorder la variante light no tiene tokens propios
+// (--color-light-*) y el chip quedaba sin borde ni fondo.
+const STATUS_VARIANT: Record<ExtractionStatus, "outlight" | "danger" | "success"> = {
+  extracting: "outlight",
   withDifferences: "danger",
   matches: "success",
 };
@@ -45,8 +47,11 @@ const PROGRESS_COLOR: Record<ExtractionStatus, string> = {
   matches: "bg-success-main",
 };
 
-/** Tabla de extracciones (en proceso y completadas) de Preserve. */
-export function ExtractionsTable({ onOpen }: { onOpen: (id: string) => void }) {
+/**
+ * Tabla de extracciones (en proceso y completadas) de Preserve.
+ * `rows` reemplaza el listado base (primer despliegue: vacío o solo la extracción recién iniciada).
+ */
+export function ExtractionsTable({ onOpen, rows }: { onOpen: (id: string) => void; rows?: ExtractionRecord[] }) {
   const { dict, language } = useLanguage();
   const t = dict.preserve.extractions;
 
@@ -120,7 +125,8 @@ export function ExtractionsTable({ onOpen }: { onOpen: (id: string) => void }) {
             <Chip
               variant={STATUS_VARIANT[row.status]}
               label={statusLabel[row.status]}
-              hasBorder
+              hasBorder={row.status !== "extracting"}
+              className={row.status === "extracting" ? "bg-container" : ""}
             />
             <span className="text-sm font-medium text-neutral-900">
               {statusDetailLabel(row.statusDetail)}
@@ -190,8 +196,9 @@ export function ExtractionsTable({ onOpen }: { onOpen: (id: string) => void }) {
 
   return (
     <DataTable<ExtractionRecord>
-      data={extractions}
+      data={rows ?? extractions}
       columns={columns}
+      labels={{ emptyMessage: t.empty }}
       keyExtractor={(row) => row.id}
       canSearch={false}
       canFilterColumns={false}

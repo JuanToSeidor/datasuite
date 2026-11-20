@@ -152,3 +152,72 @@ body {
 .animate-row-expand {
   animation: rowExpand 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+/* ------------------------------------------------------------------ */
+/* View transitions: Licencia → detalle de cuota                        */
+/* El KPI se expande (morph) y la tabla entra cuando el KPI ya llegó.   */
+/* ------------------------------------------------------------------ */
+:root {
+  --license-morph-duration: 420ms;
+  --license-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Resto de la página: crossfade corto para que no compita con el KPI */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 200ms;
+}
+
+::view-transition-group(.license-quota-morph) {
+  animation-duration: var(--license-morph-duration);
+  animation-timing-function: var(--license-ease);
+}
+::view-transition-image-pair(.license-quota-morph) {
+  animation-name: license-via-blur;
+}
+/* Se estira el contenido en vez de escalar la captura: evita textos deformados */
+::view-transition-old(.license-quota-morph),
+::view-transition-new(.license-quota-morph) {
+  height: 100%;
+  width: 100%;
+  object-fit: none;
+  object-position: left top;
+}
+
+::view-transition-new(.license-slide-up) {
+  animation:
+    260ms var(--license-ease) calc(var(--license-morph-duration) * 0.55) both license-fade-in,
+    420ms var(--license-ease) calc(var(--license-morph-duration) * 0.55) both license-slide-y;
+}
+::view-transition-old(.license-fade-out) {
+  animation: 140ms ease-out both license-fade-in reverse;
+}
+
+@keyframes license-via-blur {
+  35% {
+    filter: blur(2px);
+  }
+}
+@keyframes license-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes license-slide-y {
+  from {
+    transform: translateY(12px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

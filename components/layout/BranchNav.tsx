@@ -4,7 +4,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from 'caralstable';
-import { Branch, SidebarItem, SidebarSection } from '@/config/suite';
+import { Branch, SidebarItem, SidebarSection, getVisibleSections } from '@/config/suite';
+import { useBranchScenario } from '@/contexts/WorkspaceContext';
 
 /**
  * Navegación del módulo (branch) activo, ubicada bajo el logo de Crestone en la barra superior.
@@ -15,9 +16,11 @@ import { Branch, SidebarItem, SidebarSection } from '@/config/suite';
  */
 export function BranchNav({ branch }: { branch: Branch }) {
   const pathname = usePathname();
+  // Items según el escenario simulado por el workspace activo (rol + momento de uso).
+  const scenario = useBranchScenario(branch.id);
   // El overview/home del módulo (href === branch.href) se abre desde el logo de Crestone,
   // así que no se repite como botón en el menú.
-  const sections = (branch.sidebarSections ?? [])
+  const sections = getVisibleSections(branch, scenario)
     .map((s) => ({ ...s, items: s.items.filter((item) => item.href !== branch.href) }))
     .filter((s) => s.items.length > 0);
   const allItems = sections.flatMap((s) => s.items);

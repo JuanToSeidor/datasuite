@@ -72,9 +72,12 @@ function fill(template: string, vars: Record<string, string | number>) {
 export function SourceInventoryResults({
   tables,
   scan,
+  hideStaleWarning = false,
 }: {
   tables: InventoryTableRow[];
   scan: InventoryScanMeta;
+  /** Oculta el aviso de escaneo viejo (primer despliegue: el escaneo se acaba de hacer). */
+  hideStaleWarning?: boolean;
 }) {
   const router = useRouter();
   const { dict } = useLanguage();
@@ -302,7 +305,7 @@ export function SourceInventoryResults({
       `}</style>
 
       {/* Aviso de escaneo viejo */}
-      {isStale && (
+      {isStale && !hideStaleWarning && (
         <div className="flex items-center gap-3 rounded-2xl bg-warning-main p-3 text-white">
           <CaralIcon name="triangleExclamation" size={22} />
           <div className="flex flex-1 flex-col">

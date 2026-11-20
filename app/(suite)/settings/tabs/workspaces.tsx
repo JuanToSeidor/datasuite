@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
-import { Button, Chip, Drawer } from "caralstable";
+import React, { useState, useMemo, useEffect } from "react";
+import { Button, Chip, Drawer, Tabs } from "caralstable";
 import { CaralIcon, Icons } from "@/components/icons";
 import { Input, Select, SelectOption, IconSelector } from "@/components/ui";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -57,18 +57,7 @@ const AVAILABLE_ICONS: Icons[] = [
 
 import workspacesData from "@/data/workspaces.json";
 
-const WORKSPACE_SECTIONS: { id: WorkspaceSectionId; title: string; subtitle: string }[] = [
-  {
-    id: "general",
-    title: "General",
-    subtitle: "Modify workspace name, icon, color and description",
-  },
-  {
-    id: "users",
-    title: "Users",
-    subtitle: "Manage team members assigned to this workspace",
-  },
-];
+const WORKSPACE_TABS: WorkspaceSectionId[] = ["general", "users"];
 
 const ALL_AVAILABLE_USERS: WorkspaceMember[] = workspacesData.allAvailableUsers as WorkspaceMember[];
 const INITIAL_WORKSPACES: WorkspaceItem[] = workspacesData.workspaces as WorkspaceItem[];
@@ -85,6 +74,7 @@ export function WorkspacesTab() {
   });
   const [searchTerm, setSearchTerm] = useState("");
   const [expandedWorkspaceId, setExpandedWorkspaceId] = useState<string | null>(null);
+  const [maximizedWorkspaceId, setMaximizedWorkspaceId] = useState<string | null>(null);
   const [savedWorkspaceId, setSavedWorkspaceId] = useState<string | null>(null);
   const [activeSubSections, setActiveSubSections] = useState<Record<string, WorkspaceSectionId>>({
     default: "general",
@@ -99,7 +89,26 @@ export function WorkspacesTab() {
   const [newWsColor, setNewWsColor] = useState("#0191FF");
   const [newWsIcon, setNewWsIcon] = useState<Icons>("grid");
 
+  // Vista exclusiva de un workspace: oculta los demás; Esc vuelve al listado.
+  useEffect(() => {
+    if (!maximizedWorkspaceId) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMaximizedWorkspaceId(null);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [maximizedWorkspaceId]);
+
+  const toggleExclusiveView = (wsId: string) => {
+    if (maximizedWorkspaceId === wsId) {
+      setMaximizedWorkspaceId(null);
+      return;
+    }
+    setMaximizedWorkspaceId(wsId);
+    setExpandedWorkspaceId(wsId); // al volver al listado el workspace sigue desplegado
+    setIsAddUserOpen(null);
+  };
+
   const toggleExpand = (wsId: string) => {
+    if (maximizedWorkspaceId === wsId) return;
     setExpandedWorkspaceId((prev) => (prev === wsId ? null : wsId));
     if (!activeSubSections[wsId]) {
       setActiveSubSections((prev) => ({ ...prev, [wsId]: "general" }));
@@ -187,12 +196,17 @@ export function WorkspacesTab() {
   };
 
   const filteredWorkspaces = useMemo(() => {
+    // En vista exclusiva solo queda el workspace seleccionado (ignora la búsqueda).
+    if (maximizedWorkspaceId) return workspaces.filter((ws) => ws.id === maximizedWorkspaceId);
     return workspaces.filter(
       (ws) =>
         ws.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         ws.description.toLowerCase().includes(searchTerm.toLowerCase())
     );
-  }, [workspaces, searchTerm]);
+  }, [workspaces, searchTerm, maximizedWorkspaceId]);
+
+  const tw = dict.settings.workspaces;
+  const tabItems = [{ label: tw.tabGeneral }, { label: tw.tabUsers }];
 
   return (
     <div className="w-full flex flex-col gap-6 text-left font-poppins">
@@ -207,6 +221,7 @@ export function WorkspacesTab() {
           </p>
         </div>
 
+        {!maximizedWorkspaceId && (
         <div className="flex items-center gap-3">
           <div className="w-64">
             <Input
@@ -227,6 +242,7 @@ export function WorkspacesTab() {
             Create workspace
           </Button>
         </div>
+        )}
       </div>
 
       {/* Workspaces List */}
@@ -237,7 +253,8 @@ export function WorkspacesTab() {
           </div>
         ) : (
           filteredWorkspaces.map((ws) => {
-            const isExpanded = expandedWorkspaceId === ws.id;
+            const isMaximized = maximizedWorkspaceId === ws.id;
+            const isExpanded = expandedWorkspaceId === ws.id || isMaximized;
             const currentSection = activeSubSections[ws.id] || "general";
             const savedWs = savedWorkspacesState[ws.id];
             const isDirty = savedWs ? JSON.stringify(ws) !== JSON.stringify(savedWs) : false;
@@ -258,12 +275,18 @@ export function WorkspacesTab() {
             return (
               <div
                 key={ws.id}
-                className="w-full bg-container border border-neutral-500 hover:border-neutral-500 rounded-xl transition-all overflow-hidden shadow-xs"
+                className={`w-full transition-all ${
+                  isMaximized
+                    ? "" // En vista exclusiva el workspace ocupa la página: sin borde ni padding de tarjeta
+                    : "bg-container border border-neutral-500 hover:border-neutral-500 rounded-xl overflow-hidden shadow-xs"
+                }`}
               >
                 {/* Main Accordion Row */}
                 <div
                   onClick={() => toggleExpand(ws.id)}
-                  className="flex items-center justify-between p-4 cursor-pointer select-none gap-4"
+                  className={`flex items-center justify-between select-none gap-4 ${
+                    isMaximized ? "py-4" : "p-4 cursor-pointer"
+                  }`}
                 >
                   <div className="flex items-center gap-3.5 min-w-0">
                     {/* Workspace Icon Preview */}
@@ -305,85 +328,55 @@ export function WorkspacesTab() {
                     </div>
                   </div>
 
-                  {/* Right Actions: Save button if modified, else Chevron toggle */}
-                  <div className="flex items-center gap-2 shrink-0">
-                    {isJustSaved ? (
-                      <Button
-                        variant="default"
-                        size="sm"
-                        className="text-neutral-100!"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                        }}
-                      >
-                        <span className="flex items-center gap-1.5 text-white">
-                          <CaralIcon name="check" size={14} /> Guardado
-                        </span>
-                      </Button>
-                    ) : isDirty ? (
-                      <Button
-                        variant="default"
-                        size="sm"
-                        className="text-neutral-100!"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleSaveWorkspace(ws.id);
-                        }}
-                      >
-                        Guardar
-                      </Button>
-                    ) : (
-                      <Button
-                        isIconButton
-                        variant="ghost"
-                        size="sm"
-                        iconName="chevronDown"
-                        className={`text-neutral-800 hover:text-neutral-900 transition-transform duration-200 pointer-events-none ${isExpanded ? "rotate-180" : ""
-                          }`}
-                        title={isExpanded ? "Collapse" : "Expand"}
-                      />
-                    )}
-                  </div>
+                  {/* Chevron del acordeón (oculto en vista exclusiva) */}
+                  {!isMaximized && (
+                    <span
+                      className="flex text-neutral-900 transition-transform duration-200 shrink-0"
+                      style={{ transform: isExpanded ? "rotate(180deg)" : undefined }}
+                      title={isExpanded ? tw.collapse : tw.expand}
+                    >
+                      <CaralIcon name="chevronDown" size={24} />
+                    </span>
+                  )}
                 </div>
 
                 {/* Expanded View: Master-Detail Layout */}
                 {isExpanded && (
-                  <div className="px-5 pb-5 pt-3 border-t border-neutral-500 bg-neutral-500/5 space-y-4 animate-in fade-in duration-150">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-                      {/* Left Sidebar Sub-Navigation (4 columns) */}
-                      <div className="lg:col-span-4 flex flex-col gap-2">
-                        {WORKSPACE_SECTIONS.map((sec) => {
-                          const isActive = currentSection === sec.id;
-                          return (
-                            <div
-                              key={sec.id}
-                              onClick={() => setWorkspaceSubSection(ws.id, sec.id)}
-                              className={`p-3 rounded-xl border flex items-center justify-between gap-3 cursor-pointer transition-all select-none ${isActive
-                                ? "bg-neutral-500 border-neutral-500 shadow-xs"
-                                : "bg-container border-neutral-500 hover:bg-neutral-500/10 hover:border-neutral-500"
-                                }`}
-                            >
-                              <div className="space-y-0.5 min-w-0">
-                                <h5 className="text-xs font-bold text-neutral-900">
-                                  {sec.title}
-                                </h5>
-                                <p className="text-[11px] text-neutral-800 line-clamp-1">
-                                  {sec.subtitle}
-                                </p>
-                              </div>
-                              <CaralIcon
-                                name="chevronRigth"
-                                size={14}
-                                classname={`shrink-0 transition-colors ${isActive ? "text-neutral-900 font-bold" : "text-neutral-800"
-                                  }`}
-                              />
-                            </div>
-                          );
-                        })}
+                  <div
+                    className={`space-y-4 animate-in fade-in duration-150 ${
+                      isMaximized ? "pt-3" : "px-5 pb-5 pt-3 border-t border-neutral-500 bg-neutral-500/5"
+                    }`}
+                  >
+                    {/* Barra: pestañas a la izquierda, acciones a la derecha */}
+                    <div className="flex flex-wrap items-center justify-between gap-2.5">
+                      <Tabs
+                        tabs={tabItems}
+                        activeIndex={WORKSPACE_TABS.indexOf(currentSection)}
+                        onChange={(idx) => setWorkspaceSubSection(ws.id, WORKSPACE_TABS[idx])}
+                      />
+                      <div className="flex items-center gap-2.5">
+                        <Button
+                          isIconButton
+                          variant="ghost"
+                          hasBorder
+                          iconName={isMaximized ? "arrowsMinimize" : "arrowsMaximize"}
+                          className="border! border-neutral-800! text-neutral-900"
+                          title={isMaximized ? tw.minimize : tw.maximize}
+                          onClick={() => toggleExclusiveView(ws.id)}
+                        />
+                        <Button
+                          variant="default"
+                          iconName={isJustSaved ? "check" : "save"}
+                          className="text-neutral-100!"
+                          disabled={!isDirty && !isJustSaved}
+                          onClick={() => isDirty && handleSaveWorkspace(ws.id)}
+                        >
+                          {isJustSaved ? tw.saved : tw.save}
+                        </Button>
                       </div>
+                    </div>
 
-                      {/* Right Content View (8 columns) */}
-                      <div className="lg:col-span-8 bg-container border border-neutral-500 rounded-xl p-5 shadow-xs space-y-5">
+                    <div className="space-y-5">
                         {/* ========================================================= */}
                         {/* VIEW 1: GENERAL WORKSPACE DETAILS                         */}
                         {/* ========================================================= */}
@@ -587,7 +580,6 @@ export function WorkspacesTab() {
                             </div>
                           </div>
                         )}
-                      </div>
                     </div>
                   </div>
                 )}

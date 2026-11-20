@@ -6,7 +6,9 @@ import { Brand } from "@/components/icons";
 import { Button } from "caralstable";
 import { Select } from "@/components/ui/Select";
 import { SourceInventoryResults } from "@/components/preserve/sources/SourceInventoryResults";
+import { PRESERVE_ADMIN_FIRST_DEPLOY } from "@/config/suite";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useBranchScenario } from "@/contexts/WorkspaceContext";
 import sourcesData from "@/data/preserve/sources.json";
 import inventoryData from "@/data/preserve/inventory.json";
 
@@ -32,6 +34,8 @@ function fill(template: string, vars: Record<string, string>) {
 export default function PreserveSourcesPage() {
   const { dict } = useLanguage();
   const t = dict.preserve.sources;
+  // Primer despliegue: el escaneo es único, sin cambiar tipo/conexión ni re-escanear.
+  const isFirstDeploy = useBranchScenario("preserve") === PRESERVE_ADMIN_FIRST_DEPLOY;
   const [selectedId, setSelectedId] = useState<string>("");
   const [scannedId, setScannedId] = useState<string | null>(null);
 
@@ -104,28 +108,31 @@ export default function PreserveSourcesPage() {
       ) : (
         /* Paso 3: resultados del escaneo */
         <>
-          <div className="flex flex-wrap items-end gap-3 rounded-2xl bg-container p-4">
-            <div className="flex min-w-[220px] flex-1 flex-col gap-1">
-              <label className="text-sm font-semibold text-neutral-900">{t.results.type}</label>
-              <Select
-                brand="SAP"
-                options={[{ value: "s4hana", label: "SAP S/4HANA" }]}
-                value="s4hana"
-              />
+          {!isFirstDeploy && (
+            <div className="flex flex-wrap items-end gap-3 rounded-2xl bg-container p-4">
+              <div className="flex min-w-[220px] flex-1 flex-col gap-1">
+                <label className="text-sm font-semibold text-neutral-900">{t.results.type}</label>
+                <Select
+                  brand="SAP"
+                  options={[{ value: "s4hana", label: "SAP S/4HANA" }]}
+                  value="s4hana"
+                />
+              </div>
+              <div className="flex min-w-[220px] flex-1 flex-col gap-1">
+                <label className="text-sm font-semibold text-neutral-900">{t.sapConnection}</label>
+                <Select
+                  options={options}
+                  value={scannedId ?? undefined}
+                  onValueChange={(value) => setScannedId(String(value))}
+                />
+              </div>
+              <Button variant="success">{t.results.scanAgain}</Button>
             </div>
-            <div className="flex min-w-[220px] flex-1 flex-col gap-1">
-              <label className="text-sm font-semibold text-neutral-900">{t.sapConnection}</label>
-              <Select
-                options={options}
-                value={scannedId ?? undefined}
-                onValueChange={(value) => setScannedId(String(value))}
-              />
-            </div>
-            <Button variant="success">{t.results.scanAgain}</Button>
-          </div>
+          )}
 
           <SourceInventoryResults
             key={scannedId}
+            hideStaleWarning={isFirstDeploy}
             tables={inventoryData.tables as Parameters<typeof SourceInventoryResults>[0]["tables"]}
             scan={inventoryData.scan}
           />
